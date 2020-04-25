@@ -2,3 +2,4 @@ name: IaC.Name
 title: IaC.Title
 description: IaC.description
 theme: jekyll-theme-slate
+permalink: /blog/:year/:month/:day/:title
