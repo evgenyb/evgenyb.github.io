@@ -2,11 +2,9 @@
 layout: default
 title: About me
 ---
-# About me
+## Hi, my name is Evgeny Borzenin
 
 ![me](images/me-round.jpg)
-
-Hi, my name is Evgeny Borzenin.
 
 I am an Azure Solutions Architect Expert, Microsoft Azure Community Hero, technical architect and developer with more than 20 years of experience, strong communication skills and love of automation.
 
