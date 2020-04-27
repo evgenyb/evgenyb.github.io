@@ -81,7 +81,7 @@ az devops service-endpoint list --query "[?name=='iac-dev-arm']"
 
 where `iac-dev-arm` is the name of the service connection.
 
-By default result will be in form of `json`, but you can use `-o` attribute to control the output format (other options are `yaml`, `table`, `jsonc` `tsv`).
+By default result will be in form of `json`, but you can use `-o` attribute to control the output format (other options are `yaml`, `table`, `jsonc` and `tsv`).
 
 Actually, the only information I need for my task is the service connection id and I can get it with this command
 
