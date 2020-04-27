@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /blog/
-title: Evgeny's Borzenin blog
+title: Evgeny Borzenin's Blog
 ---
 
 <ul class="posts">
