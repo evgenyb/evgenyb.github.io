@@ -17,7 +17,7 @@ First, you need to install the preview version of [Az.Resources](https://docs.mi
 Install-Module Az.Resources -RequiredVersion 1.12.1-preview -AllowPrerelease
 ```
 
-If you get an error (like I did), you may need to install [PowerShellGet](https://docs.microsoft.com/en-us/powershell/module/powershellget/?view=powershell-7) module
+If you get an error (I've got an error), you may need to install [PowerShellGet](https://docs.microsoft.com/en-us/powershell/module/powershellget/?view=powershell-7) module
 
 ```powershell
 Install-Module PowerShellGet -Repository PSGallery -Force
@@ -160,6 +160,6 @@ PR -> Code review -> PR Approve -> Merge to master -> Deploy
 
 What we can do now is to run `-whatIf` command and check the deployment impact before we merge to master. It can be as simple as a "visual" check of what resources will be added/deleted/modified, or it could be some sort of automatic tests that verifies expected changes with actual changes provided by `-whatIf` command.
 
-For example, if you use [github](https://github.com) as your source code and [Azure DevOps](https://azure.microsoft.com/nb-no/services/devops/) for you build and release pipelines, you can implement PR check that for each PR will trigger `Azure DevOps` build (or release) pipeline that will execute `-WhatIf` command with ARM templates from the branch. This way you can get an extra verification step that prevents you from deploying unverified changes.
+For example, if you use [github](https://github.com) as your source code and [Azure DevOps](https://azure.microsoft.com/nb-no/services/devops/) for your build and release pipelines, you can implement PR check that for each PR will trigger `Azure DevOps` build (or release) pipeline that will execute `-WhatIf` command with ARM templates from the branch. This way you can get an extra verification step that prevents you from deploying unverified changes.
 
 With that - thanks for reading!
