@@ -1,12 +1,8 @@
 ---
-layout: default
+layout: page
 title: About me
 permalink: /about/
 ---
-## Hi, my name is Evgeny Borzenin
-
-![me](/images/me-round.jpg)
-
 I am an Azure Solutions Architect Expert, Microsoft Azure Community Hero, technical architect and developer with more than 20 years of experience, strong communication skills and love for automation.
 
 I am currently working as a consultant at [Konsulentselskapet Ensō AS](https://enso.no/) and presently assigned to [Vipps AS](https://vipps.no/).
