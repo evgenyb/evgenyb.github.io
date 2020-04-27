@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /blog/
-title: Evgeny Borzenin's Blog
+title: Blog archive
 ---
 
 <ul class="posts">

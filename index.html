@@ -3,6 +3,16 @@ layout: default
 title: Evgeny Borzenin, Infrastructure as Code
 ---
 <div class="blurb">
-	<h1>Hi there, I'm Evgeny Borzenin!</h1>
-	<p><a href="/about">Read more about me...</a></p>
+	<h1>Hi there, my name is Evgeny Borzenin and this is my blog.</h1>
+
+	<p>Let's see how far I will go with this :) ...</p>
+	{% for post in site.posts %}
+		<entry>
+			<title>{{ post.title }}</title>
+			<link href="http://borzenin.no{{ post.url }}"/>
+			<updated>{{ post.date | date_to_xmlschema }}</updated>
+			<id>http://borzenin.no{{ post.id }}</id>
+			<content type="html">{{ post.content | xml_escape }}</content>
+		</entry>
+	{% endfor %}
 </div><!-- /.blurb -->
