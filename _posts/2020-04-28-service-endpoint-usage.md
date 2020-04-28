@@ -160,7 +160,7 @@ az pipelines release definition list --query [].name | jq -r .[] | while read na
 done
 ```
 
-Note, you need to install `jq`, the [lightweight and flexible command-line JSON processor](https://stedolan.github.io/jq/) to use final the script.
+Note, you need to install `jq`, the [lightweight and flexible command-line JSON processor](https://stedolan.github.io/jq/) to use the final script.
 
 and here it is in action:
 
