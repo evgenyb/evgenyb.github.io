@@ -77,16 +77,15 @@ You can help us improve the accuracy of the result by opening an issue here: htt
 Resource changes: no change.
 ```
 
-Cool, no changes and that's expected. Now, let's add new storage account resource to our ARM template file.
+Cool, no changes and that's expected. Now, let's add new storage account resource into `resources` section of ARM template file.
+
+Note that I used [uniqueString()](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-string#uniquestring) function here to make sure that storage account has a unique name. Also, storage account max length is 24 characters long and `uniqueString` function returned value is 13 characters long, so you need to do some math :)
 
 ```json
 {
-    "name": "iacwhatifsa",
+    "name": "[concat('iacwhatif', uniqueString(resourceGroup().id))]",
     "type": "Microsoft.Storage/storageAccounts",
     "apiVersion": "2019-06-01",
-    "tags": {
-        "displayName": "iacwhatifsa"
-    },
     "location": "[resourceGroup().location]",
     "kind": "StorageV2",
     "sku": {
@@ -99,7 +98,7 @@ Cool, no changes and that's expected. Now, let's add new storage account resourc
 and run `-whatIf` command again...
 
 ```powershell
-New-AzResourceGroupDeployment -ResourceGroupName domains-and-certificates -TemplateFile template.json -WhatIf
+New-AzResourceGroupDeployment -ResourceGroupName iac-what-if-poc-rg -TemplateFile template.json -WhatIf
 
 Resource and property changes are indicated with this symbol:
   + Create
