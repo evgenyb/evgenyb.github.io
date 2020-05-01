@@ -490,7 +490,7 @@ and to production
 
 ## Summary
 
-`copy` function is quite powerful tool in ARM templates tool-belt. It's not very intuitive and sometimes quite hard to work with, but you can use trick to debug the result of `copy` element to `output` of ARM template deployment.
+`copy` function is quite powerful tool under the ARM templates tool-belt. It's not very intuitive in the beggining and sometimes quite hard to work with, but eventually you will find yourself comfortable using it and you can always use the "debug" trick.
 
 I used the same technique to implement other type of resources:
 
