@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Use ARM template copy function to simplify Virtual Network configuration for multiple environments"
+title: "Use ARM template copy element to simplify Virtual Network configuration for multiple environments"
 date: 2020-05-05
 categories: [ARM templates]
 ---
