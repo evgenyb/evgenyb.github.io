@@ -9,7 +9,7 @@ Let's imagine that you implement your infrastructure as code with [ARM templates
 
 ## Define our infrastructure
 
-Before we start, let's describe our specifications. We support 2 environments, `dev` and `prod` and here is `vnet` configurations for each:
+Before we start, let's define our infrastructure. We support 2 environments, `dev` and `prod` with one `vnet` configured as follow:
 
 ![infra](/images/2020-05-05-infra.png)
 
