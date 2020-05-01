@@ -504,7 +504,7 @@ But basically if you have a repetitive resource properties, resources or variabl
 
 ## Clean up
 
-Don't forget to clean up you resources when you are done with exercise.
+Don't forget to clean up your resources when you are done with exercise.
 
 Remove `iac-dev-copy-poc-rg` resource group with all resources.
 
