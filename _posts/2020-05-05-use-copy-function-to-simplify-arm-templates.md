@@ -9,7 +9,7 @@ Let's imagine that you implement your infrastructure as code with [ARM templates
 
 ## Define our infrastructure
 
-Before we start, let's describe our environments specifications. We support 2 environments, `dev` and `prod` and here is `vnet` configurations:
+Before we start, let's describe our specifications. We support 2 environments, `dev` and `prod` and here is `vnet` configurations for each:
 
 ```txt
 VNet name: iac-dev-copy-poc-vnet
@@ -58,7 +58,7 @@ az group create -n iac-prod-copy-poc-rg -l westeurope
 
 ## Some thoughts
 
-How can we implement ARM template for our scenario? One obvious solution will be to implement 2 files, one for production and one for dev environments. We can use `-dev` and `-prod` suffixes to the template files. Let's do this.
+How can we implement ARM templates to support our requirements? One obvious solution will be to implement 2 ARM templates, one for production and one for dev environments. We can use `-dev` and `-prod` suffixes for our template files.
 
 ### Create template file for `dev`
 
@@ -162,7 +162,7 @@ Let's create `template-prod.json` file containing ARM template for vnet resource
 }
 ```
 
-If we go this route, then the need to use corresponding script for each environment when we deploy. So our deployment script could look like this one:
+If we go that route, then we need to use corresponding template file when we deploy to the environment. So our deployment script might look like this:
 
 ```bash
 #!/usr/bin/env bash
@@ -175,25 +175,23 @@ environment=$1
 az deployment group create -g iac-${environment}-copy-poc-rg --template-file template-${environment}.json
 ```
 
-And then you can deploy your infrastructure by running this script
-
-to dev
+And now we can deploy your infrastructure to `dev`
 
 ```bash
 ./deploy.sh dev
 ```
 
-to prod
+and to `prod`
 
 ```bash
 ./deploy.sh prod
 ```
 
-This is good and will work fine if you only have one resource in your template file, but what if your ARM template contains not only vnet resource, but some other resources? With "one template per environment" approach, we will duplicate all recourses per environment and that will be a maintenance nightmare.
+This is good and will work fine if you only have one resource in your template file, but what if your ARM template contains not only vnet resource, but some other resources? With "one template per environment" approach, we will duplicate all recourses in each template file and that will be a maintenance nightmare.
 
-What we want is one ARM template file and set of parameters file per environment. So how can we implement such a model?
+What we want is, one ARM template file and set of parameters file per environment. So how can we implement such a model?
 
-As it turned out, we can by using 2 ARM templates futures:
+As it turned out, we can do it if we use 2 ARM templates features:
 
 * [use object as a parameter](https://docs.microsoft.com/en-us/azure/architecture/building-blocks/extending-templates/objects-as-parameters)
 * [copy element](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/copy-resources)
@@ -203,7 +201,7 @@ According to the documentation
 
 ## Refactoring and conventions
 
-So the idea is that we introduce subnets configuration as an array of objects, move it to the parameters file and use `copy` functionality of ARM template to implement vnet resource.
+So, the idea is that we introduce subnets configuration as an array of objects, move it to the parameters file and use `copy` functionality of ARM template to implement vnet resource.
 
 Let's also define some conventions:
 
