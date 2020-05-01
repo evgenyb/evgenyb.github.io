@@ -183,7 +183,7 @@ As it turned out, we can do it if we use 2 ARM templates features:
 According to the documentation
 > By adding the copy element to the properties section of a resource in your template, you can dynamically set the number of items for a property during deployment. You also avoid having to repeat template syntax.
 
-## Ineration two - refactoring
+## Iteration two - refactoring
 
 So, the idea is that we introduce subnets configuration as an array of objects, move it to the parameters file and use `copy` element of ARM template to implement vnet resource.
 
@@ -491,7 +491,14 @@ and to production
 
 ## Summary
 
-`copy` function is quite powerful tool under the ARM templates tool-belt. It's not very intuitive in the beggining, but eventually you will find yourself comfortable using it and you can always use the "debug" trick.
+`copy` element is quite powerful tool under the ARM templates tool-belt. It's not very intuitive in the begging, but eventually you will find yourself comfortable and easy using it.
+
+It can be used at the following scenarios:
+
+* deploying multiple instances of the same resource
+* creating multiple properties on single resource instance
+* working with array parameters and variables
+* returning array at the output section
 
 I used the same technique to implement other type of resources like:
 
@@ -500,8 +507,6 @@ I used the same technique to implement other type of resources like:
 * [Virtual Network Peering](https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-11-01/virtualnetworks/virtualnetworkpeerings)
 
 * [APIM custom domains](https://docs.microsoft.com/en-us/azure/templates/microsoft.apimanagement/2019-12-01/service) - you can implement environment specific custom domains with certificates via `hostnameConfigurations` section
-
-But basically if you have a repetitive resource properties, resources or variables, you can use `copy` element to simplify it.
 
 ## Clean up
 
