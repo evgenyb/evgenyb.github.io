@@ -25,7 +25,7 @@ Subnets:
     addressPrefix: 10.112.16.0/25
 ```
 
-```txt
+```
 VNet name: iac-prod-copy-poc-vnet
 addressPrefix: 10.111.0.0/16
 
@@ -434,7 +434,7 @@ az deployment group create -g iac-dev-copy-poc-rg --template-file debug.json
 
 and check the result's output section
 
-```txt
+```
 {- Finished ..
 ...
   "properties": {
