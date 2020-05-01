@@ -56,24 +56,18 @@ and one for `prod`
 az group create -n iac-prod-copy-poc-rg -l westeurope
 ```
 
-## Some thoughts
+## First iteration
 
-How can we implement ARM templates to support our requirements? One obvious solution will be to implement 2 ARM templates, one for production and one for dev environments. We can use `-dev` and `-prod` suffixes for our template files.
+How can we implement ARM templates to support our requirements? One obvious solution will be to implement 2 ARM templates, one for each environment. We will use `-dev` and `-prod` suffixes for template files.
 
 ### Create template file for `dev`
 
-Let's create `template-dev.json` file containing ARM template for vnet resource.
+Let's create `template-dev.json` file with ARM template for vnet resource.
 
 ```json
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-    },
-    "functions": [
-    ],
-    "variables": {
-    },
     "resources": [
         {
             "name": "iac-dev-copy-poc-vnet",
@@ -102,26 +96,18 @@ Let's create `template-dev.json` file containing ARM template for vnet resource.
                 ]
             }
         }
-    ],
-    "outputs": {
-    }
+    ]
 }
 ```
 
 ### Create template file for `prod`
 
-Let's create `template-prod.json` file containing ARM template for vnet resource.
+Let's create `template-prod.json` file with ARM template for vnet resource.
 
 ```json
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {
-    },
-    "functions": [
-    ],
-    "variables": {
-    },
     "resources": [
         {
             "name": "iac-prod-copy-poc-vnet",
@@ -156,9 +142,7 @@ Let's create `template-prod.json` file containing ARM template for vnet resource
                 ]
             }
         }
-    ],
-    "outputs": {
-    }
+    ]
 }
 ```
 
