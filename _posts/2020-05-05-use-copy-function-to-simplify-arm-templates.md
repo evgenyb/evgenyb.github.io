@@ -510,6 +510,9 @@ I used the same technique to implement other type of resources like:
 
 * [APIM custom domains](https://docs.microsoft.com/en-us/azure/templates/microsoft.apimanagement/2019-12-01/service) - you can implement environment specific custom domains with certificates via `hostnameConfigurations` section
 
+* [DNS Zones](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records)
+
+
 ## Clean up
 
 Don't forget to clean up your resources when you are done with exercise.
