@@ -307,6 +307,8 @@ Create new file called `parameters-prod.json` and add parameters values for prod
 
 ## Refactor template file
 
+Here is the refactored version of our template.
+
 ```json
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
@@ -378,8 +380,8 @@ In the context of our use-case, you can think of `copy` element as a `foreach` l
 
 [copyIndex()](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-numeric#copyindex) function returns the current index in the `subnet` array.
 
-It's not that easy to work with copy function, especially hard to debug, but actually there is one trick you can use if you stack with copy function for complex object. What you can do is you can use `output` section of ARM template to print the result of copy function without deploying template.
-Let's create an empty arm template called `debug.json` with only one `subnetsConfiguration` parameter and implement the same copy function in output section.
+It's not that easy to work with `copy` element, especially it's hard to debug, but actually there is one trick you can use if you stack with `copy` element for relatively complex object. What you can do is to use `output` section of ARM template to print the result of `copy` element without deploying template.
+Let's create an empty arm template called `debug.json` with only one `subnetsConfiguration` parameter and implement the same `copy` element inside `output` section.
 
 ```json
 {
@@ -459,9 +461,9 @@ and check the result's output section
 }
 ```
 
-It contains the `copy` element's execution result. This way you can "debug" it while you implementing your ARm templates.
+It contains the `copy` element's execution result. This way you can "debug" it while you implementing your ARM templates.
 
-Now, we have one `template.json` file and 2 parameters files for each environments and we can change `deploy.sh` file.
+Now, we have one `template.json` file and 2 parameters files for each environments and we need to change `deploy.sh` file.
 
 ```bash
 #!/usr/bin/env bash
@@ -471,7 +473,7 @@ Now, we have one `template.json` file and 2 parameters files for each environmen
 
 environment=$1
 
-az deployment group create -g iac-${environment}-copy-poc-rg --template-file template-${environment}.json
+az deployment group create -g iac-${environment}-copy-poc-rg --template-file template.json --parameters parameters-${environment}.json
 ```
 
 as can deploy our infrastructure to dev
