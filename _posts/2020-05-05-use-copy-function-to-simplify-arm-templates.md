@@ -146,7 +146,7 @@ Let's create `template-prod.json` file with ARM template for vnet resource.
 }
 ```
 
-If we go that route, then we need to use corresponding template file when we deploy to the environment. So our deployment script might look like this:
+If we go that route, then our deployment script might look like this:
 
 ```bash
 #!/usr/bin/env bash
@@ -159,7 +159,7 @@ environment=$1
 az deployment group create -g iac-${environment}-copy-poc-rg --template-file template-${environment}.json
 ```
 
-And now we can deploy your infrastructure to `dev`
+And now we can deploy our infrastructure to `dev`
 
 ```bash
 ./deploy.sh dev
@@ -171,9 +171,9 @@ and to `prod`
 ./deploy.sh prod
 ```
 
-This is good and will work fine if you only have one resource in your template file, but what if your ARM template contains not only vnet resource, but some other resources? With "one template per environment" approach, we will duplicate all recourses in each template file and that will be a maintenance nightmare.
+This is good and will work fine if we only have one resource in our template file, but what if our ARM template contains not only vnet resource, but some other resources? With "one template per environment" approach, we duplicate all recourses in each template file and that will be a maintenance nightmare.
 
-What we want is, one ARM template file and set of parameters file per environment. So how can we implement such a model?
+What we actually want is, one ARM template and set of parameter files for each environment. So, how can we implement such a model?
 
 As it turned out, we can do it if we use 2 ARM templates features:
 
@@ -183,9 +183,9 @@ As it turned out, we can do it if we use 2 ARM templates features:
 According to the documentation
 > By adding the copy element to the properties section of a resource in your template, you can dynamically set the number of items for a property during deployment. You also avoid having to repeat template syntax.
 
-## Refactoring and conventions
+## Ineration two - refactoring
 
-So, the idea is that we introduce subnets configuration as an array of objects, move it to the parameters file and use `copy` functionality of ARM template to implement vnet resource.
+So, the idea is that we introduce subnets configuration as an array of objects, move it to the parameters file and use `copy` element of ARM template to implement vnet resource.
 
 Let's also define some conventions:
 
@@ -201,7 +201,7 @@ Let's also define some conventions:
 
 * `vnet` name will be composed in the template based on `environment` parameter by using [concat()](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-array#concat) function.
 
-Let's do this:
+Let's do this!
 
 ## Add parameters to the template
 
