@@ -500,7 +500,7 @@ I used the same technique to implement other type of resources like:
 
 * [APIM custom domains](https://docs.microsoft.com/en-us/azure/templates/microsoft.apimanagement/2019-12-01/service) - you can implement environment specific custom domains with certificates via `hostnameConfigurations` section
 
-But basically if you have a recitative properties, you can use `copy` element to implement it.
+But basically if you have a repetitive resource properties, resources or variables, you can use `copy` element to simplify it.
 
 ## Clean up
 
