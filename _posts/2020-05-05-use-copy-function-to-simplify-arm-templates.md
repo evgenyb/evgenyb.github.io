@@ -11,6 +11,8 @@ Let's imagine that you implement your infrastructure as code with [ARM templates
 
 Before we start, let's describe our specifications. We support 2 environments, `dev` and `prod` and here is `vnet` configurations for each:
 
+![infra](/images/2020-05-05-infra.png)
+
 ```txt
 VNet name: iac-dev-copy-poc-vnet
 addressPrefix: 10.112.0.0/16
