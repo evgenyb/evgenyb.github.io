@@ -470,7 +470,7 @@ and check the result's output section
 
 It contains the `copy` element's execution result. This way you can "debug" it while you implementing your ARM templates.
 
-Now, we have one `template.json` file and 2 parameters files for each environments and we need to change `deploy.sh` file.
+Now, we have one `template.json` file and 2 parameters files for each environments and we need to change our `deploy.sh` file.
 
 ```bash
 #!/usr/bin/env bash
