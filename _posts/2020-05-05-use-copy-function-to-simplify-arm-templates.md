@@ -184,7 +184,7 @@ What we actually want is, one ARM template and set of parameter files for each e
 As it turned out, we can do it if we use 2 ARM templates features:
 
 * [use object as a parameter](https://docs.microsoft.com/en-us/azure/architecture/building-blocks/extending-templates/objects-as-parameters)
-* [copy element](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/copy-resources)
+* use [copy element](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/copy-resources)
 
 According to the documentation
 > By adding the copy element to the properties section of a resource in your template, you can dynamically set the number of items for a property during deployment. You also avoid having to repeat template syntax.
