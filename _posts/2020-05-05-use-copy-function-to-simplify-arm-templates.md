@@ -13,7 +13,7 @@ Before we start, let's define our infrastructure. We support 2 environments, `de
 
 ![infra](/images/2020-05-05-infra.png)
 
-### For dev
+### Specifications for dev
 
 ```
 VNet name: iac-dev-copy-poc-vnet
@@ -27,7 +27,7 @@ Subnets:
     addressPrefix: 10.112.16.0/25
 ```
 
-### For prod
+### Specifications for prod
 
 ```
 VNet name: iac-prod-copy-poc-vnet
