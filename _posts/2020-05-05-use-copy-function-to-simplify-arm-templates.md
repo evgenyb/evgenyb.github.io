@@ -516,10 +516,9 @@ I used the same technique to implement other type of resources like:
 
 * [DNS Zones](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records)
 
-
 ## Clean up
 
-Don't forget to clean up your resources when you are done with exercise.
+Don't forget to clean up your resources when you are done with the exercise.
 
 Remove `iac-dev-copy-poc-rg` resource group with all resources.
 
