@@ -373,7 +373,7 @@ Some comments about changes we did in the template file:
 * We replaced hard coded value of `addressPrefixes` property with value from `vnetAddressPrefix` parameter
 * Finally, we used `copy` element of ARM template and implemented `subnets` property of `Microsoft.Network/virtualNetworks` resource from the `subnetsConfiguration` array
 
-In the context of our use-case, you can think of `copy` element as a `foreach` loop, where we iterate through each item of `subnetsConfiguration` array and create new array under `Microsoft.Network/virtualNetworks` resource properties called `subnets` where each new item of the new array will have the following structure
+In the context of our use-case, you can think of `copy` element as a `foreach` loop, where we iterate through each item of `subnetsConfiguration` array and create new array under `Microsoft.Network/virtualNetworks` resource properties called `subnets` where each subnet item has the following structure
 
 ```json
 {
