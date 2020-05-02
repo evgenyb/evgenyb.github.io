@@ -388,7 +388,7 @@ In the context of our use-case, you can think of `copy` element as a `foreach` l
 
 It's not that easy to work with `copy` element, especially it's hard to debug it, but there is one trick you can use if you stack with `copy` element. That is - you can use an `output` section of ARM template to print the result of `copy` element execution.
 
-Let's create an empty ARM template file called `debug.json` with only one `subnetsConfiguration` parameter and implement the same `copy` element logic inside `output` section.
+Let's create an empty ARM template file called `debug.json` with only one `subnetsConfiguration` parameter and implement the same `copy` element logic inside the `output` section.
 
 ```json
 {
