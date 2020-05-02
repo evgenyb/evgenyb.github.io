@@ -152,7 +152,7 @@ Let's create `template-prod.json` file with ARM template for vnet resource.
 }
 ```
 
-If we go that route, then our deployment script might look like this:
+Our deployment script might look like this:
 
 ```bash
 #!/usr/bin/env bash
