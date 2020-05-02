@@ -386,9 +386,9 @@ In the context of our use-case, you can think of `copy` element as a `foreach` l
 
 [copyIndex()](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-numeric#copyindex) function returns the current index in the `subnet` array.
 
-It's not that easy to work with `copy` element, especially it's hard to debug, but actually there is one trick you can use if you stack with `copy` element for relatively complex object. What you can do is to use `output` section of ARM template to print the result of `copy` element without deploying template.
+It's not that easy to work with `copy` element, especially it's hard to debug it, but there is one trick you can use if you stack with `copy` element. What you can do is to use `output` section of ARM template to print the result of `copy` element execution.
 
-Let's create an empty arm template called `debug.json` with only one `subnetsConfiguration` parameter and implement the same `copy` element inside `output` section.
+Let's create an empty ARM template file called `debug.json` with only one `subnetsConfiguration` parameter and implement the same `copy` element logic inside `output` section.
 
 ```json
 {
