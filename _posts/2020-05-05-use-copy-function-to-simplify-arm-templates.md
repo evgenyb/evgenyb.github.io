@@ -165,7 +165,7 @@ environment=$1
 az deployment group create -g iac-${environment}-copy-poc-rg --template-file template-${environment}.json
 ```
 
-And now we can deploy our infrastructure to `dev`
+Let's deploy our infrastructure to `dev`
 
 ```bash
 ./deploy.sh dev
