@@ -366,7 +366,7 @@ Here is the refactored version of our template.
 }
 ```
 
-Some comments about changes we did:
+Some comments about changes we did in the template file:
 
 * We added variable `vnetName` and used `concat` function to compose the vnet name based on environment
 * We replaced resource `location` with value from `location` parameter
