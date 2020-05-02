@@ -483,7 +483,7 @@ environment=$1
 az deployment group create -g iac-${environment}-copy-poc-rg --template-file template.json --parameters parameters-${environment}.json
 ```
 
-as can deploy our infrastructure to dev
+Let's re-deploy our infrastructure to dev
 
 ```bash
 ./deploy.sh dev
