@@ -304,6 +304,10 @@ Create new file called `parameters-prod.json` and add parameters values for prod
                 {
                     "name": "agw-net",
                     "addressPrefix": "10.111.16.0/25"
+                },
+                {
+                    "name": "AzureBastionSubnet",
+                    "addressPrefix": "10.111.16.128/25"
                 }
             ]
         }
