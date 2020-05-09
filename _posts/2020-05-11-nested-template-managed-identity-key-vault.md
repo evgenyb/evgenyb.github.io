@@ -19,7 +19,7 @@ We need to define access policies in the key-vault to allow the identity to be g
 
 ### 3. Configure the application gateway
 
-After we complete the two preceding steps, we can configure application gateway to use the user-assigned managed identity
+After we complete the two previous steps, we can configure application gateway to use the user-assigned managed identity
 
 ```json
 "identity": {
