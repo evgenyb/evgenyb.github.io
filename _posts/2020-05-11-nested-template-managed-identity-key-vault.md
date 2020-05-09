@@ -9,6 +9,8 @@ Azure Application Gateway v2 supports integration with Key Vault for server cert
 
 Application Gateway integration with key-vault requires a three-step configuration process:
 
+![infra](/images/2020-05-11_1305.png)
+
 ### 1. Create a user-assigned [managed identity](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview)
 
 ### 2. Configure access policy at key-vault
