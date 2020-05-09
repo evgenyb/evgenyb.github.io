@@ -202,10 +202,6 @@ Here is our final version of the template:
         "certificateKeyVaultName": {
             "type": "string"
         },
-        "tenantId": {
-            "type": "string",
-            "defaultValue": "[subscription().tenantId]"
-        },
         "certificateKeyVaultResourceGroupName": {
             "type": "string"
         },
@@ -214,6 +210,10 @@ Here is our final version of the template:
         },
         "managedIdentityName": {
             "type": "string"
+        },
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "[subscription().tenantId]"
         }
     },
     "variables": {
