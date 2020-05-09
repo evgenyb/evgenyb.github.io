@@ -78,14 +78,6 @@ The key-vault containing SSL certificates is located at the different Azure subs
 * create user assigned managed identity called `iac-agw-mi`
 * grant `iac-agw-mi` managed identity `get` access policy to the secrets level at `iac-certificates-kv` key-vault.
 
-## Create resource group
-
-As always, let's start by creating new resource group.
-
-```bash
-az group create -n iac-agw-ssl-rg -l westeurope
-```
-
 ## User Assigned Managed Identity
 
 This is probably one of the simplest ARM resources you can find. Here is [Microsoft.ManagedIdentity userAssignedIdentities template reference documentation](https://docs.microsoft.com/en-us/azure/templates/microsoft.managedidentity/2018-11-30/userassignedidentities). There are no configurable properties, so the resource implementation looks like this:
@@ -278,16 +270,6 @@ Here is our final version of the template:
 ## To sum-up
 
 So, I managed to grant access to key-vault for user assigned identity from ARM templates. I personally think that it's easier with `az cli` script, but at the same time, if you don't want to (or if you are not allowed to) use a mix of ARM templates and `az cli` scripts, it's totally possible to implement everything with ARM templates.
-
-## Clean up
-
-Don't forget to clean up your resources when you are done with the exercise.
-
-Remove `iac-agw-ssl-rg` resource group with all resources.
-
-```bash
-az group delete -n iac-agw-ssl-rg
-```
 
 ## Useful links
 
