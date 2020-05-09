@@ -140,7 +140,7 @@ Deployment failed. Correlation ID: xxxxxxxxxxxxxxx. {
 }
 ```
 
-That's actually correct. The `iac-certificates-kv` is not at `iac-agw-ssl-rg`, and not even at that same subscription. How can we solve this?
+That's actually correct, because our certificate key-vault (`iac-certificates-kv`) is not located at the `iac-agw-ssl-rg` resource group. It's deployed to the `domains-and-certificates` resource group located at different subscription. How can we solve this with ARM templates?
 
 ## Nested templates
 
@@ -282,7 +282,6 @@ So, I managed to grant access to key-vault for user assigned identity from ARM t
 * [add an Access Policy to an Existing Keyvault example](https://github.com/Azure/azure-quickstart-templates/blob/master/101-keyvault-add-access-policy/azuredeploy.json)
 * [Azure Resource Manager QuickStart Templates collection](https://github.com/Azure/azure-quickstart-templates)
 * [Microsoft.KeyVault vaults/accessPolicies template reference documentation](https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/2019-09-01/vaults/accesspolicies)
-
 
 If you have any issues/comments/suggestions related to this post, you can reach out to me at evgeny.borzenin@gmail.com.
 
