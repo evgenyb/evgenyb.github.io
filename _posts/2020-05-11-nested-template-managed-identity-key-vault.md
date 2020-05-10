@@ -73,11 +73,7 @@ In this post I decided to check what it takes to implement ARM template that doe
 
 ## Use-case description
 
-<<<<<<< HEAD
 Our managed identity and key-vault with SSL certificates are located at the different resource groups in different Azure subscriptions. What we want to implement is ARM template that will:
-=======
-The key-vault containing SSL certificates is located at the different Azure subscription. What we want to implement is ARM template that will:
->>>>>>> b33ba89b7bc2d02563d3dfb3f79cbfc6dbd10cb1
 
 * create user assigned managed identity called `iac-agw-mi`
 * grant `iac-agw-mi` managed identity `get` access policy to the secrets level at `iac-certificates-kv` key-vault.
@@ -97,15 +93,9 @@ This is probably one of the simplest ARM resources you can find. Here is [Micros
 
 ## Configure key-vault accessPolicies
 
-<<<<<<< HEAD
 You can manage key-vault's access policies with [Microsoft.KeyVault vaults/accessPolicies](https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/2019-09-01/vaults/accesspolicies) ARM resource.
 
 Here is a good [example](https://github.com/Azure/azure-quickstart-templates/blob/master/101-keyvault-add-access-policy/azuredeploy.json) of how you can add an Access Policy to an existing key-vault.
-=======
-You can manage key-vault's access policies with [Microsoft.KeyVault vaults/accessPolicies](https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/2019-09-01/vaults/accesspolicies) resource.
-
-Here is one good [example](https://github.com/Azure/azure-quickstart-templates/blob/master/101-keyvault-add-access-policy/azuredeploy.json) of how you can add an Access Policy to an existing key-vault.
->>>>>>> b33ba89b7bc2d02563d3dfb3f79cbfc6dbd10cb1
 
 Let's look at the syntax:
 
@@ -150,11 +140,7 @@ Deployment failed. Correlation ID: xxxxxxxxxxxxxxx. {
 }
 ```
 
-<<<<<<< HEAD
 That's actually correct, because managed identity and certificate's key-vault are deployed to different resource groups in different Azure subscriptions. How can we solve this with ARM templates?
-=======
-That's actually correct, because our certificate key-vault (`iac-certificates-kv`) is not located at the `iac-agw-ssl-rg` resource group. It's deployed to the `domains-and-certificates` resource group located at different subscription. How can we solve this with ARM templates?
->>>>>>> b33ba89b7bc2d02563d3dfb3f79cbfc6dbd10cb1
 
 ## Nested templates
 
