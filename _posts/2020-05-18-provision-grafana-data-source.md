@@ -7,6 +7,8 @@ categories: [grafana]
 
 In my current project, the most of the workload is running on Azure ([AKS](https://azure.microsoft.com/nb-no/services/kubernetes-service/), [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/) and [Azure App Services](https://docs.microsoft.com/en-us/azure/app-service/)) and we use Azure Monitor, Azure Log Analytics and Application Insight to collect and analyse our logs and metrics. However, for the metrics visualization and alerts we decided to use [Grafana](https://grafana.com/).
 
+![infra](../images/2020-05-18-infra.png)
+
 ## Grafana terminology
 
 Let's start by introducing some of the terms used in Grafana.
