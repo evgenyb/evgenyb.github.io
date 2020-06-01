@@ -40,7 +40,7 @@ Storage account contains the following folders inside `File shares`:
 
 ![pic](/images/2020-05-28-sa-1.png)
 
-`userscript.sh` - is where your script fro mARM template will be extracted and stored
+`userscript.sh` - is where your script from ARM template will be extracted and stored
 
 *azscriptoutput* folder contains `executionresult.json` with script output.
 
@@ -52,7 +52,7 @@ First, create new resource group
 az group create -n iac-scriptarm-rg -l westeurope
 ```
 
-Create key-vault for sensitive data. Because the keyvault name should be globally unique you need to define your own key-vault name.
+Create key-vault for sensitive data. Keyvault name should be globally unique, therefore you need to define your own key-vault name.
 
 ```bash
 az keyvault create -n YOUR-KEYVAULT-NAME -g iac-scriptarm-rg -l westeurope --enabled-for-template-deployment
@@ -61,8 +61,9 @@ az keyvault create -n YOUR-KEYVAULT-NAME -g iac-scriptarm-rg -l westeurope --ena
 ### User-assigned managed identity
 
 You need user-assigned identity that will be used to execute deployment scripts. Since script service creates storage account and container instance behind the scene, this managed identity needs a contributor's role at the subscription level.
+Since we will store secret to the key-vault, managed identity should have `secret set` permission at the key-vault.
 
-To create identity, use the following script (note, you need to ):
+To create identity, use the following script:
 
 ```bash
 echo -e "Create user-assigned managed identity"
@@ -144,7 +145,7 @@ Now we can deploy our script by running the following command:
 az deployment group create -g iac-scriptarm-rg --template-file template.json
 ```
 
-Check if password was generated and stored at the key-vault:
+and check that password was generated and stored at the key-vault:
 
 ```bash
 az keyvault secret show -n admin-password --vault-name YOUR-KEYVAULT-NAME --query value
@@ -158,7 +159,7 @@ az keyvault secret show -n admin-password --vault-name YOUR-KEYVAULT-NAME --quer
 
 ### How about idempotency
 
-By default, the deployment script service compares the resource names in the template with the existing resources in the same resource group. If the names are the same, the script will not be executed. In some scenarios, this is exactly behavior we need. We definitely don't want to generate new password every time we run deployment. We want password to be generated once, during first time provisioning.  
+By default, the deployment script service compares the resource names in the template with the existing resources in the same resource group. If the names are the same, the script will not be executed. In our scenario, this is exactly behavior we need. We definitely don't want to generate new password every time we run deployment. We want password to be generated once, during first time provisioning.  
 At the same time, if you want to execute the same deployment script multiple times, there are 2 options:
 
 * Change the name of your deploymentScripts resource
@@ -183,8 +184,6 @@ az group delete -n iac-scriptarm-rg
 * [Use deployment scripts in templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template?tabs=CLI#run-script-more-than-once)
 * [Tutorial: Use deployment scripts to create a self-signed certificate (Preview)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-deployment-script)
 * [Microsoft.Resources deploymentScripts template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentscripts)
-* [Use Azure Key Vault to pass secure parameter value during deployment](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/key-vault-parameter?tabs=azure-cli)
-* [Reference secrets with static ID](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/key-vault-parameter?tabs=azure-cli#reference-secrets-with-static-id)
 
 If you have any issues/comments/suggestions related to this post, you can reach out to me at evgeny.borzenin@gmail.com.
 
