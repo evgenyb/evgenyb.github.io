@@ -25,8 +25,8 @@ Behind the scene, script service creates storage account and container instance.
 
 ![pic](/images/2020-05-28-resources.png)
 
-* Container instances - it's where your scripts will be executed
-* Storage account - it's where your script will be stored at File shares and used by container instance
+* Container instances - that's where your scripts will be executed
+* Storage account - that's where your script will be stored at File shares and used by container instance
 
 Here is a quote from the [documentation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template?tabs=CLI#clean-up-deployment-script-resources)
 
