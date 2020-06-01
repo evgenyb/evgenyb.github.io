@@ -168,7 +168,7 @@ Read more about idempotency [here](https://docs.microsoft.com/en-us/azure/azure-
 
 ## To sum-up
 
-I have a mixed feelings. I definitely like the idea and I can see a lot of use-cases where I will use it, but at the same time, I don't like inline scripts as part of the json file. There is an option to [use external scripts](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template?tabs=CLI#use-external-scripts), but then these scrips either have to be publicly available (for example via github), or you have to upload them to storage account and use sas token to access them and that increases the complexity of already-not-that-easy-to-work-with ARM templates.
+I have a mixed feelings. I definitely like the idea and I can see a lot of use-cases where I will use it, but at the same time, I don't like inline scripts as part of the json file. There is an option to [use external scripts](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template?tabs=CLI#use-external-scripts), but in this case scrips either have to be publicly available (for example via github), or you have to upload them to storage account and use sas token to access them and that increases the complexity of already-not-that-easy-to-work-with ARM templates.
 
 ## Don't forget to remove your resources
 
