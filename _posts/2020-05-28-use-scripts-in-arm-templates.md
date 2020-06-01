@@ -25,7 +25,7 @@ Behind the scene, script service creates storage account and container instance.
 
 ![pic](/images/2020-05-28-resources.png)
 
-* Container instances - that's where your scripts will be executed
+* Container instances - that's where your script will be executed
 * Storage account - that's where your script will be stored at File shares and used by container instance
 
 Here is a quote from the [documentation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template?tabs=CLI#clean-up-deployment-script-resources)
@@ -180,7 +180,6 @@ az group delete -n iac-scriptarm-rg
 
 ## Useful links
 
-* [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/services/postgresql/)
 * [Use deployment scripts in templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template?tabs=CLI#run-script-more-than-once)
 * [Tutorial: Use deployment scripts to create a self-signed certificate (Preview)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-deployment-script)
 * [Microsoft.Resources deploymentScripts template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentscripts)
