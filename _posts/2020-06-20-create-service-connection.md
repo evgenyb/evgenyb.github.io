@@ -158,13 +158,13 @@ Arguments
     --name                             [Required] : Name of service endpoint to create.
 ```
 
-Basically, you just send `--azure-rm-service-principal-id`, `--azure-rm-subscription-id`, `--azure-rm-subscription-name`, `--azure-rm-tenant-id`, `--name` parameters to the command, then you will be asked you to provide spn secret and that's it. The new ARM service endpoint is created.
+Basically, you just send `--azure-rm-service-principal-id`, `--azure-rm-subscription-id`, `--azure-rm-subscription-name`, `--azure-rm-tenant-id`, `--name` parameters to the command, then you will be asked to provide spn secret and that's it. The new ARM service endpoint is created.
 
-We don't want to type secret manually, therefore for automation, is allows you to set service principal password/secret in `AZURE_DEVOPS_EXT_AZURE_RM_SERVICE_PRINCIPAL_KEY` environment variable. Learn more about this [here](https://aka.ms/azure-devops-cli-azurerm-service-endpoint).
+We don't want to type secret manually, therefore for automation, it allows you to set service principal password/secret in `AZURE_DEVOPS_EXT_AZURE_RM_SERVICE_PRINCIPAL_KEY` environment variable. Learn more about this [here](https://aka.ms/azure-devops-cli-azurerm-service-endpoint).
 
 ## Wrapping it up
 
-`azure-devops` extensions service endpoints functionality is still in preview, but when it will be in GA, we will definitely switch to it. With this extension, the script will be less "noisy" and much simpler because you don't need to maintain json template and don't need to do json transformation.
+`azure-devops` service endpoints functionality is still in preview, but when it will reach GA, we will definitely switch to it. With this extension, the script will be less "noisy" and much simpler because you don't need to maintain json template and don't need to do any json transformation.
 
 ## Useful links
 
