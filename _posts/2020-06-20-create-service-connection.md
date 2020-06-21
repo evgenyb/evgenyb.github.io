@@ -29,7 +29,7 @@ To communicate with Azure DevOps rest API, you need your [personal access token]
 My Azure DevOps organization called `evgenyborzenin`, project name is `iac-ws-2` and service endpoint id is `9880b02b-c68b-4f68-8876-d0394c44a8c1`. To get service connection details, I use the following `curl` command:
 
 ```bash
-curl -u evgeny.borzenin@gmail.com:my-azure-devops-personal-access-token https://dev.azure.com/evgenyborzenin/iac-ws-2/_apis/serviceendpoint/endpoints/9880b02b-c68b-4f68-8876-d0394c44a8c1
+curl -u my-email:my-azure-devops-personal-access-token https://dev.azure.com/evgenyborzenin/iac-ws-2/_apis/serviceendpoint/endpoints/9880b02b-c68b-4f68-8876-d0394c44a8c1
 ```
 
 Once we identified the ARM service endpoint json format, we can extract json template out of it.
