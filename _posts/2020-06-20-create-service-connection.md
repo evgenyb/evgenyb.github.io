@@ -16,9 +16,9 @@ There are 2 automation options available:
 
 Let's look at both options in details.
 
-## Azure DevOps Rest API: Endpoints - Create
+## Azure DevOps Rest API
 
-You can read how to get started with Azure DevOps Rest API [here](https://docs.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-5.1) and in our case we will use [Endpoint - create]((https://docs.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/endpoints/create?view=azure-devops-rest-5.1)) operation.
+You can read how to get started with Azure DevOps Rest API [here](https://docs.microsoft.com/en-us/rest/api/azure/devops/?view=azure-devops-rest-5.1) and in our case we will use [Endpoints](https://docs.microsoft.com/en-us/rest/api/azure/devops/serviceendpoint/endpoints?view=azure-devops-rest-5.1) operations.
 
 To create new service endpoint, we need to compose a payload json describing service endpoint configuration and `POST` it to `https://dev.azure.com/{organization}/{project}/_apis/serviceendpoint/endpoints?api-version=5.1-preview.2` endpoint.
 
@@ -32,7 +32,7 @@ My Azure DevOps organization called `evgenyborzenin`, project name is `iac-ws-2`
 curl -u my-email:my-azure-devops-personal-access-token https://dev.azure.com/evgenyborzenin/iac-ws-2/_apis/serviceendpoint/endpoints/9880b02b-c68b-4f68-8876-d0394c44a8c1
 ```
 
-Once we identified the ARM service endpoint json format, we can extract json template out of it.
+Once we identified the ARM service endpoint json format, we can extract it into json template.
 
 ```json
 {
@@ -77,11 +77,11 @@ For the above template, the following information needs to be provided:
 | subscription-id | Azure subscription id |
 | subscription-name | Azure subscription name |
 
-As you can see, the `authenticationType` is set to `spnKey` and that means that you need to provide spn's secret. Service principal secret is only accessible right after spn is created (you can re-create a new secret later), but you can't retrieve existing secret and that totally make sense from security stand point. Therefore if we want to automate service endpoint creation, we either should create spn and service endpoint at the same script (so secret is assessable), or you should store spn secret to key-vault as part of the spn creation process and then get secret from the key-vault during service endpoint creation process.
+As you can see, the `authenticationType` is set to `spnKey` and that means that you need to provide spn's secret. Service principal secret is only accessible right after spn is created (you can re-create a new secret later), but you can't retrieve existing secret and that totally make sense from security stand point. Therefore, if we want to automate service endpoint creation, we either should create spn and service endpoint at the same script (so secret is assessable), or you should store spn secret to key-vault as part of the spn creation process and then get secret from the key-vault during service endpoint creation process.
 
 With template in place, what we need to do is to replace placeholders with actual values and post json to endpoint.
 
-Assuming that template file called `arm-service-connection-template.json` and located at the `templates` folder, here an example how you can do replacement of the placeholders with actual values
+Assuming that template file called `arm-service-connection-template.json` and located at the `templates` folder, here an example of how you can do replacement of the placeholders with actual values from your bash script
 
 ```bash
 echo -e "Transforming template templates/arm-service-connection-template.json -> arm-service-connection.json"
@@ -131,7 +131,9 @@ else
 fi
 ```
 
-Last thing we need to do is to remove `arm-service-connection.json` file.
+For both create and update we use `arm-service-connection.json` file as value for curl  `--data-binary` parameter.
+
+Last thing we need to do, is to remove `arm-service-connection.json` file.
 
 ## az cli `azure-devops`
 
