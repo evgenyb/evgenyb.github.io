@@ -156,7 +156,7 @@ Arguments
     --name                             [Required] : Name of service endpoint to create.
 ```
 
-Basically, you just send `--azure-rm-service-principal-id`, `--azure-rm-subscription-id`, `--azure-rm-subscription-name`, `--azure-rm-tenant-id`, `--name` parameters to the command, then you will be asked you to provide spn secret and that's it. New ARM service endpoint is created.
+Basically, you just send `--azure-rm-service-principal-id`, `--azure-rm-subscription-id`, `--azure-rm-subscription-name`, `--azure-rm-tenant-id`, `--name` parameters to the command, then you will be asked you to provide spn secret and that's it. The new ARM service endpoint is created.
 
 We don't want to type secret manually, therefore for automation, is allows you to set service principal password/secret in `AZURE_DEVOPS_EXT_AZURE_RM_SERVICE_PRINCIPAL_KEY` environment variable. Learn more about this [here](https://aka.ms/azure-devops-cli-azurerm-service-endpoint).
 
