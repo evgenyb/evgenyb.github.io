@@ -5,14 +5,14 @@ date: 2020-07-25
 categories: [Azure, APIM, API Management, Canary testing, APIM policy, Azure Front Door, Azure Traffic Manager, Immutable infrastructure]
 ---
 
-One of the benefits using immutable infrastructure is that it allows you to do a canary testing of your infrastructure. That is - you provision new version of your infrastructure components, deploy your services and then route small percentage of the traffic towards new infrastructure, monitor how apps work under the new infra and eventually switch 100% traffic to new infrastructure.  
+One of the benefits of using immutable infrastructure is that it allows you to do a canary testing of your infrastructure. That is - you provision new version of your infrastructure components, deploy your services and then route small percentage of the traffic towards new infrastructure, monitor how apps work under the new infra and eventually switch all traffic to new infrastructure.  
 
-To implement canary traffic orchestration, such products as [Azure Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview) with [weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-routing-methods#weighted) and / or [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) with [weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-routing-methods#weighted) are normally used.
-But what if you use [API Management](https://azure.microsoft.com/en-us/services/api-management/) in front of your services? How can you distribute traffic between services running at the current and vNext versions of your infrastructure?
+To implement canary traffic orchestration, such products as [Azure Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview) with [weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-routing-methods#weighted) or [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) with [weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-routing-methods#weighted) are normally used.
+But what if you use [Azure API Management](https://azure.microsoft.com/en-us/services/api-management/) in front of your services? How can you distribute traffic between services running at the current and vNext versions of your infrastructure?
 
 ## Use-case description
 
-Here is how our infrastructure looks like.
+Let's consider the following hypothetical infrastructure setup.
 
 ![use-case](/images/2020-07-25-use-case.png)
 
@@ -31,7 +31,7 @@ Here is how our infrastructure looks like.
 
 To implement canary flow orchestration between 2 AKS clusters, we can use [control flow](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#choose) and [set backend service](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies#SetBackendService) policies.
 
-Here is the example of API level policy for API called `api-b`. Assuming that `api-b` backend service is accessible via the following AKS endpoints:
+Here is the example of API level policy for API named `api-b`. Assuming that `api-b` backend service is accessible via the following AKS endpoints:
 
 * http://10.2.15.10/api-b/ at `aks-dev-blue`
 * http://10.3.15.10/api-b/ at `aks-dev-green`
@@ -53,7 +53,9 @@ Here is the example of API level policy for API called `api-b`. Assuming that `a
 </policies>
 ```
 
-* `canaryPercent` is [APIM named value](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties) specifying the percentage of the requests we want to send to the new AKS cluster
+We use [APIM named values](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties) to store our configurable variables:
+
+* `canaryPercent` contains the percentage (value from 0 to 100) of the requests we want to send to canary cluster
 * `aksHost` contains AKS ingress controller private IP address (`10.2.15.10`) of current AKS cluster (in our use-case, `aks-dev-green`)
 * `aksHostCanary` contains AKS ingress controller private IP address (`10.3.15.10`) of next version of AKS cluster (in our use-case, `aks-dev-blue`)
 
