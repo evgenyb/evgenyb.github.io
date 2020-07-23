@@ -5,34 +5,36 @@ date: 2020-07-25
 categories: [Azure, APIM, API Management, Canary, APIM policy]
 ---
 
-![logo](/images/2020-07-25-logo.png)
-
-One of the benefits using immutable infrastructure is that it allows you to do a canary testing of your infrastructure. That is - you provision new version of your infrastructure components, deploys your services and then route small percentage of the traffic towards new infrastructure.
+One of the benefits using immutable infrastructure is that it allows you to do a canary testing of your infrastructure. That is - you provision new version of your infrastructure components, deploy your services and then route small percentage of the traffic towards new infrastructure, monitor how apps work in new infra and eventually switch 100% traffic to new infrastructure.  
 
 To implement canary traffic orchestration, such products as [Azure Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview) with [weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-routing-methods#weighted) and / or [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) with [weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-routing-methods#weighted) are normally used.
-But what if you use [API Management](https://azure.microsoft.com/en-us/services/api-management/) in front of your services? How can we distribute traffic between services running at the current and vNext versions of your infrastructure?
+But what if you use [API Management](https://azure.microsoft.com/en-us/services/api-management/) in front of your services? How can you distribute traffic between services running at the current and vNext versions of your infrastructure?
 
 ## Use-case description
 
 Here is how our infrastructure looks like.
 
-![logo](/images/2020-07-25-use-case.png)
+![use-case](/images/2020-07-25-use-case.png)
 
 * We use Azure Front Door in front of APIM
 * APIM instance is deployed to private VNet with [external access type](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet). That means that APIM gateway is accessible from the public internet and gateway can access resources within the virtual network
-* APIM [Network Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview) is configured to only accept traffic from Azure Front Door
-* AKS is deployed to private VNet peered with APIM Vnet and NSG only accepting traffic from `apim-net` subnet
-* We use [nginx private ingress controller](https://docs.microsoft.com/en-us/azure/aks/ingress-internal-ip)
-* We use `blue` / `green` convention to mark infrastructure "version"
+* We don't want direct access to APIM from internet, therefore APIM [Network Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview) is configured to only accept traffic from Azure Front Door
+* AKS is deployed to private VNet peered with APIM Vnet
+* `aks-net` NSG configured to only accept traffic from `apim-net` subnet
+* We use AKS [nginx private ingress controller](https://docs.microsoft.com/en-us/azure/aks/ingress-internal-ip)
+* We use `blue` / `green` convention to mark our infrastructure versions
 * Normally, there is only one version of AKS cluster is active, but when we introduce some infrastructure changes (for example, we want to upgrade AKS cluster to the newer version, or change AKS VM size or do some other AKS related changes), we have 2 active AKS clusters
 
 ## APIM policy configuration
 
  [APIM policies](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-policies) - a collection of Statements that are executed sequentially on the request or response of an API. Popular Statements include format conversion from XML to JSON and call rate limiting to restrict the amount of incoming calls. Here is the full policy [reference index](https://docs.microsoft.com/en-us/azure/api-management/api-management-policies).
 
-To implement canary flow orchestration between 2 AKS clusters at APIM, we can use [control flow](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#choose) and [set backend service](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies#SetBackendService) policy.
+To implement canary flow orchestration between 2 AKS clusters, we can use [control flow](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#choose) and [set backend service](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies#SetBackendService) policies.
 
-Here is the example of API level policy for API called `api-b`.
+Here is the example of API level policy for API called `api-b`. Assuming that `api-b` is accessible via the following AKS endpoints:
+
+* http://10.2.15.10/api-b/ at `aks-dev-blue`
+* http://10.3.15.10/api-b/ at `aks-dev-green`
 
 ```xml
 <policies>
@@ -52,10 +54,10 @@ Here is the example of API level policy for API called `api-b`.
 ```
 
 * `canaryPercent` is [APIM named value](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties) specifying the percentage of the requests we want to send to the new AKS cluster
-* `aksHost` contains AKS ingress controller private IP address (or domain name pointing towards this IP) of current AKS cluster (in our use-case, `aks-dev-green`)
-* `aksHostCanary` contains AKS ingress controller private IP address (or domain name pointing towards this IP) of new version of AKS cluster (in our use-case, `aks-dev-blue`)
+* `aksHost` contains AKS ingress controller private IP address (`10.2.15.10`) of current AKS cluster (in our use-case, `aks-dev-green`)
+* `aksHostCanary` contains AKS ingress controller private IP address (`10.3.15.10`) of new version of AKS cluster (in our use-case, `aks-dev-blue`)
 
-That works fine for one or two APIs, but if there are hundreds of APIs, that might be a bit too much XML "noise" in every API policy. To simplify it, we can define the `aksUrl` based on our  "canary" logic at Global level policy and use this variable at `set-backend-service` policy at API level policy.
+That works fine for one or two APIs, but if there are hundreds of APIs, that might be a bit too much XML "noise" in every API policy and duplication of canary orchestration logic. To solve this, we can move canary logic to Global level policy, put the result of canary logic to the variable `aksUrl` using [set-variable](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#set-variable) policy and then use this variable at `set-backend-service` policy at API level policy.
 
 ### Global level policy
 
@@ -81,28 +83,50 @@ That works fine for one or two APIs, but if there are hundreds of APIs, that mig
 <policies>
     <inbound>
         <base />
-        <set-backend-service base-url="@((string)context.Variables["aksUrl"] + "/api-b/")" />
+        <set-backend-service base-url="@(context.Variables.GetValueOrDefault<string>("aksUrl") + "/api-b/")" />
     </inbound>
 ...
 </policies>
 ```
 
-THis way we keep the canary "business" logic in one place (global level policy) and if change this logic, there will be done at one place only.
+This way, we keep the canary "business" logic in one place (global level policy) and if we need to change this logic, the change will be done at one place only.
 
 ## Switching scenario
 
-With this setup in place, here is how we can introduce new 
+With this setup in place, here is the typical switch scenario:
 
-## Wrapping it up
+1. The current environment is `blue`. APIM named values state:
+
+* `aksHost` = 10.2.15.10
+* `canaryPercent` = 0
+
+2. We provision `green` environment and want to send 10% of the traffic to `green`. APIM named values state:
+
+* `aksHost` = 10.2.15.10
+* `aksCanaryHost` = 10.3.15.10
+* `canaryPercent` = 10
+
+3. We want to increase canary traffic to 50%. APIM named values state:
+
+* `aksHost` = 10.2.15.10
+* `aksCanaryHost` = 10.3.15.10
+* `canaryPercent` = 50
+
+3. Everything looks good and we want 100% of the traffic go to `green`. APIM named values state:
+
+* `aksHost` = 10.3.15.10
+* `canaryPercent` = 0
+
+At that moment `green` is our active environment and we can decommission `blue`.
 
 ## Useful links
 
 * [Azure Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview)
 * [Azure Traffic Manager weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-routing-methods#weighted)
 * [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview)
-* [Azure Front Door weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-routing-methods#weighted) 
+* [Azure Front Door weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-routing-methods#weighted)
 * [APIM control flow policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#choose)
-* [APIM set backend service](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies#SetBackendService)
+* [APIM set variable policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#set-variable)
 * [APIM set backend service policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies#SetBackendService)
 * [APIM named value](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties)
 * [Network Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview)
