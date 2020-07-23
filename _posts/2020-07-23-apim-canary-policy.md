@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "How to use Azure API Management policy for canary testing"
-date: 2020-07-25
+date: 2020-07-23
 categories: [Azure, APIM, API Management, Canary testing, APIM policy, Azure Front Door, Azure Traffic Manager, Immutable infrastructure]
 ---
 
