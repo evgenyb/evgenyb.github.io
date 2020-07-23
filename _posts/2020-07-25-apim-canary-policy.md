@@ -5,7 +5,7 @@ date: 2020-07-25
 categories: [Azure, APIM, API Management, Canary, APIM policy]
 ---
 
-One of the benefits using immutable infrastructure is that it allows you to do a canary testing of your infrastructure. That is - you provision new version of your infrastructure components, deploy your services and then route small percentage of the traffic towards new infrastructure, monitor how apps work in new infra and eventually switch 100% traffic to new infrastructure.  
+One of the benefits using immutable infrastructure is that it allows you to do a canary testing of your infrastructure. That is - you provision new version of your infrastructure components, deploy your services and then route small percentage of the traffic towards new infrastructure, monitor how apps work under the new infra and eventually switch 100% traffic to new infrastructure.  
 
 To implement canary traffic orchestration, such products as [Azure Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview) with [weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-routing-methods#weighted) and / or [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) with [weighted traffic-routing method](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-routing-methods#weighted) are normally used.
 But what if you use [API Management](https://azure.microsoft.com/en-us/services/api-management/) in front of your services? How can you distribute traffic between services running at the current and vNext versions of your infrastructure?
@@ -31,7 +31,7 @@ Here is how our infrastructure looks like.
 
 To implement canary flow orchestration between 2 AKS clusters, we can use [control flow](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#choose) and [set backend service](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies#SetBackendService) policies.
 
-Here is the example of API level policy for API called `api-b`. Assuming that `api-b` is accessible via the following AKS endpoints:
+Here is the example of API level policy for API called `api-b`. Assuming that `api-b` backend service is accessible via the following AKS endpoints:
 
 * http://10.2.15.10/api-b/ at `aks-dev-blue`
 * http://10.3.15.10/api-b/ at `aks-dev-green`
@@ -55,9 +55,9 @@ Here is the example of API level policy for API called `api-b`. Assuming that `a
 
 * `canaryPercent` is [APIM named value](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties) specifying the percentage of the requests we want to send to the new AKS cluster
 * `aksHost` contains AKS ingress controller private IP address (`10.2.15.10`) of current AKS cluster (in our use-case, `aks-dev-green`)
-* `aksHostCanary` contains AKS ingress controller private IP address (`10.3.15.10`) of new version of AKS cluster (in our use-case, `aks-dev-blue`)
+* `aksHostCanary` contains AKS ingress controller private IP address (`10.3.15.10`) of next version of AKS cluster (in our use-case, `aks-dev-blue`)
 
-That works fine for one or two APIs, but if there are hundreds of APIs, that might be a bit too much XML "noise" in every API policy and duplication of canary orchestration logic. To solve this, we can move canary logic to Global level policy, put the result of canary logic to the variable `aksUrl` using [set-variable](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#set-variable) policy and then use this variable at `set-backend-service` policy at API level policy.
+This approach works fine for one or two APIs, but if there are hundreds of APIs under APIM, that might be a bit too much XML "noise" in every API policy and duplication of canary orchestration logic all over the place. To solve this, we can move canary logic to Global level policy, put the result of canary logic into the variable `aksUrl` using [set-variable](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#set-variable) policy and then use this variable at `set-backend-service` policy at API level policy.
 
 ### Global level policy
 
@@ -89,7 +89,7 @@ That works fine for one or two APIs, but if there are hundreds of APIs, that mig
 </policies>
 ```
 
-This way, we keep the canary "business" logic in one place (global level policy) and if we need to change this logic, the change will be done at one place only.
+This way, we keep the canary "business" logic in one place (Global level policy) and if we need to change this logic, the change will be done at one place only.
 
 ## Switching scenario
 
