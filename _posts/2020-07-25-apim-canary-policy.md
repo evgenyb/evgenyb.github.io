@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "How to use APIM policy for canary testing"
+title: "How to use Azure API Management policy for canary testing"
 date: 2020-07-25
-categories: [Azure, APIM, API Management, Canary, APIM policy]
+categories: [Azure, APIM, API Management, Canary testing, APIM policy, Azure Front Door, Azure Traffic Manager]
 ---
 
 One of the benefits using immutable infrastructure is that it allows you to do a canary testing of your infrastructure. That is - you provision new version of your infrastructure components, deploy your services and then route small percentage of the traffic towards new infrastructure, monitor how apps work under the new infra and eventually switch 100% traffic to new infrastructure.  
