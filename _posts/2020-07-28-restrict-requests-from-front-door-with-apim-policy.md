@@ -32,6 +32,8 @@ For each requests sent to the backends, Front Door includes Front Door ID inside
 
 `frontDoorId` is a [APIM named value](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties) containing Front Door ID
 
+The best place to add this policy would be the Global level policy.
+
 ## How to find Front Door ID?
 
 ### Portal
