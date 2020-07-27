@@ -5,20 +5,24 @@ date: 2020-07-28
 categories: [Azure, APIM, API Management, APIM policy, Azure Front Door]
 ---
 
-If you want to use [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) in front of APIM instance, keep in mind that Front Door requires that [backends](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-backend-pool) are accessible from public internet. That means that it will only work when:
+## APIM deployment models
+
+If you want to use [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) in front of APIM instance, keep in mind that Front Door requires that [backends](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-backend-pool) are accessible from public internet. That means that APIM can only be added as Front Door backend when:
 
 * APIM is not deployed into a virtual network
 * APIM is deployed into virtual network with [external access type](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet)
 
-In both cases, API Management gateway is accessible from the public internet (and that's one of the the requirements for Front Door backend).
+![apim-internal](/images/2020-07-28-apim-external.png)
 
-If you deploy APIM into virtual network with internal access type (this is when API Management gateway is accessible only from within the virtual network), then you need to additionally deploy Azure Application Gateway in front of APIM and use it as a backend endpoint in Azure Front Door.
+In both cases, API Management gateway is accessible from the public internet.
+
+If you deploy APIM into virtual network with internal access type (this is when API Management gateway is accessible only from within the virtual network), then you need to [additionally provision Azure Application Gateway](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-integrate-internal-vnet-appgateway) in front of APIM and use it as a backend endpoint in Azure Front Door.
 
 ![apim-internal](/images/2020-07-28-apim-internal.png)
 
 ## APIM access restriction policies
 
-You can use the [check-header](https://docs.microsoft.com/en-us/azure/api-management/api-management-access-restriction-policies#CheckHTTPHeader) policy to enforce that a request has a `X-Azure-FDID` header and this header contains your Front Door ID. If the check fails, the policy terminates request processing and returns the HTTP status code and error message specified by the policy.
+For each requests sent to the backends, Front Door includes Front Door ID inside `X-Azure-FDID` header. If you want your APIM instance to only accept requests from Front Door, you can use the [check-header](https://docs.microsoft.com/en-us/azure/api-management/api-management-access-restriction-policies#CheckHTTPHeader) policy to enforce that a request has a `X-Azure-FDID` header and this header contains your Front Door ID. If the check fails, the policy terminates request processing and returns the HTTP status code and error message specified by the policy.
 
 ```xml
 <check-header name="X-Azure-FDID" failed-check-httpcode="401" failed-check-error-message="Not authorized" ignore-case="false">
@@ -56,7 +60,9 @@ You can fetch the `frontdoorId` from Front Door’s management API. The easiest 
 
 ## Network Security Group
 
-If you deploy APIM into private Vnet, you can use the service tag `AzureFrontDoor.Backend` in your [Network Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview). For example, if you want to open traffic from Front Door to APIM on port 443, add the following NSG rule:
+If you deploy APIM into private virtual network (both for internal and external access types) and you only want to accept traffic from Front Door, you can use the service tag `AzureFrontDoor.Backend` in your [Network Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview).
+
+If you use `internal` access type, then you configure `AzureFrontDoor.Backend` rules at Network Security Group assigned to `agw-net` subnet (check image above). In addition, you can restrict that `api-net` subnet only accept traffic from `agw-net` subnet by configuring Network Security group assigned to `apim-net`. 
 
 ## Useful links
 
@@ -69,6 +75,7 @@ If you deploy APIM into private Vnet, you can use the service tag `AzureFrontDoo
 * [Network Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview)
 * [Create an ingress controller to an internal virtual network in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/ingress-internal-ip)
 * [How to use Azure API Management with virtual networks](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet)
+* [Integrate API Management in an internal VNET with Application Gateway](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-integrate-internal-vnet-appgateway)
 
 If you have any issues/comments/suggestions related to this post, you can reach out to me at evgeny.borzenin@gmail.com.
 
