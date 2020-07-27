@@ -68,7 +68,7 @@ If you deploy APIM into private virtual network (both for internal and external 
 
 ![apim-internal](/images/2020-07-28-nsg.png)
 
-If you use `internal` access type, then you configure `AzureFrontDoor.Backend` rules at Network Security Group assigned to `agw-net` subnet. In addition, you can restrict that `api-net` subnet only accept traffic from `agw-net` subnet by configuring Network Security group assigned to `apim-net`.
+If you use `internal` access type, then you configure `AzureFrontDoor.Backend` rules at Network Security Group assigned to `agw-net` subnet. In addition, you can restrict that `apim-net` subnet only accept traffic from `agw-net` subnet by configuring Network Security group assigned to `apim-net`.
 
 ## Useful links
 
