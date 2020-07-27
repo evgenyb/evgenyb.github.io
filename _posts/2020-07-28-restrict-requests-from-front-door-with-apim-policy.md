@@ -46,13 +46,15 @@ If you have [front-door az cli extension](https://github.com/Azure/azure-cli-ext
 az network front-door show -n iac-fd -g iac-base-rg --query frontdoorId
 ```
 
-I have the latest version of `front-door` extension  (`1.0.8`) and I know that `frontdoorId` field didn't exist at version `1.0.2`.
+If you can't find `frontdoorId` field in the response, make sure that you use latest version of `front-door` extension.
 
-If you don't have ``front-door` extension you can use this command. Note that you have to use API version `2020-01-01` or newer for this.
+Alternatively you can use this command.
 
 ```bash
 az resource show  --api-version 2020-01-01 --resource-type Microsoft.Network/frontdoors --name iac-fd --resource-group iac-base-rg --query properties.frontdoorId
 ```
+
+Note that you have to set `--api-version` flag to `2020-01-01` version or newer.
 
 ## Azure REST API
 
@@ -60,9 +62,11 @@ You can fetch the `frontdoorId` from Front Door’s management API. The easiest 
 
 ## Network Security Group
 
-If you deploy APIM into private virtual network (both for internal and external access types) and you only want to accept traffic from Front Door, you can use the service tag `AzureFrontDoor.Backend` in your [Network Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview).
+If you deploy APIM into private virtual network (both for internal and external access types) and you only want to accept traffic from Front Door, you can use the service tag `AzureFrontDoor.Backend` in your [Network Security Group](https://docs.microsoft.com/en-us/azure/virtual-network/security-overview) rules.
 
-If you use `internal` access type, then you configure `AzureFrontDoor.Backend` rules at Network Security Group assigned to `agw-net` subnet (check image above). In addition, you can restrict that `api-net` subnet only accept traffic from `agw-net` subnet by configuring Network Security group assigned to `apim-net`. 
+![apim-internal](/images/2020-07-28-nsg.png)
+
+If you use `internal` access type, then you configure `AzureFrontDoor.Backend` rules at Network Security Group assigned to `agw-net` subnet (check image above). In addition, you can restrict that `api-net` subnet only accept traffic from `agw-net` subnet by configuring Network Security group assigned to `apim-net`.
 
 ## Useful links
 
