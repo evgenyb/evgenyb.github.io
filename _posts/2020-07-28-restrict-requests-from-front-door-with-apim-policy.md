@@ -5,11 +5,11 @@ date: 2020-07-28
 categories: [Azure, APIM, API Management, APIM policy, Azure Front Door, Network Security Group, Azure Application Gateway]
 ---
 
-I was recently experimenting with infrastructure where Azure Front Door is deployed in front of Azure API Management with focus on how to secure that traffic to APIM is only coming from the Front Door, so here are some notes related to this setup.
+I was recently experimenting with infrastructure where [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) is deployed in front of [Azure API Management](https://docs.microsoft.com/en-us/azure/api-management/api-management-key-concepts) with focus on how to secure that traffic to APIM is only coming from the Front Door, so here are some notes related to this setup.
 
 ## APIM deployment models
 
-If you want to use [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) in front of APIM instance, keep in mind that Front Door requires that [backends](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-backend-pool) are accessible from public internet. That means that APIM can only be added as Front Door backend when:
+If you want to use Front Door in front of APIM instance, keep in mind that Front Door requires that [backends](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-backend-pool) are accessible from public internet. That means that APIM can only be added as Front Door backend when:
 
 * APIM is not deployed into a virtual network
 * APIM is deployed into virtual network with [external access type](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet)
@@ -79,6 +79,7 @@ If you use `internal` access type, then you configure `AzureFrontDoor.Backend` r
 * [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview)
 * [Backends and backend pools in Azure Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-backend-pool)
 * [How do I lock down the access to my backend to only Azure Front Door?](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-faq#how-do-i-lock-down-the-access-to-my-backend-to-only-azure-front-door)
+* [About API Management](https://docs.microsoft.com/en-us/azure/api-management/api-management-key-concepts)
 * [APIM named value](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties)
 * [APIM access restriction policies](https://docs.microsoft.com/en-us/azure/api-management/api-management-access-restriction-policies)
 * [APIM check-header policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-access-restriction-policies#CheckHTTPHeader)
