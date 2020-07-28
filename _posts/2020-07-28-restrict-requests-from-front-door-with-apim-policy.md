@@ -18,13 +18,13 @@ If you want to use Front Door in front of APIM instance, keep in mind that Front
 
 In both cases, API Management gateway is accessible from the public internet.
 
-If you deploy APIM into virtual network with internal access type (this is when API Management gateway is accessible only from within the virtual network), then you need to [additionally provision Azure Application Gateway](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-integrate-internal-vnet-appgateway) in front of APIM and use it as a backend endpoint in Azure Front Door.
+If you deploy APIM into virtual network with [internal access type](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet) (this is when API Management gateway is accessible only from within the virtual network), then you need to [additionally provision Azure Application Gateway](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-integrate-internal-vnet-appgateway) in front of APIM and use it as a backend endpoint in Azure Front Door.
 
 ![apim-internal](/images/2020-07-28-apim-internal.png)
 
 ## APIM access restriction policies
 
-Here is the official documentation about [how do I lock down the access to my backend to only Azure Front Door?](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-faq#how-do-i-lock-down-the-access-to-my-backend-to-only-azure-front-door). Basically, for each requests sent to the backend, Front Door includes Front Door ID inside `X-Azure-FDID` header. 
+Here is the official documentation about [how do I lock down the access to my backend to only Azure Front Door?](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-faq#how-do-i-lock-down-the-access-to-my-backend-to-only-azure-front-door). Basically, for each requests sent to the backend, Front Door includes Front Door ID inside `X-Azure-FDID` header.
 
 If you want your APIM instance to only accept requests from Front Door, you can use the [check-header](https://docs.microsoft.com/en-us/azure/api-management/api-management-access-restriction-policies#CheckHTTPHeader) policy to enforce that a request has a `X-Azure-FDID` header and this header contains your Front Door ID. If the check fails, the policy terminates request processing and returns the HTTP status code and error message specified by the policy.
 
