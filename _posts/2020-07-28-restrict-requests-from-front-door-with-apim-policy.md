@@ -30,7 +30,7 @@ If you want your APIM instance to only accept requests from Front Door, you can 
 
 ```xml
 <check-header name="X-Azure-FDID" failed-check-httpcode="401" failed-check-error-message="Not authorized" ignore-case="false">
-    <value> {{ frontDoorId }} </value>
+    <value>{{frontDoorId}}</value>
 </check-header>
 ```
 
