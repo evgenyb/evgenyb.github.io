@@ -20,7 +20,7 @@ Here are my AKS cluster configuration requirements:
 
 ## AKS Managed Identity and role assignment
 
-For resources outside of the AKS "managed" `MC_*` resource group, AKS managed identity needs to be granted with required permissions, so AKS is able to interact with “external” resources (for example, read/write on subnets or provision static IP address etc.). AKS managed identity has to be assigned with `NetworkContributor` role at the AKS subnet scope. To perform a role assignment, use the PrincipalID of the cluster System Assigned managed identity. Here is an example how you can assign `NetworkContributor` role (you can find role GUID in [Azure built-in roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles) list) for AKS managed identity with ARM template.
+For resources outside of the AKS "managed" `MC_*` resource group, AKS managed identity needs to be granted with required permissions, so AKS is able to interact with “external” resources (for example, read/write on subnets or provision static IP address etc.). AKS managed identity has to be assigned with `NetworkContributor` role at the AKS subnet scope. To perform a role assignment, use the `principalId` of the cluster System Assigned managed identity. Here is an example how you can assign `NetworkContributor` role (you can find role GUID in [Azure built-in roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles) list) for AKS managed identity with ARM template.
 
 ```json
 {
