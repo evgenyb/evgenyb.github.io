@@ -53,7 +53,7 @@ and then set `clientId` field of `servicePrincipalProfile` property to `msi`
 
 ## Azure AD integration
 
-To enable Azure AD integration, add the `aadProfile` property inside `properties` section. Use the following syntax:
+To enable Azure AD integration, add the `aadProfile` property inside `properties` section and use the following syntax:
 
 ```json
 "aadProfile": {
@@ -68,16 +68,23 @@ To enable Azure AD integration, add the `aadProfile` property inside `properties
 To find your Azure AD group id by name, use the following command:
 
 ```bash
-az ad group  show -g 'iac-admin' --query objectId
+az ad group show -g 'iac-admin' --query objectId
 ```
 
-Here is the complete version of the [ARM template](https://github.com/evgenyb/arm/blob/master/aks/template.json).
+## apiVersion
+
+I only managed this changes to work if I set `apiVersion` of `Microsoft.ContainerService/managedClusters` resource to `2020-06-01` (and you get the same version if you create your cluster with `az cli` or from portal and then export template), but I didn't find this version in the "official" [Microsoft.ContainerService managedClusters template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.containerservice/managedclusters)
+
+## Final version
+
+Here is the complete version of my [ARM template](https://github.com/evgenyb/arm/blob/master/aks/).
 
 ## Useful links
 
 * [Use managed identities in Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity)
 * [AKS-managed Azure Active Directory integration](https://docs.microsoft.com/en-us/azure/aks/managed-aad)
 * [Azure built-in roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles)
+* [Microsoft.ContainerService managedClusters template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.containerservice/managedclusters)
 
 If you have any issues/comments/suggestions related to this post, you can reach out to me at evgeny.borzenin@gmail.com.
 
