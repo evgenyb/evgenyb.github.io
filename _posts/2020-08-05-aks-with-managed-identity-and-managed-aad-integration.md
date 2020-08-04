@@ -73,7 +73,7 @@ az ad group show -g 'iac-admin' --query objectId
 
 ## apiVersion
 
-I only managed this changes to work if I set `apiVersion` of `Microsoft.ContainerService/managedClusters` resource to `2020-06-01` (and you get the same version if you create your cluster with `az cli` or from portal and then export template), but I didn't find this version in the "official" [Microsoft.ContainerService managedClusters template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.containerservice/managedclusters)
+The solution shown above, only works if I set `apiVersion` of `Microsoft.ContainerService/managedClusters` resource to `2020-06-01` (and you actually get the same version if you create your cluster with `az cli` or from portal and then export template), but I didn't find this version in the "official" [Microsoft.ContainerService managedClusters template reference](https://docs.microsoft.com/en-us/azure/templates/microsoft.containerservice/managedclusters).
 
 ## Final version
 
