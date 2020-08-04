@@ -10,7 +10,7 @@ Recently I was working with my sandbox infrastructure environment and decided to
 Here are my AKS cluster configuration requirements:
 
 * AKS is deployed to `iac-aks-blue|green-rg` resource group
-* AKS called `iac-blue|green-aks`
+* AKS is called `iac-blue|green-aks`
 * AKS is deployed to `aks-net` subnet of `iac-aks-blue|green-vnet` private virtual network
 * AKS uses [advanced networking](https://docs.microsoft.com/en-us/azure/aks/configure-azure-cni)
 * AKS uses [Calico networking policies](https://docs.microsoft.com/en-us/azure/aks/use-network-policies)
@@ -18,31 +18,66 @@ Here are my AKS cluster configuration requirements:
 * AKS uses managed identity
 * AKS uses `iac-admin` Azure AD group for managed Azure AD integration
 
-## Managed Identities
+## AKS Managed Identity and role assignment
 
-For resources outside of the AKS "managed" `MC_*` resource group, AKS managed identity needs to be granted with required permissions, so AKS will be able to interact with “external” resources (for example, read/write on subnets, provision static IP address etc.).
-
-Use the PrincipalID of the cluster System Assigned Managed Identity to perform a role assignment.
-
-Here is an example how you can assign `NetworkContributorRole` for AKS managed identity and with ARM template:
+For resources outside of the AKS "managed" `MC_*` resource group, AKS managed identity needs to be granted with required permissions, so AKS is able to interact with “external” resources (for example, read/write on subnets or provision static IP address etc.). AKS managed identity has to be assigned with `NetworkContributor` role at the AKS subnet scope. To perform a role assignment, use the PrincipalID of the cluster System Assigned managed identity. Here is an example how you can assign `NetworkContributor` role (you can find role GUID in [Azure built-in roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles) list) for AKS managed identity with ARM template.
 
 ```json
 {
     "type": "Microsoft.Network/virtualNetworks/subnets/providers/roleAssignments",
     "apiVersion": "2017-05-01",
-    "name": "[concat(parameters('vnetName'), '/', parameters('subnetName'), '/Microsoft.Authorization/', guid(resourceGroup().id, 'aksvnet'))]",
+    "name": "[concat(parameters('vnetName'), '/', parameters('subnetName'), '/Microsoft.Authorization/', guid(resourceGroup().id, 'akstovnet'))]",
     "properties": {
         "roleDefinitionId": "[variables('networkContributorRole')]",
         "principalId": "[reference(resourceId('Microsoft.ContainerService/managedClusters/', parameters('clusterName')), '2020-06-01', 'Full').identity.principalId]",
         "scope": "[variables('subnetId')]"
     }
 }
-``` 
+```
+
+To enable system-assigned managed identity, add the `identity` property at the same level as the "type": "Microsoft.ContainerService/managedClusters" property. Use the following syntax:
+
+```json
+"identity": {
+    "type": "SystemAssigned"
+}
+```
+
+and then set `clientId` field of `servicePrincipalProfile` property to `msi`  
+
+```json
+"servicePrincipalProfile": {
+    "clientId": "msi"
+}
+```
+
+## Azure AD integration
+
+To enable Azure AD integration, add the `aadProfile` property inside `properties` section. Use the following syntax:
+
+```json
+"aadProfile": {
+    "managed": true,
+    "tenantId": "[parameters('tenantId')]",
+    "adminGroupObjectIDs": [
+        "[parameters('adminGroupObjectId')]"
+    ]
+}
+```
+
+To find your Azure AD group id by name, use the following command:
+
+```bash
+az ad group  show -g 'iac-admin' --query objectId
+```
+
+Here is the complete version of the [ARM template](https://github.com/evgenyb/arm/blob/master/aks/template.json).
 
 ## Useful links
 
 * [Use managed identities in Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity)
 * [AKS-managed Azure Active Directory integration](https://docs.microsoft.com/en-us/azure/aks/managed-aad)
+* [Azure built-in roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles)
 
 If you have any issues/comments/suggestions related to this post, you can reach out to me at evgeny.borzenin@gmail.com.
 
