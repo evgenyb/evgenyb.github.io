@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "ARM template design choices and deployment time"
-date: 2020-08-18
+date: 2020-08-17
 categories: [Azure, ARM templates, Infrastructure as Code]
 ---
 
@@ -62,16 +62,29 @@ When it comes to where to upload templates, one option is to place your linked t
 
 For information about nested templates, see [Using linked templates with Azure Resource Manager](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates).
 
-The advantage of this method (compared to `ARM template per resource` method) is that you don't have to worry about the complexities of ordering operations. Resource Manager orchestrates the deployment of interdependent resources so they're created in the correct order. When possible, Resource Manager deploys resources in parallel so your deployments finish faster than serial deployments. You deploy the template through one command, rather than through multiple imperative commands.
+The advantage of this method and method #1 (compared to `ARM template per resource` method) is that you don't have to worry about the complexities of ordering operations. Resource Manager orchestrates the deployment of interdependent resources so they're created in the correct order. When possible, Resource Manager deploys resources in parallel so your deployments finish faster than serial deployments. You deploy the template through one command, rather than through multiple imperative commands.
 
 ![emplate-processing](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/media/overview/template-processing.png)
 
-
 ## Some thoughts about performance
 
-Provisioning of Azure resources takes time. The more infrastructure components are in your environment, the more time it will take to provision new environment. If you employ blue-green provisioning mordel 
+Provisioning of Azure resources takes time. The more infrastructure components are in your environment, the more time it will take to provision new environment. If you use blue-green or canary provisioning model, then it might not be so critical, but if your Disaster Recovery strategy is "redeploy on disaster", then every minute counts.
+
+If we look at the above options from `time it takes to provision` perspective, then options #1 and #3 performing best and #2 is the slowest one.
 
 ## Let's get some numbers
+
+Table below shows time it took to provision 2 Application Gateways v2 and AKS cluster (1 node) sequentially:
+
+Resource | Duration
+---------|----------
+AGW1     | 4 min 32 sec
+AGW2     | 5 min 15 sec
+AKS (1 node)     | 3 min 17 sec
+
+In total, it took a little more than 13 min to provision all 3 resources.
+
+To provision the same resources as a single ARM template took 5 min 19 sec, so almost twice as fast.
 
 ## Useful links
 
