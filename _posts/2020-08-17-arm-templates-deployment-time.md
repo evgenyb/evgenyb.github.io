@@ -5,13 +5,15 @@ date: 2020-08-17
 categories: [Azure, ARM templates, Infrastructure as Code]
 ---
 
-When you use ARM templates to implement your infrastructure as code, there are multiple ways you can structure your ARM templates. When your infrastructure setup is small, it doesn't really matter, but when you work with complex infrastructure, with significant number of infrastructure components, the way how you structure your ARM templates will directly affect how easy is to maintain them.
+When you use ARM templates to implement your infrastructure as code, there are multiple ways you can structure your ARM templates. When your infrastructure setup is small, it doesn't really matter, but when you work with complex infrastructure, with significant number of infrastructure components, the way how you structure your ARM templates directly affects how easy is to maintain them.
 
 Let's have a look at the most common ways to structure ARM templates:
 
 ## #1 Single template
 
-This is the "default" approach you will find it in documentation and most of the [Azure Resource Manager QuickStart Templates](https://github.com/Azure/azure-quickstart-templates). The biggest challenge with this approach is that ARM template json file becomes way too big and hard to maintain. With [ARM Tools for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) plugin, you will get much better development experience. If you use parameters to support multi-environment setup, these parameter files also become also quite big and not so easy to maintain.
+This is the "default" approach you will find it in documentation and most of the [Azure Resource Manager QuickStart Templates](https://github.com/Azure/azure-quickstart-templates). The biggest challenge with this approach is when you have a lot of resources in one ARM template, this json file becomes way too long and hard to read, navigate and maintain. If you use parameters to support multi-environment setup, these parameter files also become quite big and not so easy to maintain.
+
+Tools like [ARM Tools for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) helps a lot and you get much better development experience and I highly recommend to use it.
 
 In single template scenario you define the order for deploying resources by using [dependsOn element](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency#dependson) and Resource Manager orchestrates the deployment of the resources.
 
