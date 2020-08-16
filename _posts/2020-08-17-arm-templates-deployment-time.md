@@ -11,7 +11,7 @@ Let's have a look at the most common ways to structure ARM templates:
 
 ## #1 Single template
 
-This is the "default" approach you will find it in documentation and most of the [Azure Resource Manager QuickStart Templates](https://github.com/Azure/azure-quickstart-templates). The biggest challenge with this approach is when you have a lot of resources in one ARM template, this json file becomes way too long and hard to read, navigate and maintain. If you use parameters to support multi-environment setup, these parameter files also become quite big and not so easy to maintain.
+This is the "default" approach you will find it in documentation and most of the [Azure Resource Manager QuickStart Templates](https://github.com/Azure/azure-quickstart-templates). The biggest challenge with this approach is when there are a lot of resources in one ARM template, this json file becomes way too long and hard to read, navigate and maintain. If you use parameters to support multi-environment setup, these parameter files also become quite big and not so easy to work with.
 
 Tools like [ARM Tools for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) help a lot and you get much better development experience and I highly recommend to use it.
 
