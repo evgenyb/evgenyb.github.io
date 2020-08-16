@@ -50,7 +50,7 @@ arm
     deploy.sh
 ```
 
-To provision this infrastructure, you will either recursively iterate through folders structure and deploy each template with [az deployment group create](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create) command (or PowerShell equivalent), or create a master script that will deploy all resources one by one in the correct order.
+To deploy resources structured this way, you will either recursively iterate through folders structure and deploy each template with [az deployment group create](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create) command (or PowerShell equivalent), or create a master script that will deploy all resources one by one in the correct order.
 
 My [How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/) workshop contains labs showing how to refactor from `Single ARM template` to set of `ARM template per resource`. Check out [lab03](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/labs/lab-03/readme.md) and [lab04](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/labs/lab-04/readme.md) to get more hands-on experience and here is the list of [all labs](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/agenda.md) from the workshop.
 
@@ -74,7 +74,7 @@ The advantage of this method and method #1 compared to method #2 is that you don
 
 Provisioning of Azure resources takes time and the more infrastructure components are in your environment, the more time it takes to provision new environment. If you adapt immutable infrastructure with use of blue-green or canary provisioning model, then deployment time might not be so critical, but if your Disaster Recovery strategy is "redeploy on disaster", and during disaster, when you need to quickly provision new environment, then every minute counts.
 
-If we look at the options from `time it takes to provision` perspective, then obviously options #1 and #3 performing best and #2 is the slowest one.
+If we look at the options from `time it takes to provision resource` perspective, then obviously options #1 and #3 perform best and #2 is the slowest one.
 
 ## Let's get some numbers
 
@@ -102,4 +102,4 @@ To provision the same resources as a single ARM template it took 5 min 19 sec. A
 
 If you have any issues/comments/suggestions related to this post, you can reach out to me at evgeny.borzenin@gmail.com.
 
-With that - thanks for reading!
+With that - thanks for reading! :)
