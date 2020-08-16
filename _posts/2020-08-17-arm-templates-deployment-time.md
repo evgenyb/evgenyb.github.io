@@ -2,7 +2,7 @@
 layout: post
 title: "ARM template design choices and deployment time"
 date: 2020-08-17
-categories: [Azure, ARM templates, Infrastructure as Code]
+categories: [Azure, ARM templates, Infrastructure as Code, Immutable infrastructure]
 ---
 
 When you use ARM templates to implement your infrastructure as code, there are multiple ways you can structure your ARM templates. When your infrastructure setup is small, it doesn't really matter, but when you work with complex infrastructure, with significant number of infrastructure components, the way how you structure your ARM templates directly affects how easy is to maintain them.
@@ -90,7 +90,7 @@ AKS (1 node)     | 3 min 17 sec
 
 In total, it took a little more than 13 min to provision all 3 resources.
 
-To provision the same resources as a single ARM template it took 5 min 19 sec. Almost twice as fast!
+To provision the same resources as a single ARM template it took 5 min 19 sec. More than two times faster!
 
 ## Useful links
 
