@@ -72,7 +72,7 @@ The advantage of this method and method #1 compared to method #2 is that you don
 
 ## Some thoughts about deployment time
 
-Provisioning of Azure resources takes time and the more infrastructure components are in your environment, the more time it takes to provision new environment. If you adapt immutable infrastructure with use of blue-green or canary provisioning model, then deployment time might not be so critical, but if your Disaster Recovery strategy is "redeploy on disaster", and during disaster, when you need to quickly provision new environment, then every minute counts.
+Provisioning of Azure resources takes time and the more infrastructure components are in your environment, the more time it takes to provision new environment. If you use immutable infrastructure with blue-green provisioning model, then deployment time might not be so critical, but if your Disaster Recovery strategy is "redeploy on disaster", and during disaster, when you need to quickly provision new environment, then every minute counts.
 
 If we look at the options from `time it takes to provision resource` perspective, then obviously options #1 and #3 perform best and #2 is the slowest one.
 
