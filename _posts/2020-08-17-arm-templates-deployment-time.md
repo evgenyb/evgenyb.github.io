@@ -76,7 +76,7 @@ Provisioning of Azure resources takes time and the more infrastructure component
 
 If we look at the options from `time it takes to provision resource` perspective, then obviously options #1 and #3 perform best and #2 is the slowest one.
 
-If you don't want to use Simple template or linked templates an still want to improve deployment time, you can implement parallel deployment logic in your master script, but then you need to understand your resources dependencies and know what resources can be run in parallel. As you can imagine, that adds extra complexity, but technically it's possible.
+If you don't want to use Simple template or linked templates but still want to improve deployment time, you can introduce parallel deployment logic in your master script, but then you need to understand your resources dependencies and know what resources can be run in parallel. As you can imagine, that adds extra complexity, but technically it's possible.
 
 ## Let's get some numbers
 
