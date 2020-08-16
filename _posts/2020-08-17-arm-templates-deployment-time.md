@@ -13,7 +13,7 @@ Let's have a look at the most common ways to structure ARM templates:
 
 This is the "default" approach you will find it in documentation and most of the [Azure Resource Manager QuickStart Templates](https://github.com/Azure/azure-quickstart-templates). The biggest challenge with this approach is when you have a lot of resources in one ARM template, this json file becomes way too long and hard to read, navigate and maintain. If you use parameters to support multi-environment setup, these parameter files also become quite big and not so easy to maintain.
 
-Tools like [ARM Tools for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) helps a lot and you get much better development experience and I highly recommend to use it.
+Tools like [ARM Tools for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) help a lot and you get much better development experience and I highly recommend to use it.
 
 In single template scenario you define the order for deploying resources by using [dependsOn element](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency#dependson) and Resource Manager orchestrates the deployment of the resources.
 
@@ -21,7 +21,7 @@ In single template scenario you define the order for deploying resources by usin
 
 You don't have to define your entire infrastructure in a single template. Often, it makes sense to divide your infrastructure into a set of targeted templates.
 
-If you use this approach, you would normally put template and parameters files into the folder representing one resource, or set of purpose-specific resources and it's your responsibility to orchestrate in which order resources should be deployed. To group several resources into one template, you use single template approach described in option #1.
+If you use this approach, you would normally put template and parameters files into the folder representing one resource, or set of purpose-specific resources and it's your responsibility to orchestrate in which order "folders" should be deployed. To group several resources into one template, you use single template approach described in option #1.
 
 Here is an example of such a folder structure with alphabetic ordering:
 
@@ -50,11 +50,11 @@ arm
     deploy.sh
 ```
 
-To provision this infrastructure, you will either recursively iterate through folders structure and deploy each template with [az deployment group create](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create) command (or PowerShell equivalent), or create a master script that will provision all resources one by one in proper order.
+To provision this infrastructure, you will either recursively iterate through folders structure and deploy each template with [az deployment group create](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create) command (or PowerShell equivalent), or create a master script that will deploy all resources one by one in the correct order.
 
-My [How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/) workshop contains labs showing how to refactor from `Single ARM template` to set of `ARM template per resource`. Check out [lab03](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/labs/lab-03/readme.md) and [lab04](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/labs/lab-04/readme.md) to get more hands-on experience. Here is the list of [all labs](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/agenda.md) from this workshop.
+My [How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/) workshop contains labs showing how to refactor from `Single ARM template` to set of `ARM template per resource`. Check out [lab03](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/labs/lab-03/readme.md) and [lab04](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/labs/lab-04/readme.md) to get more hands-on experience and here is the list of [all labs](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/agenda.md) from the workshop.
 
-Since your ARM templates are divided into smaller templates, it's easier to maintain both templates and parameters.  
+Since your ARM templates are divided into smaller templates, it's easier to read and maintain both templates and parameters.  
 
 ## #3 Linked templates
 
@@ -68,11 +68,11 @@ For information about nested templates, see [Using linked templates with Azure R
 
 The advantage of this method and method #1 compared to method #2 is that you don't have to worry about the complexities of ordering operations. Resource Manager orchestrates the deployment of interdependent resources so they're created in the correct order. When possible, Resource Manager deploys resources in parallel so your deployments finish faster than serial deployments. You deploy the template through one command, rather than through multiple imperative commands.
 
-![emplate-processing](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/media/overview/template-processing.png)
+![template-processing](/images/2020-08-17-logo.png)
 
 ## Some thoughts about deployment time
 
-Provisioning of Azure resources takes time. The more infrastructure components are in your environment, the more time it will take to provision new environment. If you adapt immutable infrastructure with use of blue-green or canary provisioning model, then deployment time might not be so critical, but if your Disaster Recovery strategy is "redeploy on disaster", and during disaster, when you need to quickly provision new infrastructure, then every minute counts.
+Provisioning of Azure resources takes time and the more infrastructure components are in your environment, the more time it takes to provision new environment. If you adapt immutable infrastructure with use of blue-green or canary provisioning model, then deployment time might not be so critical, but if your Disaster Recovery strategy is "redeploy on disaster", and during disaster, when you need to quickly provision new environment, then every minute counts.
 
 If we look at the options from `time it takes to provision` perspective, then obviously options #1 and #3 performing best and #2 is the slowest one.
 
