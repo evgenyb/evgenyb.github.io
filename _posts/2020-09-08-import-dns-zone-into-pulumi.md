@@ -112,13 +112,13 @@ Resources:
     5 changes
 ```
 
-That means that if I run `pulumi up`, a new stack will be cerated and 5 resources will be imported.
+That means that if I run `pulumi up`, a new stack will be cerated and 4 resources will be imported.
 
 After I successfully imported all resources, I can remove `new CustomResourceOptions { ImportId = "" }` code blocks from the code and continue to work with Pulumi as usual.
 
 ## SOA record set
 
-Since [SOA records](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837#soa-records) are created and deleted with each DNS zone and cannot be created or deleted separately, therefore there is no need to import this resource into your pulumi stack (and I guess, that's why there is no support for this record set type in Pulumi).
+Since [SOA records](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837#soa-records) are created and deleted with each DNS zone and cannot be created or deleted separately, there is no need to import this resource into your pulumi stack (and I guess, that's why there is no support for this record type in Pulumi).
 
 In the next weeks I will write how to implement Azure DevOps CD pipeline to deploy changes to DNS Zone maintained with Pulumi. Stay tuned.
 
