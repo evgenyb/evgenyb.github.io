@@ -9,9 +9,9 @@ I am currently working with the materials for my upcoming [Workshop #3: Implemen
 
 ## Importing Infrastructure
 
-Since this Zone was already provisioned manually long before and already contains several records, I need to import existing resources so they can be managed by Pulumi.
+Since my DNS Zone instance was already provisioned manually long before and already contains several DNS record sets, I need to import existing resources so they can be managed by Pulumi.
 
-To adopt existing resources so that Pulumi is able to manage subsequent updates to them, Pulumi offers the [import](https://www.pulumi.com/docs/intro/concepts/programming-model/#import) resource option. This option request that a resource defined in your Pulumi program adopts an existing resource in Azure instead of creating a new one.
+To adopt existing resources so that Pulumi is able to manage subsequent updates to them, Pulumi offers the [import resource](https://www.pulumi.com/docs/intro/concepts/programming-model/#import)  option. This option requests that a resource defined in your Pulumi program adopts an existing resource in Azure instead of creating a new one.
 
 In my case, to import DNS Zone, I need to import the following resources:
 
@@ -114,19 +114,11 @@ Resources:
 
 That means that if I run `pulumi up`, a new stack will be cerated and 5 resources will be imported.
 
-After I successfully import all resources, I can remove `new CustomResourceOptions { ImportId = "" }` code blocks to make my code clean and nice.
+After I successfully imported all resources, I can remove `new CustomResourceOptions { ImportId = "" }` code blocks and work with Pulumi as usual.
 
-## Azure DevOps CI/CD pipeline
+## SOA record set
 
-I what to use Azure DevOps pipelines to deploy new DNS records with the following flow:
-
-* `master` branch represents what is deployed to DNS Zone
-* If we need to create new, update or delete existing record set, developer adds change into Pulumi code and creates new pull request
-* Pull requests triggers pipeline that runs `pulumi preview` command
-* The person that does PR review needs to check the result of the `preview` command and only accept PR if it does what it supposed to do
-* When PR is merged, it triggers pipeline that runs `pulumi up --yes` command that deploys changes to DNS Zone.
-
-There is [Pulumi Task Extension](https://marketplace.visualstudio.com/items?itemName=pulumi.build-and-release-task) available at Visual Studio Marketplace that lets you easily use Pulumi in your CI/CD pipelines. It can be used both with classic Azure DevOps releases and YAML based pipelines.
+Since [SOA records](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837#soa-records) are created and deleted with each DNS zone and cannot be created or deleted separately, I guess that's why there is no support for this record set type in Pulumi and therefore there is no need to import this resource into your pulumi stack.
 
 ## Useful links
 
@@ -138,8 +130,7 @@ There is [Pulumi Task Extension](https://marketplace.visualstudio.com/items?item
 * [Overview of DNS zones and records](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837)
 * [Manage DNS records and recordsets in Azure DNS using the Azure CLI](https://docs.microsoft.com/en-us/azure/dns/dns-operations-recordsets-cli?WT.mc_id=AZ-MVP-5003837)
 * [Azure Command-Line Interface (CLI) documentation](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest?WT.mc_id=AZ-MVP-5003837)
-* [Pulumi CD with Azure DevOps](https://www.pulumi.com/docs/guides/continuous-delivery/azure-devops/)
-* [Pulumi Azure task extension for Azure Pipelines](https://marketplace.visualstudio.com/items?itemName=pulumi.build-and-release-task)
+* [SOA records](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837#soa-records)
 
 If you have any issues/comments/suggestions related to this post, you can reach out to me at evgeny.borzenin@gmail.com.
 
