@@ -120,6 +120,8 @@ After I successfully imported all resources, I can remove `new CustomResourceOpt
 
 Since [SOA records](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837#soa-records) are created and deleted with each DNS zone and cannot be created or deleted separately, I guess that's why there is no support for this record set type in Pulumi and therefore there is no need to import this resource into your pulumi stack.
 
+In the next weeks I will write how to implement Azure DevOps CD pipeline to deploy changes to DNS Zone maintained with Pulumi. Stay tuned.
+
 ## Useful links
 
 * [Pulumi](https://www.pulumi.com/)
