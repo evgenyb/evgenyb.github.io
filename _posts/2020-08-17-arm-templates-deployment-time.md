@@ -15,7 +15,7 @@ This is the "default" approach you will find it in documentation and most of the
 
 Tools like [ARM Tools for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools) help a lot and you get much better development experience and I highly recommend to use it.
 
-In single template scenario you define the order for deploying resources by using [dependsOn element](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency#dependson) and Resource Manager orchestrates the deployment of the resources.
+In single template scenario you define the order for deploying resources by using [dependsOn element](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency?WT.mc_id=AZ-MVP-5003837#dependson) and Resource Manager orchestrates the deployment of the resources.
 
 ## #2 ARM template per resource
 
@@ -50,7 +50,7 @@ arm
     deploy.sh
 ```
 
-To deploy resources structured this way, you will either recursively iterate through folders structure and deploy each template with [az deployment group create](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create) command (or PowerShell equivalent), or create a master script that will deploy all resources one by one in the correct order.
+To deploy resources structured this way, you will either recursively iterate through folders structure and deploy each template with [az deployment group create](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest&WT.mc_id=AZ-MVP-5003837#az-deployment-group-create) command (or PowerShell equivalent), or create a master script that will deploy all resources one by one in the correct order.
 
 My [How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/) workshop contains labs showing how to refactor from `Single ARM template` to set of `ARM template per resource`. Check out [lab03](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/labs/lab-03/readme.md) and [lab04](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/labs/lab-04/readme.md) to get more hands-on experience and here is the list of [all labs](https://github.com/evgenyb/iac-meetup/blob/master/workshops/01-how-to-live-in-harmony-with-ARM-templates/agenda.md) from the workshop.
 
@@ -64,7 +64,7 @@ When referencing a linked template, the value of uri must not be a local file or
 
 When it comes to where to upload templates, one option is to place your linked template in a storage account, and use the URI with SAS token for them. If your templates are stable and don't contain any sensitive data, you can also store them in github repository.
 
-For information about nested templates, see [Using linked templates with Azure Resource Manager](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates).
+For information about nested templates, see [Using linked templates with Azure Resource Manager](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates?WT.mc_id=AZ-MVP-5003837).
 
 The advantage of this method and method #1 compared to method #2 is that you don't have to worry about the complexities of ordering operations. Resource Manager orchestrates the deployment of interdependent resources so they're created in the correct order. When possible, Resource Manager deploys resources in parallel so your deployments finish faster than serial deployments. You deploy the template through one command, rather than through multiple imperative commands.
 
@@ -94,13 +94,13 @@ To provision the same resources as a single ARM template it took 5 min 19 sec. M
 
 ## Useful links
 
-* [What are ARM templates?](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview)
-* [ARM template design](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview#template-design)
-* [Define the order for deploying resources in ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency)
-* [Using linked templates with Azure Resource Manager](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates)
+* [What are ARM templates?](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview?WT.mc_id=AZ-MVP-5003837)
+* [ARM template design](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview?WT.mc_id=AZ-MVP-5003837#template-design)
+* [Define the order for deploying resources in ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/define-resource-dependency?WT.mc_id=AZ-MVP-5003837)
+* [Using linked templates with Azure Resource Manager](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates?WT.mc_id=AZ-MVP-5003837)
 * [Azure Resource Manager QuickStart Templates](https://github.com/Azure/azure-quickstart-templates)
 * [Azure Resource Manager Tools for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=msazurermtools.azurerm-vscode-tools)
-* [az deployment group create](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest#az-deployment-group-create)
+* [az deployment group create](https://docs.microsoft.com/en-us/cli/azure/deployment/group?view=azure-cli-latest&WT.mc_id=AZ-MVP-5003837#az-deployment-group-create)
 
 If you have any issues/comments/suggestions related to this post, you can reach out to me at evgeny.borzenin@gmail.com.
 
