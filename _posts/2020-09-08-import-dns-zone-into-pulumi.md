@@ -7,7 +7,7 @@ categories: [Azure, Pulumi, Infrastructure as Code, Azure DNS Zone]
 
 ![logo](/images/2020-09-08-logo.png)
 
-I am currently working with the materials for my upcoming [Workshop #3: Implement immutable infrastructure on Azure with Pulumi](https://www.meetup.com/Infrastructure-As-Code-User-Group-Oslo/events/272952783/) and spending a lot of time working with [Pulumi on Azure](https://www.pulumi.com/docs/get-started/azure/). To have a realistic POC to work with, I decided to implement CI/CD pipeline for my existing [Azure DNS Zone](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837) that handles DNS records for my `iac-labs.com` domain.
+I am currently working with the materials for my upcoming [Workshop #3: Implement immutable infrastructure on Azure with Pulumi](https://www.meetup.com/Infrastructure-As-Code-User-Group-Oslo/events/272952783/) and spending a lot of time working with [Pulumi on Azure](https://www.pulumi.com/docs/get-started/azure/). As one of the POCs, I decided to implement CI/CD pipeline for my existing [Azure DNS Zone](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837) that handles DNS records for my `iac-labs.com` domain.
 
 ## Importing Infrastructure
 
