@@ -39,9 +39,9 @@ and finally, this script gives me the list of all record sets under my DNS Zone
 az network dns record-set list --zone-name iac-labs.com -g iac-domains-and-certificates-rg
 ```
 
-With ID in place, what I need to do now is to implement the regular Pulumi stack including resource group, DNS Zone and record sets, but in addition to normal resource specification, specify `ImportId` for each of the resources you want to adapt.
+With ID in place, I need to implement the regular Pulumi stack including resource group, DNS Zone and record sets, and in addition to normal resource specification, I need to specify `ImportId` for each of the resources I want to import.
 
-Here is the code that imports resource group, Azure DNS Zone instance and TXT, NS and CName record sets. I am .net guy, so I will use C#, but if you use other [languages supported by Pulumi](https://www.pulumi.com/docs/intro/languages/), I hope it will be easy for you to follow...
+Here is the code that imports resource group, Azure DNS Zone instance and TXT, NS and CName records. I am .net guy, so I will use C#, but if you use other [languages supported by Pulumi](https://www.pulumi.com/docs/intro/languages/), I hope it will be easy for you to follow...
 
 ```c#
 // Create an Azure Resource Group
@@ -92,7 +92,7 @@ new CNameRecord("iac-lab-portal", new CNameRecordArgs
 
 ```
 
-`pulumi preview` gives me the following information
+Running `pulumi preview` gives me the following information
 
 ```bash
 $ pulumi preview
@@ -114,11 +114,11 @@ Resources:
 
 That means that if I run `pulumi up`, a new stack will be cerated and 5 resources will be imported.
 
-After I successfully imported all resources, I can remove `new CustomResourceOptions { ImportId = "" }` code blocks and work with Pulumi as usual.
+After I successfully imported all resources, I can remove `new CustomResourceOptions { ImportId = "" }` code blocks from the code and continue to work with Pulumi as usual.
 
 ## SOA record set
 
-Since [SOA records](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837#soa-records) are created and deleted with each DNS zone and cannot be created or deleted separately, I guess that's why there is no support for this record set type in Pulumi and therefore there is no need to import this resource into your pulumi stack.
+Since [SOA records](https://docs.microsoft.com/en-us/azure/dns/dns-zones-records?WT.mc_id=AZ-MVP-5003837#soa-records) are created and deleted with each DNS zone and cannot be created or deleted separately, therefore there is no need to import this resource into your pulumi stack (and I guess, that's why there is no support for this record set type in Pulumi).
 
 In the next weeks I will write how to implement Azure DevOps CD pipeline to deploy changes to DNS Zone maintained with Pulumi. Stay tuned.
 
