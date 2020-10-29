@@ -63,7 +63,7 @@ At the API Management side we need to implement a `choose` policy that checks if
 
 #### Traffic to inactive slot
 
-With this setup in place, when I do the following request
+With this setup in place, when I call "inactive" frontend
 
 ```bash
 curl --get https://api29cc67d2.foo-bar.org/foo
