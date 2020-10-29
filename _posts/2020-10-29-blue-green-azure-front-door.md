@@ -24,7 +24,7 @@ If you are lucky and have control of your system consumers, you can enrich reque
 
 ## Use Azure Front Door
 
-The following Azure Front Door concepts will help us solve our task:
+The following Azure Front Door concepts will help us to solve our task:
 
 ### Additional frontends
 
