@@ -73,11 +73,11 @@ the following set of actions will take place:
 
 ![flow](/images/2020-10-29-inactive-flow.png)
 
-* Azure Front Door will receive traffic into the `api29cc67d2.foo-bar.org` frontend
-* AFD will use `api-inactive` Routing rule
+* Azure Front Door receives traffic from the `api29cc67d2.foo-bar.org` frontend
+* AFD uses `api-inactive` Routing rule
 * AFD identifies that `api-inactive` Routing rule uses `BlueGreenRules` Rules engine
-* the conditions of `BlueGreenRules` Engine rule are met and AFD will add `Redirect-To` header with value `green` to the request
-* request is sent to the APIM backend
+* The conditions of `BlueGreenRules` Engine rule are met and AFD will add `Redirect-To` header with value `green` to the request
+* Request is sent to the APIM backend
 * APIM policy identifies that header `Redirect-To` exists with value `green` and routes the request to the `green` Azure function
 
 #### "Default" traffic flow
@@ -90,10 +90,10 @@ curl --get https://api.foo-bar.org/foo
 
 ![flow](/images/2020-10-29-active-flow.png)
 
-* Azure Front Door will receive traffic into the `api.foo-bar.org` frontend
-* AFD will use `api` Routing rule
-* there is no Rules engine configured for this Routing rule
-* request is sent to the APIM backend
+* Azure Front Door receives traffic from the `api.foo-bar.org` frontend
+* AFD uses `api` Routing rule
+* There is no Rules engine associated with `api` Routing rule
+* Request is sent to the APIM backend
 * APIM policy identifies that there is no header `Redirect-To` exists at the header and routes the request to the active Azure function (`blue`)
 
 ## Useful links
