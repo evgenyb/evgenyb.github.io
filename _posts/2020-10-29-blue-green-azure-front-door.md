@@ -96,7 +96,7 @@ curl --get https://api.foo-bar.org/foo
 * Request is sent to the APIM backend
 * APIM policy identifies that there is no header `Redirect-To` exists at the header and routes the request to the active Azure function (`blue`)
 
-Note that this solution will only work if your APIM is not deployed into private VNet or if using [External]((https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837)) deployment model.
+Note that this solution will only work if your APIM is not deployed into private VNet or if using [External](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837) deployment model.
 If your APIM deployed into private VNEt with [Internal](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837) mode, this solution will not work, because Azure Front Door requires endpoints to be publicly available.
 
 I will cover how to configure the same setup with combination of API Management and Azure Application Gateway in the next post. Stay tuned!
