@@ -8,7 +8,7 @@ categories: [APIM, API Management, Canary testing, APIM policy, Azure Front Door
 ![logo](/images/2020-10-29-logo.png)
 
 If you use Azure API Management and want to adapt blue-green deployment or provisioning model, APIM has functionality that allows you implement a [canary traffic orchestration](https://borzenin.com/apim-canary-policy/) at the policy level.
-Here is the typical scenario how it would work:
+Here is the typical scenario how it works:
 
 * you have an active version of your infrastructure provisioned and deployed to, for instance, `blue` slot
 * you introduce the new version of your infrastructure and deploy it into the `green` slot
