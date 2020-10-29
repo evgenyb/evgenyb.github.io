@@ -11,36 +11,33 @@ If you use Azure API Management and want to adapt blue-green deployment or provi
 Here is the typical scenario how it would work:
 
 * you have an active version of your infrastructure provisioned and deployed to, for instance, `blue` slot
-* you introduce new version into the `green` slot
+* you introduce the new version of your infrastructure and deploy it into the `green` slot
 * you configure APIM to send, let's say 10% of the traffic to the `green` slot
 * you monitor logs and if all looks good, you increase the percentage to, let's say 50%
-* eventually you sent 100% of the traffic to the `green` slot and decommission `blue`
+* eventually you switch all 100% of the traffic to the `green` slot and decommission the `blue` one
 
-That works fine, but sometimes you want to test your new version (in the example above that's the `green` slot) before you even open traffic for canary testing. How do you do this?
+That works fine, but sometimes you want to test your new version (in the example above that's the `green` slot) before you open traffic even for canary testing. How do you do this?
 
-The simplest solution is to enrich requests by adding extra header with information about the `slot` we want redirect traffic to. Let's call this header `Redirect-To` with supported values `blue` or `green`. With this header at the requests, you can implement APIM policy and route the requests to the corresponding backend.
+The simplest solution is to enrich requests by adding extra header with information about which `slot` we want to redirect traffic to. Let's call this header `Redirect-To` with supported values `blue` or `green`. With this header added to the request, you can implement APIM policy and route the requests to the backend specified at the `Redirect-To` header.
 
-If you are lucky and have control of your APIM consumers, you can enrich requests at the client side, but often you can't do this and then the question is what options are available?
+If you are lucky and have control of your system consumers, you can enrich requests at the client side, but more often than not, you can't do this and then the question is what options are available?
 
 ## Use Azure Front Door
 
 The following Azure Front Door concepts will help us solve our task:
 
-* Frontends with custom domains support
-* [Rules Engine](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine?WT.mc_id=AZ-MVP-5003837)
+### Additional frontends
 
-### Additional blue|green frontends
-
-When you create Azure Front Door, you will have at least one frontend will hostname matching the name of your Front Door instance + `.azurefd.net`. Normally, you will add a custom domain with your domain name, for instance `api.foo-bar.org` that is configured as a CNAME record, pointing to your original FD host name.  
-When I want to test new inactive slot, I can add an extra endpoint with some custom domain, for example `api29cc67d2.foo-bar.org`, where `29cc67d2` is just random id, but you can use some more meaningful domain names like `api-inactive.foo-bar.org`, it doesn't really matter.
+When you create Azure Front Door, you will have at least one frontend with hostname matching your Front Door instance name + `.azurefd.net`. Normally, you will add a custom domain with your domain name, for instance `api.foo-bar.org` which is configured as a CNAME record, pointing to your original FD host name.  
+When I want to test new inactive (`green`) slot, I can add an extra custom domain endpoint, for example `api29cc67d2.foo-bar.org`, where `29cc67d2` is just random id, but you can use some more meaningful domain names like `api-inactive.foo-bar.org`, it doesn't really matter.
 
 ### Rules Engine
 
 Azure Front Door has a concept of [Rules Engine](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine?WT.mc_id=AZ-MVP-5003837) that allows you to customize how HTTP requests gets handled and provides a more controlled behavior to back-ends. It supports several [actions](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions?WT.mc_id=AZ-MVP-5003837) and the one that of our interest is [Modify request header](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions?WT.mc_id=AZ-MVP-5003837#modify-request-header). This action allows you to modify headers that are present in requests sent to your origin.
 
-Check this [tutorial](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-tutorial-rules-engine?WT.mc_id=AZ-MVP-5003837) how to configure your Rules Engine.
+Check this [tutorial](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-tutorial-rules-engine?WT.mc_id=AZ-MVP-5003837) and learn how to configure your Rules Engine.
 
-With rules engine I can configure the following rule:
+With Rules engine I can configure the following rule (pseudo code):
 
 ```txt
 If requestUrl contains `29cc67d2` then add new request header Redirect-To and set its value to green
@@ -52,7 +49,7 @@ Here is how it looks when you edit it at the Portal
 
 ### Routing rules
 
-We also need to add new routing rule `api-inactive` that routes all traffic from `api29cc67d2.foo-bar.org` to `apim-backend`. This rule has to be configured to use `BlueGreenRules` engine rule.
+We also need to add new routing rule `api-inactive` that routes all traffic from `api29cc67d2.foo-bar.org` frontend to `apim-backend` Backend pool. This rule has to be configured to use `BlueGreenRules` Engine rule.
 
 Here is how it looks at the Portal
 
@@ -60,9 +57,11 @@ Here is how it looks at the Portal
 
 ### APIM policies
 
-At the API Management we need to implement a `choose` policy that checks if request contains `Redirect-To` header, and if so, extracts header value and use `set-backend-service` policy to redirect an incoming request to a corresponding beckend (either `blue` or `green`).  
+At the API Management side we need to implement a `choose` policy that checks if request contains `Redirect-To` header, and if so, extracts header value and use `set-backend-service` policy to redirect an incoming request to a corresponding beckend (either `blue` or `green`).  
 
 ### Putting it all together
+
+#### Traffic to inactive slot
 
 With this setup in place, when I do the following request
 
@@ -77,9 +76,25 @@ the following set actions will take place:
 * Azure Front Door will receive traffic into the `api29cc67d2.foo-bar.org` frontend
 * AFD will use `api-inactive` Routing rule
 * AFD identifies that `api-inactive` Routing rule uses `BlueGreenRules` Rules engine
-* the condition of `api-blue` engine rule are met and AFD will add `Redirect-To` header with value `green` to the request
+* the conditions of `BlueGreenRules` Engine rule are met and AFD will add `Redirect-To` header with value `green` to the request
 * request is sent to the APIM backend
 * APIM policy identifies that header `Redirect-To` exists with value `green` and routes the request to the `green` Azure function
+
+#### "Default" traffic flow
+
+Here is how this setup will work when I call the "default" url:
+
+```bash
+curl --get https://api.foo-bar.org/foo
+```
+
+![flow](/images/2020-10-29-default-flow.png)
+
+* Azure Front Door will receive traffic into the `api.foo-bar.org` frontend
+* AFD will use `api` Routing rule
+* there is no Rules engine configured for this Routing rule
+* request is sent to the APIM backend
+* APIM policy identifies that there is no header `Redirect-To` exists at the header and routes the request to the active Azure function (`blue`)
 
 ## Useful links
 
