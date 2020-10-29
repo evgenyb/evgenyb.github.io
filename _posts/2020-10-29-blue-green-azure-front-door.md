@@ -69,9 +69,9 @@ With this setup in place, when I call "inactive" frontend
 curl --get https://api29cc67d2.foo-bar.org/foo
 ```
 
-the following set actions will take place:
+the following set of actions will take place:
 
-![flow](/images/2020-10-29-flow.png)
+![flow](/images/2020-10-29-inactive-flow.png)
 
 * Azure Front Door will receive traffic into the `api29cc67d2.foo-bar.org` frontend
 * AFD will use `api-inactive` Routing rule
@@ -88,7 +88,7 @@ Here is how this setup will work when I call the "default" url:
 curl --get https://api.foo-bar.org/foo
 ```
 
-![flow](/images/2020-10-29-default-flow.png)
+![flow](/images/2020-10-29-active-flow.png)
 
 * Azure Front Door will receive traffic into the `api.foo-bar.org` frontend
 * AFD will use `api` Routing rule
