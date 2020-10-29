@@ -49,7 +49,7 @@ Here is how it looks when you edit it at the Portal
 
 ### Routing rules
 
-We also need to add new routing rule `api-inactive` that routes all traffic from `api29cc67d2.foo-bar.org` frontend to `apim-backend` Backend pool. This rule has to be configured to use `BlueGreenRules` Engine rule.
+We also need to add new routing rule `api-inactive` that routes all traffic from `api29cc67d2.foo-bar.org` frontend to `apim-backend` Backend pool. This rule has to be configured to use `BlueGreenRules` Rules Engine.
 
 Here is how it looks at the Portal
 
