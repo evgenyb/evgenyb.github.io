@@ -7,18 +7,18 @@ categories: [APIM, API Management, Canary testing, APIM policy, Azure Front Door
 
 ![logo](/images/2020-10-29-logo.png)
 
-If you use Azure API Management and want to adapt blue-green deployment or provisioning model, APIM has functionality that allows you implement a [canary traffic orchestration](https://borzenin.com/apim-canary-policy/) at the policy level.
-Here is the typical scenario how it works:
+If you use Azure API Management and want to adapt blue-green deployment or provisioning model, APIM has functionality that allows you to implement a [canary traffic orchestration](https://borzenin.com/apim-canary-policy/) at the policy level.
+Here is a typical scenario for how it works:
 
-* you have an active version of your infrastructure provisioned and deployed to, for instance, `blue` slot
-* you introduce the new version of your infrastructure and deploy it into the `green` slot
-* you configure APIM to send, let's say 10% of the traffic to the `green` slot
-* you monitor logs and if all looks good, you increase the percentage to, let's say 50%
+* you have an active version of your infrastructure provisioned and deployed to a slot that we will call the `blue` slot
+* you introduce a new version of your infrastructure and deploy it into a new slot - the `green` slot
+* you configure APIM to send some small percentage (let's say 10%) of the traffic to the `green` slot
+* you monitor logs and if all looks good, you increase the percentage to 50%
 * eventually you switch all 100% of the traffic to the `green` slot and decommission the `blue` one
 
 That works fine, but sometimes you want to test your new version (in the example above that's the `green` slot) before you open traffic even for canary testing. How do you do this?
 
-The simplest solution is to enrich requests by adding extra header with information about which `slot` we want to redirect traffic to. Let's call this header `Redirect-To` with supported values `blue` or `green`. With this header added to the request, you can implement APIM policy and route the requests to the backend specified at the `Redirect-To` header.
+The easiest solution is to enrich requests by adding extra header with information about which `slot` we want to redirect traffic to. Let's call this header `Redirect-To` with supported values `blue` or `green`. With this header added to the request, you can implement APIM policy and route the requests to the backend specified at the `Redirect-To` header.
 
 If you are lucky and have control of your system consumers, you can enrich requests at the client side, but more often than not, you can't do this and then the question is what options are available?
 
@@ -29,11 +29,11 @@ The following Azure Front Door concepts will help us to solve our task:
 ### Additional frontends
 
 When you create Azure Front Door, you will have at least one frontend with hostname matching your Front Door instance name + `.azurefd.net`. Normally, you will add a custom domain with your domain name, for instance `api.foo-bar.org` which is configured as a CNAME record, pointing to your original FD host name.  
-When I want to test new inactive (`green`) slot, I can add an extra custom domain endpoint, for example `api29cc67d2.foo-bar.org`, where `29cc67d2` is just random id, but you can use some more meaningful domain names like `api-inactive.foo-bar.org`, it doesn't really matter.
+When I want to test the new inactive (`green`) slot, I can add an extra custom domain endpoint, for example `api29cc67d2.foo-bar.org`, where `29cc67d2` is just random id, but you can use some more meaningful domain names like `api-inactive.foo-bar.org`.
 
 ### Rules Engine
 
-Azure Front Door has a concept of [Rules Engine](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine?WT.mc_id=AZ-MVP-5003837) that allows you to customize how HTTP requests gets handled and provides a more controlled behavior to back-ends. It supports several [actions](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions?WT.mc_id=AZ-MVP-5003837) and the one that of our interest is [Modify request header](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions?WT.mc_id=AZ-MVP-5003837#modify-request-header). This action allows you to modify headers that are present in requests sent to your origin.
+Azure Front Door has a concept of [Rules Engine](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine?WT.mc_id=AZ-MVP-5003837) that allows you to customize how HTTP requests are handled and provides a more controlled behavior to back-ends. It supports several [actions](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions?WT.mc_id=AZ-MVP-5003837) and the one that interests us is [Modify request header](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions?WT.mc_id=AZ-MVP-5003837#modify-request-header). This action allows you to modify headers that are present in requests sent to your origin.
 
 Check this [tutorial](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-tutorial-rules-engine?WT.mc_id=AZ-MVP-5003837) and learn how to configure your Rules Engine.
 
@@ -57,7 +57,7 @@ Here is how it looks at the Portal
 
 ### APIM policies
 
-At the API Management side we need to implement a `choose` policy that checks if request contains `Redirect-To` header, and if so, extracts header value and use `set-backend-service` policy to redirect an incoming request to a corresponding beckend (either `blue` or `green`).  
+At the API Management side we need to implement a `choose` policy that checks if requests contain `Redirect-To` header, and if so, extracts header value and uses `set-backend-service` policy to redirect the  incoming request to a corresponding beckend (either `blue` or `green`).  
 
 ### Putting it all together
 
