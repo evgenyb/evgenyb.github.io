@@ -22,7 +22,7 @@ Here is a typical scenario for how blue-green infrastructure provisioning works:
 
 Now, I want to test my new version (the `green` slot) before I open traffic for canary testing. How do I do that?
 
-In this post I will focus on the use-case when APIM deployed to private VNet with Internal mode and exposed publicly with Azure Application Gateway.
+In this post I will focus on the use-case when APIM deployed to a private VNet with Internal mode and exposed publicly with Azure Application Gateway.
 
 ## Application Gateway Configuration
 
@@ -112,7 +112,7 @@ the following set of actions will take place:
 * Request is sent to the APIM backend
 * APIM policy identifies that header `Redirect-To` exists with value `green` and routes the request to the `green` App Service
 
-Next time I will write how to test inactive slot when your APIM deployed into private VNet with [Internal](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837) mode and you don't want to expose it publicly neither with Azure Front Door nor with Application Gateway. Stay tuned!
+Next time I will describe how to test inactive slot when your APIM is deployed into a private VNet with [Internal](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837) mode and you don't want to expose it publicly neither with Azure Front Door nor with Application Gateway. Stay tuned!
 
 ## Useful links
 
