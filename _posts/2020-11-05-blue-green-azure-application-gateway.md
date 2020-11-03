@@ -1,0 +1,87 @@
+---
+layout: post
+title: "How to do blue-green testing with API Management and Azure Application Gateway"
+date: 2020-11-05
+description: "If you use Azure API Management and want to adapt a blue-green provisioning model, APIM has functionality that allows you to implement a canary traffic orchestration at the policy level. The canary testing model works fine, but sometimes you need to verify your new version of the infrastructure before you open traffic even for canary testing. How do you do this? In this blogpost I show how you can orchestrate your traffic to an inactive version of infrastructure by using API Management in combination with Azure Application Gateway."
+image: "/images/2020-11-05-logo.png"
+categories: [APIM, API Management, Canary testing, APIM policy, Azure Application Gateway, AGW, IaC, Infrastructure As Code]
+---
+
+![logo](/images/2020-11-05-logo.png)
+
+If you use Azure API Management and want to adapt blue-green deployment or provisioning model, APIM has functionality that allows you to implement a [canary traffic orchestration](https://borzenin.com/apim-canary-policy/) at the policy level.
+
+In my previous post I wrote about [how to do blue-green testing with Azure Front Door and API Management](https://borzenin.com/blue-green-azure-front-door/), but I will repeat the use-case description and requirements here as well.
+
+Here is a typical scenario for how blue-green infrastructure provisioning works:
+
+* you have an active version of your infrastructure provisioned and deployed to a slot that we will call the `blue` slot
+* you introduce a new version of your infrastructure and deploy it into a new slot - the `green` slot
+* you configure APIM to send some small percentage (let's say 10%) of the traffic to the `green` slot
+* you monitor logs and if all looks good, you switch all 100% of the traffic to the `green` slot and decommission the `blue` one
+
+Now, I want to test my new version (the `green` slot) before I open traffic for canary testing. How do I do that?
+
+In this post I will focus on the use-case when APIM deployed to private VNet with Internal mode and exposed publicly with Azure Application Gateway.
+
+## Application Gateway Configuration
+
+### Http Listeners
+
+When you configure your AGW instance, one of the elements that needs to be configured is [HttpListeners](https://docs.microsoft.com/en-us/azure/application-gateway/configuration-listeners?WT.mc_id=AZ-MVP-5003837). A listener is a logical entity that checks for incoming connection requests by using the port, protocol, host, and IP address. In my example, there is one listener called `default` configured as a custom domain `api.foo-bar.org`.
+
+### Backend pools
+
+A [backend pool](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-components?WT.mc_id=AZ-MVP-5003837#backend-pools) routes request to backend servers, which serve the request. In my example, there is one backend called `apim` pointing to APIM instance.
+
+### Routing rules
+
+A [request routing rule](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-components?WT.mc_id=AZ-MVP-5003837#request-routing-rules) determines how to route traffic on the listener. The rule binds the listener and the back-end pool. In my example, there is a rule called `default` that links `default` listener with `apim` backend pool.
+
+Here is how AGW configuration looks like at the `Monitoring/Insights` view (still in Preview)
+
+![AGW-default](/images/2020-11-05-AGW-default.png)
+
+## Canary configuration
+
+AGW allows you to configure more than one listener, routing rule and backend pool, so, when I need to test the new inactive infrastructure slot, I will add an extra listener, let's call it `canary`, for `api29cc67d2.foo-bar.org` domain and new routing rule that binds `canary` listener with `apim` backend pool, and let's call it `canary` as well.
+
+With this new set of components in place, here is how AGW configuration will look like:
+
+![AGW-default](/images/2020-11-05-AGW-canary.png)
+
+## Rewrite HTTP headers
+
+Application Gateway supports [rewrite HTTP headers](https://docs.microsoft.com/en-us/azure/application-gateway/rewrite-http-headers-url?WT.mc_id=AZ-MVP-5003837) of requests and responses. It allows you to add conditions to ensure that specified headers are rewritten only when certain conditions are met.
+Application Gateway uses [server variables](https://docs.microsoft.com/en-us/azure/application-gateway/rewrite-http-headers-url?WT.mc_id=AZ-MVP-5003837#server-variables) to store useful information about the server, the connection with the client, and the current request on the connection. You can use these variables to evaluate rewrite conditions and rewrite headers.
+
+For my case, I want to enrich all requests coming through `canary` Routing rules with extra header `Redirect-To` with value set to `green`.
+
+This is how Rewrite set configuration looks at the Portal:
+
+First, you select what Routing rules that you want rewrite set to be associated with. In my case, I only want to enrich request headers for `canary` Routing rule.
+
+![portal-01](/images/2020-11-05-portal-1.png)
+
+Next, you configure your Rewrite rule. I want to enrich all requests coming through `Canary` Routing rules, therefore there is no Conditions and only one Action called `CanaryRewrite` that adds new `Redirect-To` header with value `green`.
+
+![portal-01](/images/2020-11-05-portal-2.png)
+
+## APIM policies
+
+At the API Management side I need to implement a `choose` policy that checks if requests contain `Redirect-To` header, and if so use `set-backend-service` policy to redirect the incoming request to the `green` slot.  
+
+## Useful links
+
+* [What is Azure Application Gateway?](https://docs.microsoft.com/en-us/azure/application-gateway/overview?WT.mc_id=AZ-MVP-5003837)
+* [Azure Application Gateway documentation](https://docs.microsoft.com/en-us/azure/application-gateway/?WT.mc_id=AZ-MVP-5003837)
+* [Application gateway components](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-components?WT.mc_id=AZ-MVP-5003837)
+* [Application Gateway configuration overview](https://docs.microsoft.com/en-us/azure/application-gateway/configuration-overview?WT.mc_id=AZ-MVP-5003837)
+* [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/?WT.mc_id=AZ-MVP-5003837#overview)
+* [APIM control flow policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies?WT.mc_id=AZ-MVP-5003837#choose)
+* [APIM set backend service policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies?WT.mc_id=AZ-MVP-5003837#SetBackendService)
+* [How to use Azure API Management with virtual networks](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837)
+
+If you have any issues/comments/suggestions related to the labs, you can reach out to me at evgeny.borzenin@gmail.com.
+
+With that - thanks for reading :)
