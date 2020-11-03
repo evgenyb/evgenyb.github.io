@@ -75,6 +75,43 @@ Here is how the AGW configuration will look like after rewrite set was assigned 
 
 At the API Management side I need to implement a `choose` policy that checks if requests contain `Redirect-To` header, and if so, use `set-backend-service` policy to redirect the incoming request to the `green` slot.  
 
+### Putting it all together
+
+#### "Default" traffic flow
+
+Here is how this setup will work when I call the "default" url:
+
+```bash
+curl --get https://api.foo-bar.org/foo
+```
+
+![flow](/images/2020-11-05-active-flow.png)
+
+* Application Gateway receives traffic from the `api.foo-bar.org` listener
+* AGW uses `default` routing rule
+* There is no Rewrite set associated with `default` routing rule
+* Request is sent to the APIM backend
+* APIM policy identifies that there is no header `Redirect-To` at the request and routes the request to the active App Service (`blue`)
+
+#### Traffic to inactive slot
+
+When I call "inactive" frontend
+
+```bash
+curl --get https://api29cc67d2.foo-bar.org/foo
+```
+
+the following set of actions will take place:
+
+![flow](/images/2020-11-05-inactive-flow.png)
+
+* Application Gateway receives traffic from the `api29cc67d2.foo-bar.org` listener
+* AGW uses `canary` routing rule
+* AGW identifies that `canary` routing rule uses `CanaryRewrite` Rewrite set
+* AGW will add `Redirect-To` header with value `green` to the request
+* Request is sent to the APIM backend
+* APIM policy identifies that header `Redirect-To` exists with value `green` and routes the request to the `green` App Service
+
 ## Useful links
 
 * [What is Azure Application Gateway?](https://docs.microsoft.com/en-us/azure/application-gateway/overview?WT.mc_id=AZ-MVP-5003837)
