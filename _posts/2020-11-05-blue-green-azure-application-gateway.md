@@ -123,6 +123,8 @@ the following set of actions will take place:
 * [APIM set backend service policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies?WT.mc_id=AZ-MVP-5003837#SetBackendService)
 * [How to use Azure API Management with virtual networks](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837)
 
-If you have any issues/comments/suggestions related to the labs, you can reach out to me at evgeny.borzenin@gmail.com.
-
 With that - thanks for reading :)
+
+## Responses
+
+Visit the [Github Issue](https://github.com/evgenyb/evgenyb.github.io/issues/21) to comment on this page. The comments will not be displayed directly on the page.
