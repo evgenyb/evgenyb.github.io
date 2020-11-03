@@ -112,13 +112,18 @@ the following set of actions will take place:
 * Request is sent to the APIM backend
 * APIM policy identifies that header `Redirect-To` exists with value `green` and routes the request to the `green` App Service
 
+Next time I will write how to test inactive slot when your APIM deployed into private VNet with [Internal](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837) mode and you don't want to expose it publicly neither with Azure Front Door nor with Application Gateway. Stay tuned!
+
 ## Useful links
 
 * [What is Azure Application Gateway?](https://docs.microsoft.com/en-us/azure/application-gateway/overview?WT.mc_id=AZ-MVP-5003837)
 * [Azure Application Gateway documentation](https://docs.microsoft.com/en-us/azure/application-gateway/?WT.mc_id=AZ-MVP-5003837)
 * [Application gateway components](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-components?WT.mc_id=AZ-MVP-5003837)
 * [Application Gateway configuration overview](https://docs.microsoft.com/en-us/azure/application-gateway/configuration-overview?WT.mc_id=AZ-MVP-5003837)
-* [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/?WT.mc_id=AZ-MVP-5003837#overview)
+* [AGW: listeners](https://docs.microsoft.com/en-us/azure/application-gateway/configuration-listeners?WT.mc_id=AZ-MVP-5003837)
+* [AGW: backend pool](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-components?WT.mc_id=AZ-MVP-5003837#backend-pools)
+* [AGW: request routing rule](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-components?WT.mc_id=AZ-MVP-5003837#request-routing-rules)
+* [AGW: Rewrite HTTP headers of requests and responses](https://docs.microsoft.com/en-us/azure/application-gateway/rewrite-http-headers-url?WT.mc_id=AZ-MVP-5003837)
 * [APIM control flow policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies?WT.mc_id=AZ-MVP-5003837#choose)
 * [APIM set backend service policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-transformation-policies?WT.mc_id=AZ-MVP-5003837#SetBackendService)
 * [How to use Azure API Management with virtual networks](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837)
