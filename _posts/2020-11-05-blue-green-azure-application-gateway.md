@@ -44,7 +44,7 @@ Here is how AGW configuration looks like at the `Monitoring/Insights` view (stil
 
 ## Canary configuration
 
-AGW allows you to configure more than one listener, routing rule and backend pool, so, when I need to test the new inactive infrastructure slot, I will add an extra listener, let's call it `canary`, for `api29cc67d2.foo-bar.org` domain and new routing rule that binds `canary` listener with `apim` backend pool, and let's call it `canary` as well.
+AGW allows you to configure more than one listener, routing rule and backend pool, so, when I need to test the new inactive infrastructure slot, I can add an extra listener, let's call it `canary`, for test host `api29cc67d2.foo-bar.org` and new routing rule that binds `canary` listener with `apim` backend pool, and let's call it `canary` as well.
 
 With this new set of components in place, here is how AGW configuration will look like:
 
@@ -52,24 +52,28 @@ With this new set of components in place, here is how AGW configuration will loo
 
 ## Rewrite HTTP headers
 
-Application Gateway supports [rewrite HTTP headers](https://docs.microsoft.com/en-us/azure/application-gateway/rewrite-http-headers-url?WT.mc_id=AZ-MVP-5003837) of requests and responses. It allows you to add conditions to ensure that specified headers are rewritten only when certain conditions are met.
+Application Gateway supports [rewrite HTTP headers of requests and responses](https://docs.microsoft.com/en-us/azure/application-gateway/rewrite-http-headers-url?WT.mc_id=AZ-MVP-5003837). It allows you to add conditions to ensure that specified headers are rewritten only when certain conditions are met.
 Application Gateway uses [server variables](https://docs.microsoft.com/en-us/azure/application-gateway/rewrite-http-headers-url?WT.mc_id=AZ-MVP-5003837#server-variables) to store useful information about the server, the connection with the client, and the current request on the connection. You can use these variables to evaluate rewrite conditions and rewrite headers.
 
-For my case, I want to enrich all requests coming through `canary` Routing rules with extra header `Redirect-To` with value set to `green`.
+For my case, I want to enrich all requests coming through `canary` routing rules with extra header `Redirect-To` with value set to `green`.
 
 This is how Rewrite set configuration looks at the Portal:
 
-First, you select what Routing rules that you want rewrite set to be associated with. In my case, I only want to enrich request headers for `canary` Routing rule.
+First, select what Routing rules that you want rewrite set to be associated with. In my case, I only want to enrich request headers for `canary` routing rule.
 
 ![portal-01](/images/2020-11-05-portal-1.png)
 
-Next, you configure your Rewrite rule. I want to enrich all requests coming through `Canary` Routing rules, therefore there is no Conditions and only one Action called `CanaryRewrite` that adds new `Redirect-To` header with value `green`.
+Next, configure your Rewrite set. I want to enrich all requests coming through `canary` routing rules by adding new `Redirect-To` header before AGW forwards the requests to the backend, therefore there is no Conditions and only one Action called `CanaryRewrite` that adds new `Redirect-To` header with value `green`.
 
-![portal-01](/images/2020-11-05-portal-2.png)
+![portal-02](/images/2020-11-05-portal-2.png)
+
+Here is how the AGW configuration will look like after rewrite set was assigned to the `canary` routing rule:
+
+![AGW-canary-v1](/images/2020-11-05-AGW-canary-v1.png)
 
 ## APIM policies
 
-At the API Management side I need to implement a `choose` policy that checks if requests contain `Redirect-To` header, and if so use `set-backend-service` policy to redirect the incoming request to the `green` slot.  
+At the API Management side I need to implement a `choose` policy that checks if requests contain `Redirect-To` header, and if so, use `set-backend-service` policy to redirect the incoming request to the `green` slot.  
 
 ## Useful links
 
