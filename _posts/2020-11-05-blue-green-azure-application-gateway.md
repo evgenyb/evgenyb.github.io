@@ -40,13 +40,13 @@ A [backend pool](https://docs.microsoft.com/en-us/azure/application-gateway/appl
 
 A [request routing rule](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-components?WT.mc_id=AZ-MVP-5003837#request-routing-rules) determines how to route traffic on the listener. The rule binds the listener and the back-end pool. In my example, there is a rule called `default` that links `default` listener with `apim` backend pool.
 
-Here is how AGW configuration looks like at the `Monitoring/Insights` view (still in Preview)
+Here is how AGW configuration looks like from the `Monitoring/Insights` view (still in Preview)
 
 ![AGW-default](/images/2020-11-05-AGW-default.png)
 
 ## Canary configuration
 
-AGW allows you to configure more than one listener, routing rule and backend pool, so, when I need to test the new inactive infrastructure slot, I can add an extra listener, let's call it `canary`, for test host `api29cc67d2.foo-bar.org` and new routing rule that binds `canary` listener with `apim` backend pool, and let's call it `canary` as well.
+AGW allows you to configure more than one listener, routing rule and backend pool, so, when I need to test the new inactive infrastructure slot, I can add an extra listener, let's call it `canary`, receiving requests from the test host `api29cc67d2.foo-bar.org`, and new routing rule that binds `canary` listener with `apim` backend pool, and let's call it `canary` as well.
 
 With this new set of components in place, here is how AGW configuration will look like:
 
@@ -65,17 +65,17 @@ First, select what Routing rules that you want rewrite set to be associated with
 
 ![portal-01](/images/2020-11-05-portal-1.png)
 
-Next, configure your Rewrite set. I want to enrich all requests coming through `canary` routing rules by adding new `Redirect-To` header before AGW forwards the requests to the backend, therefore there is no Conditions and only one Action called `CanaryRewrite` that adds new `Redirect-To` header with value `green`.
+Next, configure your rewrite set. I want to enrich all requests coming through `canary` routing rules by adding new `Redirect-To` header before AGW forwards the requests to the backend, therefore there is no Conditions and only one Action called `CanaryRewrite` that adds new `Redirect-To` header with value `green`.
 
 ![portal-02](/images/2020-11-05-portal-2.png)
 
-Here is how the AGW configuration will look like after rewrite set was assigned to the `canary` routing rule:
+Here is how the AGW configuration will look like when rewrite set is assigned to the `canary` routing rule:
 
 ![AGW-canary-v1](/images/2020-11-05-AGW-canary-v1.png)
 
 ## APIM policies
 
-At the API Management side I need to implement a `choose` policy that checks if requests contain `Redirect-To` header, and if so, use `set-backend-service` policy to redirect the incoming request to the `green` slot.  
+At the API Management side I need to implement a `choose` policy that checks if requests contain `Redirect-To` header, and if so, use `set-backend-service` policy to redirect the incoming request to the backend hosted at the `green` slot.  
 
 ### Putting it all together
 
@@ -93,7 +93,7 @@ curl --get https://api.foo-bar.org/foo
 * AGW uses `default` routing rule
 * There is no Rewrite set associated with `default` routing rule
 * Request is sent to the APIM backend
-* APIM policy identifies that there is no header `Redirect-To` at the request and routes the request to the active App Service (`blue`)
+* APIM policy identifies that there is no header `Redirect-To` at the request and routes the request to the App Service hosted at the active slot (`blue`)
 
 #### Traffic to inactive slot
 
@@ -109,12 +109,12 @@ the following set of actions will take place:
 
 * Application Gateway receives traffic from the `api29cc67d2.foo-bar.org` listener
 * AGW uses `canary` routing rule
-* AGW identifies that `canary` routing rule uses `CanaryRewrite` Rewrite set
+* AGW identifies that `canary` routing rule has `CanaryRewrite` rewrite set assigned
 * AGW will add `Redirect-To` header with value `green` to the request
 * Request is sent to the APIM backend
 * APIM policy identifies that header `Redirect-To` exists with value `green` and routes the request to the `green` App Service
 
-Next time I will describe how to test inactive slot when your APIM is deployed into a private VNet with [Internal](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837) mode and you don't want to expose it publicly neither with Azure Front Door nor with Application Gateway. Stay tuned!
+Next time I will describe how to test inactive slot just by using the built-in APIM functionality. Stay tuned!
 
 ## Useful links
 
@@ -134,4 +134,4 @@ With that - thanks for reading :)
 
 ## Responses
 
-Visit the [Github Issue](https://github.com/evgenyb/evgenyb.github.io/issues/21) to comment on this page. The comments will not be displayed directly on the page.
+Visit the [Github Issue](https://github.com/evgenyb/evgenyb.github.io/issues/21) to comment on this page. The comments will not be displayed directly on that page.
