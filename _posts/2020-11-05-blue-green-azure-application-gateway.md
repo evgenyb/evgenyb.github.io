@@ -22,13 +22,15 @@ Here is a typical scenario for how blue-green infrastructure provisioning works:
 
 Now, I want to test my new version (the `green` slot) before I open traffic for canary testing. How do I do that?
 
-In this post I will focus on the use-case when APIM deployed to a private VNet with Internal mode and exposed publicly with Azure Application Gateway.
+In this post I will focus on the use-case when APIM is deployed to a private VNet with [Internal](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837) mode and exposed publicly with Azure Application Gateway.
 
 ## Application Gateway Configuration
 
+Here is what you typically need to configure at Application Gateway:
+
 ### Http Listeners
 
-When you configure your AGW instance, one of the elements that needs to be configured is [HttpListeners](https://docs.microsoft.com/en-us/azure/application-gateway/configuration-listeners?WT.mc_id=AZ-MVP-5003837). A listener is a logical entity that checks for incoming connection requests by using the port, protocol, host, and IP address. In my example, there is one listener called `default` configured as a custom domain `api.foo-bar.org`.
+A [listener](https://docs.microsoft.com/en-us/azure/application-gateway/configuration-listeners?WT.mc_id=AZ-MVP-5003837) is a logical entity that checks for incoming connection requests by using the port, protocol, host, and IP address. In my example, there is one listener called `default` configured as a custom domain `api.foo-bar.org`.
 
 ### Backend pools
 
