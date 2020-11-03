@@ -7,22 +7,17 @@ avatar: https://avatars0.githubusercontent.com/u/155018?s=60&u=a057dc9b607a2f075
 
 # Includes an icon in the footer for each username you enter
 footer-links:
-  dribbble:
   email: evgeny.borzenin@gmail.com
   github: evgenyb/iac-meetup
-  instagram:
   linkedin: evgeny-borzenin-8b13a4
+  twitter: EvgenyBorzenin
   rss: rss
-
-# Enter your Disqus shortname (not your username) to enable commenting on posts
-# You can find your shortname on the Settings page of your Disqus account
-disqus: 
 
 # Google Analytics
 google_analytics: UA-156553535-3
 
 # Used for Sitemap.xml and your RSS feed
-url: http://borzenin.no
+url: https://borzenin.com
 #enforce_ssl: https://borzenin.no
 
 permalink: /:title/
