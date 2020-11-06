@@ -2,7 +2,7 @@
 layout: post
 title: "Execute bash scripts in ARM templates (preview)"
 date: 2020-05-28
-categories: [ARM templates]
+categories: ["ARM templates"]
 ---
 
 ![infra](/images/2020-05-28-logo.png)

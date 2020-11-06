@@ -2,7 +2,7 @@
 layout: post
 title: "Use nested ARM template to provision User Assigned Managed Identity and add access policy to key-vault from different subscription"
 date: 2020-05-11
-categories: [ARM templates]
+categories: ["ARM templates"]
 ---
 
 Azure Application Gateway v2 supports integration with Key Vault for server certificates that are attached to HTTPS-enabled listeners. One of the main benefits of this integration, is support for automatic renewal of certificates. This is especially practical if you use Azure App Service Certificates that you purchase and maintain directly on Azure.

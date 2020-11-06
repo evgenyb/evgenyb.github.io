@@ -4,7 +4,7 @@ title: "How to do blue-green testing with Azure Front Door and API Management"
 date: 2020-10-29
 description: "If you use Azure API Management and want to adapt a blue-green provisioning model, APIM has functionality that allows you to implement a canary traffic orchestration at the policy level. The canary testing model works fine, but sometimes you want to verify your new version of the infrastructure before you open traffic even for canary testing. How do you do this? In this latest blogpost I show how you can orchestrate your traffic to an inactive version of infrastructure by using API Management in combination with Azure Front Door."
 image: "/images/2020-10-29-logo.png"
-categories: [APIM, API Management, Canary testing, APIM policy, Azure Front Door, IaC, Infrastructure As Code]
+categories: ["API Management", "Canary testing", "Azure Front Door", "Infrastructure as Code"]
 ---
 
 ![logo](/images/2020-10-29-logo.png)

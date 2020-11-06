@@ -2,7 +2,7 @@
 layout: post
 title: "Import existing Azure DNS Zone into Pulumi"
 date: 2020-09-08
-categories: [Azure, Pulumi, Infrastructure as Code, Azure DNS Zone]
+categories: ["Pulumi", "Infrastructure as Code", "Azure DNS Zone"]
 ---
 
 ![logo](/images/2020-09-08-logo.png)

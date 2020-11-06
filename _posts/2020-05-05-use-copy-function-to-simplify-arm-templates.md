@@ -2,7 +2,7 @@
 layout: post
 title: "Use ARM template copy element to simplify Virtual Network configuration for multiple environments"
 date: 2020-05-05
-categories: [ARM templates]
+categories: ["ARM templates", "Infrastructure as Code"]
 ---
 
 Let's imagine that you implement your infrastructure as code with [ARM templates](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/overview) and you need to provision [Private Virtual Network](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) (further vnet) for different environments and you use different subnet configuration for each of them. Let's see how we can solve this.

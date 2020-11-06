@@ -2,7 +2,7 @@
 layout: post
 title: "ARM template deployment what-if operation"
 date: 2020-04-27
-categories: [ARM templates, powershell]
+categories: ["ARM templates", "PowerShell"]
 ---
 
 During the preparation for my ["How to live in harmony with ARM templates" on-line hands-on workshop](https://www.meetup.com/Infrastructure-As-Code-User-Group-Oslo/events/268754221/) I came across the following really interesting [Resource Manager](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview) feature called [what-if operation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-deploy-what-if). This is similar concept to [Terraform Plan](https://www.terraform.io/docs/commands/plan.html), when Resource Manager will compare the current infrastructure state with ARM template you are trying to deploy and show the "execution plan" without making any changes to existing resources. That is - it will show what will be added, removed or updated. So, I decided to check this out and get some hands-on experience how it actually works.

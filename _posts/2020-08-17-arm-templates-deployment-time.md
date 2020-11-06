@@ -2,7 +2,7 @@
 layout: post
 title: "ARM template design choices and deployment time"
 date: 2020-08-17
-categories: [Azure, ARM templates, Infrastructure as Code, Immutable infrastructure]
+categories: ["ARM templates", "Infrastructure as Code", "Immutable infrastructure"]
 ---
 
 When you use ARM templates to implement your infrastructure as code, there are multiple ways you can structure your ARM templates. When your infrastructure setup is small, it doesn't really matter, but when you work with complex infrastructure, with significant number of infrastructure components, the way how you structure your ARM templates directly affects how easy is to maintain them.

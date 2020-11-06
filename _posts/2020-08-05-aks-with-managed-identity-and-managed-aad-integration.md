@@ -2,7 +2,7 @@
 layout: post
 title: "ARM template for AKS cluster with managed identity and managed Azure AD integration"
 date: 2020-08-05
-categories: [Azure, AKS, Managed Identity, Azure AD, ARM templates, Kubernetes, Infrastructure as Code]
+categories: ["AKS", "Managed Identity", "Azure AD", "ARM templates", "Infrastructure as Code"]
 ---
 
 Recently I was working with my sandbox infrastructure environment and decided to switch my AKS cluster to [use Managed Identity](https://docs.microsoft.com/en-us/azure/aks/use-managed-identity?WT.mc_id=AZ-MVP-5003837) and [managed Azure AD integration](https://docs.microsoft.com/en-us/azure/aks/managed-aad?WT.mc_id=AZ-MVP-5003837). I mainly use ARM templates to describe my infrastructure and I actually didn't find any ARM template samples showing how to configure AKS with neither managed identity, nor managed Azure AD integration, so I decided to share what I finally came up with as a solution...

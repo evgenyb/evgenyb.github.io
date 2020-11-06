@@ -2,7 +2,7 @@
 layout: post
 title: "Azure DevOps service endpoint automation"
 date: 2020-06-20
-categories: [ARM templates, Azure DevOps, SPN, Automation, Rest API]
+categories: ["ARM templates", "Azure DevOps", "Automation"]
 ---
 
 ![logo](/images/2020-06-20-logo.png)

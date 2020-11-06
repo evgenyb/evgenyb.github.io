@@ -2,7 +2,7 @@
 layout: post
 title: "How to use API Management policy to lock down requests to only Azure Front Door instance?"
 date: 2020-07-28
-categories: [Azure, APIM, API Management, APIM policy, Azure Front Door, Network Security Group, Azure Application Gateway]
+categories: ["API Management", "Azure Front Door", "Network Security Group", "Azure Application Gateway"]
 ---
 
 I was recently experimenting with infrastructure where [Azure Front Door](https://azure.microsoft.com/en-us/services/frontdoor/#overview) is deployed in front of [Azure API Management](https://docs.microsoft.com/en-us/azure/api-management/api-management-key-concepts) and my focus was on how to secure that traffic to APIM is only coming from my Front Door instance, so here are some notes related to this setup.

@@ -2,7 +2,7 @@
 layout: post
 title: "Azure DevOps Service Connection usage"
 date: 2020-04-28
-categories: [Azure DevOps]
+categories: ["Azure DevOps"]
 ---
 
 I work a lot with [Azure DevOps](https://azure.microsoft.com/nb-no/services/devops/) and quite often I need to find what pipelines use given [Azure DevOps Service Connection](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml). From the `Azure DevOps` portal, for each service connection you can find the `Usage history`.
