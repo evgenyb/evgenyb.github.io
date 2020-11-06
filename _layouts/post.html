@@ -10,6 +10,13 @@ layout: default
     {% if page.last_modified_at %}
     <p class="author_title" datetime="{{ page.last_modified_at | date_to_xmlschema }}">(Updated: {{ page.last_modified_at | date: "%b %-d, %Y" }})</p>
     {% endif %}
+  </div>
+    
+  <div class="entry">
+    {{ content }}
+  </div>
+
+  <div>
     <div class="post-tags">
       {% if post %}
         {% assign categories = post.categories %}
@@ -18,13 +25,8 @@ layout: default
       {% endif %}
       {% for category in categories %}
         <a href="{{site.baseurl}}/tags/#{{category | slugify}}">{{category}}</a>
-        {% unless forloop.last %}&nbsp;{% endunless %}
       {% endfor %}
     </div>
-  </div>
-    
-  <div class="entry">
-    {{ content }}
   </div>
 
   <div>

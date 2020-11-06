@@ -4,7 +4,7 @@ title: "How to do blue-green testing with API Management and Azure Application G
 date: 2020-11-05
 description: "If you use Azure API Management and want to adapt a blue-green provisioning model, APIM has functionality that allows you to implement a canary traffic orchestration at the policy level. The canary testing model works fine, but sometimes you need to verify your new version of the infrastructure before you open traffic even for canary testing. How do you do this? In this blogpost I show how you can orchestrate your traffic to an inactive version of infrastructure by using API Management in combination with Azure Application Gateway."
 image: "/images/2020-11-05-logo.png"
-categories: ["API Management", "Canary testing", "Azure Application Gateway", "Infrastructure As Code"]
+categories: ["API Management", "Canary testing", "Azure Application Gateway", "Infrastructure as Code"]
 ---
 
 ![logo](/images/2020-11-05-logo.png)
