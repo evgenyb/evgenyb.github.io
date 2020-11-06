@@ -30,4 +30,10 @@ layout: default
   <div>
     <p><span class="share-box">Share:</span> <a href="https://www.linkedin.com/shareArticle?mini=true&title={{ page.title }}&url={{site.url}}{{page.url}}" target="_blank">LinkedIn</a>, <a href="http://twitter.com/share?text={{ page.title }}&url={{site.url}}{{page.url}}" target="_blank">Twitter</a>, <a href="https://www.facebook.com/sharer.php?u={{site.url}}{{page.url}}" target="_blank">Facebook</a></p>
   </div>
+
+  ## Responses
+
+  {% if page.githubissuesid %}
+  Visit the [Github Issue](https://github.com/evgenyb/evgenyb.github.io/issues/{{ page.githubissuesid }}) to comment on this page. The comments will not be displayed directly on that page.
+  {% endif %}
 </article>
