@@ -37,6 +37,7 @@ Here is the example of API level policy for API named `api-b`. Assuming that `ap
 * http://10.3.15.10/api-b/ at `aks-dev-green`
 
 ```xml
+{% raw %}
 <policies>
     <inbound>
         <base />
@@ -51,6 +52,7 @@ Here is the example of API level policy for API named `api-b`. Assuming that `ap
     </inbound>
 ...
 </policies>
+{% endraw %}
 ```
 
 We use [APIM named values](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties) to store our configurable variables:
@@ -64,6 +66,7 @@ This approach works fine for one or two APIs, but if there are hundreds of APIs 
 ### Global level policy
 
 ```xml
+{% raw %}
 <policies>
     <inbound>
         <choose>
@@ -77,6 +80,7 @@ This approach works fine for one or two APIs, but if there are hundreds of APIs 
     </inbound>
 ...
 </policies>
+{% endraw %}
 ```
 
 ### api-b API level policy
