@@ -2,9 +2,6 @@
 layout: default
 ---
 <div class="blurb">
-	<h1>Hi there, my name is Evgeny Borzenin and this is my blog.</h1>
-
-	<p>Let's see how far I will go with this :) ...</p>
 	<ul class="posts">
 		{% for post in site.posts %}
 		<li><span>{{ post.date | date_to_string }}</span> » <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
