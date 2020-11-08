@@ -10,6 +10,7 @@
 
     <meta name="theme-color" content="#000000">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/images/favicon.png">
+    <script src="https://kit.fontawesome.com/594bd70680.js" crossorigin="anonymous"></script>
   </head>
                                                                     	
   <body>
@@ -26,10 +27,12 @@
             </div>
 
             <nav>
-              <a href="{{ site.baseurl }}/">Home</a>
-              <a href="{{ site.baseurl }}/tags">Tags</a>
-              <a href="{{ site.baseurl }}/blog">Blog</a>
-              <a href="{{ site.baseurl }}/about">About</a>
+              <a href="{{ site.baseurl }}/tags">TAGS</a>
+              <a href="{{ site.baseurl }}/blog">BLOG</a>
+              <a href="{{ site.baseurl }}/feed.xml"><i class="fas fa-rss social-icon" ></i></a>
+              <a href="https://www.twitter.com/{{ site.footer-links.twitter }}"><i class="fab fa-twitter social-icon" ></i></a>
+              <a href="https://github.com/{{ site.footer-links.github }}"><i class="fab fa-github social-icon" ></i></a>
+              <a href="https://www.linkedin.com/in/{{ site.footer-links.linkedin }}"><i class="fab fa-linkedin social-icon" ></i></a>
             </nav>
           </header>
         </div>
@@ -44,7 +47,7 @@
       <div class="wrapper-footer">
         <div class="container">
           <footer class="footer">
-            {% include svg-icons.html %}
+              <p class="site-description">© Copyright Evgeny Borzenin - All rights reserved</p>
           </footer>
         </div>
       </div>
