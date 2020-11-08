@@ -679,6 +679,10 @@ Modules - reusable parts of our design
   line-height: 0;
 }
 
+.post-tag {
+  white-space:nowrap;
+}
+
 .post-tags {
   text-align: left;
   line-height: 35px;
