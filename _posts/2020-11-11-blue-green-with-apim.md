@@ -61,7 +61,7 @@ Another option is to use [revisions](https://docs.microsoft.com/en-us/azure/api-
 https://api.foo-bar.org/foo;rev=2
 ```
 
-Then I can implement [<choose...> (aka Control flow policy)](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies?WT.mc_id=AZ-MVP-5003837#choose) and route all traffic containing `rev=` as prt of the url to the inactive backend.
+Then I can implement [control flow policy](https://docs.microsoft.com/en-us/azure/api-management/api-management-advanced-policies?WT.mc_id=AZ-MVP-5003837#choose) and route all traffic containing `rev=` as prt of the url to the inactive backend.
 
 ```xml
 {% raw %}
