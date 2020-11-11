@@ -21,4 +21,13 @@
     <meta property="og:image" content="{{ site.avatar }}"/>
     <meta property="twitter:image" content="{{ site.avatar }}"/>
     {% endif %}
-    <meta property="og:site_name" content="Evgeny's Borzenin blog"/>
+    <meta property="og:site_name" content="Evgeny's Borzenin Infrastructure as Code blog"/>
+    
+    {% if post %}
+        {% assign categories = post.categories %}
+    {% else %}
+        {% assign categories = page.categories %}
+    {% endif %}
+    {% for category in categories %}
+    <meta property="article:tag" content="{{category}}"/>
+    {% endfor %}
