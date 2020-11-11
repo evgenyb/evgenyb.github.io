@@ -55,7 +55,7 @@ where `inactiveBackendUrl` and `activeBackendUrl` are Named values, representing
 
 ## Use Revisions
 
-Another option is to use [revisions](https://docs.microsoft.com/en-us/azure/api-management/api-management-revisions?WT.mc_id=AZ-MVP-5003837). Revisions allow you to make changes to your APIs in a controlled and safe way. Each revision to your API can be accessed using a specially formed URL. Append `;rev={revisionNumber}` at the end of your API URL, but before the query string, to access a specific revision of that API. For example, I might use this URL to access revision 1 of my `foo` API:
+Another option is to use [revisions](https://docs.microsoft.com/en-us/azure/api-management/api-management-revisions?WT.mc_id=AZ-MVP-5003837). Revisions allow you to make changes to your APIs in a controlled and safe way. Each revision to your API can be accessed using a specially formed URL. Append `;rev={revisionNumber}` at the end of your API URL, but before the query string, to access a specific revision of that API. For example, I might use this URL to access revision 2 of my `foo` API:
 
 ```bash
 https://api.foo-bar.org/foo;rev=2
