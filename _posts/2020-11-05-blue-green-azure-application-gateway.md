@@ -5,6 +5,7 @@ date: 2020-11-05
 description: "If you use Azure API Management and want to adapt a blue-green provisioning model, APIM has functionality that allows you to implement a canary traffic orchestration at the policy level. The canary testing model works fine, but sometimes you need to verify your new version of the infrastructure before you open traffic even for canary testing. How do you do this? In this blogpost I show how you can orchestrate your traffic to an inactive version of infrastructure by using API Management in combination with Azure Application Gateway."
 image: "/images/2020-11-05-logo.png"
 categories: ["API Management", "Canary testing", "Azure Application Gateway", "Infrastructure as Code"]
+githubissuesid: 21
 ---
 
 ![logo](/images/2020-11-05-logo.png)
@@ -131,7 +132,3 @@ Next time I will describe how to test inactive slot just by using the built-in A
 * [How to use Azure API Management with virtual networks](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837)
 
 With that - thanks for reading :)
-
-## Responses
-
-Visit the [Github Issue](https://github.com/evgenyb/evgenyb.github.io/issues/21) to comment on this page. The comments will not be displayed directly on that page.

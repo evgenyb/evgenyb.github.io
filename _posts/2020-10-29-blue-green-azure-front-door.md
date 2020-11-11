@@ -5,6 +5,7 @@ date: 2020-10-29
 description: "If you use Azure API Management and want to adapt a blue-green provisioning model, APIM has functionality that allows you to implement a canary traffic orchestration at the policy level. The canary testing model works fine, but sometimes you want to verify your new version of the infrastructure before you open traffic even for canary testing. How do you do this? In this latest blogpost I show how you can orchestrate your traffic to an inactive version of infrastructure by using API Management in combination with Azure Front Door."
 image: "/images/2020-10-29-logo.png"
 categories: ["API Management", "Canary testing", "Azure Front Door", "Infrastructure as Code"]
+githubissuesid: 20
 ---
 
 ![logo](/images/2020-10-29-logo.png)
@@ -114,7 +115,3 @@ I will cover how to configure the same setup with combination of API Management 
 * [How to use Azure API Management with virtual networks](https://docs.microsoft.com/en-us/azure/api-management/api-management-using-with-vnet?WT.mc_id=AZ-MVP-5003837)
 
 With that - thanks for reading :)
-
-## Responses
-
-Visit the [Github Issue](https://github.com/evgenyb/evgenyb.github.io/issues/20) to comment on this page. The comments will not be displayed directly on that page.
