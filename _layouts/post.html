@@ -24,7 +24,7 @@ layout: default
         {% assign categories = page.categories %}
       {% endif %}
       {% for category in categories %}
-        <a href="{{site.baseurl}}/tags/#{{category | slugify}}">{{category}}</a>
+        <a href="{{site.baseurl}}/tags/#{{category | slugify}}" class="post-tag">{{category}}</a>
       {% endfor %}
     </div>
   </div>
