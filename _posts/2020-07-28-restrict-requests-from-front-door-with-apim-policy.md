@@ -2,6 +2,8 @@
 layout: post
 title: "How to use API Management policy to lock down requests to only Azure Front Door instance?"
 date: 2020-07-28
+description: "Learn how to use API Management policies to secure that traffic to your API Management instance coming from your Azure Front Door instance."
+image: "/images/2020-07-28-apim-external.png"
 categories: ["API Management", "Azure Front Door", "Network Security Group", "Azure Application Gateway"]
 githubissuesid: 25
 ---
