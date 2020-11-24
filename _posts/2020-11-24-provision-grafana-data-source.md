@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Declarative Azure Monitor Data-Source deployment to Grafana for multi-team setup"
+title: "Grafana datasource as code - or how to automate deployment of Azure Monitor data-sources to Grafana for multi-team setup"
 date: 2020-11-24
 image: ../images/2020-05-18-infra.png
-description: "Grafana supports many different storage back-ends for your time series data, including Azure Monitor, Log Analytics and Application Insights. In this blogpost I show how you can automate provision of grafana data-source for Azure time-series data."
-categories: [grafana, "Azure App Services", "AKS", "Azure Monitor", "Azure Functions", "Azure Log Analytics", "Application Insight"]
+description: "Grafana supports many different storage back-ends for your time series data, including Azure Monitor, Log Analytics and Application Insights. In this blogpost I show how you can automate provision of grafana data-source for Azure time-series data-sources."
+categories: ["grafana", "Azure App Services", "AKS", "Azure Monitor", "Azure Functions", "Azure Log Analytics", "Application Insight", "DevOps"]
 ---
 
 In my current project, the most of the workload is running on Azure ([Azure Kubernetes Service](https://azure.microsoft.com/nb-no/services/kubernetes-service?WT.mc_id=AZ-MVP-5003837), [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions?WT.mc_id=AZ-MVP-5003837) and [Azure App Services](https://docs.microsoft.com/en-us/azure/app-service?WT.mc_id=AZ-MVP-5003837)) and we use [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview?WT.mc_id=AZ-MVP-5003837), [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/log-analytics-overview?WT.mc_id=AZ-MVP-5003837) and [Application Insight](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview?WT.mc_id=AZ-MVP-5003837) to collect and analyse our logs and metrics. However, for the metrics visualization and alerts we use [Grafana](https://grafana.com/).
@@ -17,16 +17,16 @@ Let's start by introducing some of the terms used in Grafana.
 
 ### Data source
 
-Grafana supports many different storage back-ends for your time series data ([data-source](https://grafana.com/docs/grafana/latest/features/datasources/#data-source-overview)). Each data-source has a specific Query Editor that is customized for the features and capabilities that the particular data-source exposes.
+Grafana supports many different storage back-ends for your time series data ([data-source](https://grafana.com/docs/grafana/latest/datasources/#data-sources)). Each data-source has a specific Query Editor that is customized for the features and capabilities that the particular data-source exposes.
 
 ### Dashboard
 
-A [dashboard](https://grafana.com/docs/grafana/latest/features/dashboard/dashboards/) is a set of one or more panels organized and arranged into one or more rows. Grafana ships with a variety of Panels. Each panel can interact with data from any configured Grafana [Data Source](https://grafana.com/docs/grafana/latest/features/datasources/#data-source-overview).
+A [dashboard](https://grafana.com/docs/grafana/latest/dashboards/) is a set of one or more panels organized and arranged into one or more rows. Grafana ships with a variety of Panels. Each panel can interact with data from any configured Grafana [Data Source](https://grafana.com/docs/grafana/latest/datasources/#data-sources).
 Dashboards can be tagged.
 
 ### Alert
 
-[Alerts](https://grafana.com/docs/grafana/latest/alerting/alerts-overview/) allow you to identify problems in your system moments after they occur. By quickly identifying unintended changes in your system, you can minimize disruptions to your services.
+[Alerts](https://grafana.com/docs/grafana/latest/alerting/#alerts-overview) allow you to identify problems in your system moments after they occur. By quickly identifying unintended changes in your system, you can minimize disruptions to your services.
 
 ### Users and Teams
 
@@ -34,15 +34,15 @@ Dashboards can be tagged.
 
 [Teams](https://grafana.com/docs/grafana/latest/manage-users/#teams) allow you to grant permissions for a group of users.
 
-Grafana supports many different [data-sources](https://grafana.com/docs/grafana/latest/features/datasources/) and, by no surprise, [Azure Monitor](https://grafana.com/docs/grafana/latest/features/datasources/azuremonitor/) is one of them.
+Grafana supports many different data-sources and, by no surprise, [Azure Monitor](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/) is one of them.
 
 ## Azure Monitor data-source
 
 The Grafana Azure Monitor data-source supports the following services:
 
-* [Azure Monitor](https://grafana.com/docs/grafana/latest/features/datasources/azuremonitor/#querying-the-azure-monitor-service) - the platform service that provides a single source for monitoring Azure resources.
-* [Application Insights](https://grafana.com/docs/grafana/latest/features/datasources/azuremonitor/#querying-the-application-insights-service) - an extensible Application Performance Management (APM) service for web developers on multiple platforms.
-* [Azure Log Analytics](https://grafana.com/docs/grafana/latest/features/datasources/azuremonitor/#querying-the-azure-log-analytics-service) gives you access to log data collected by Azure Monitor.
+* [Azure Monitor](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#query-the-azure-monitor-service) - the platform service that provides a single source for monitoring Azure resources.
+* [Application Insights](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#query-the-application-insights-service) - an extensible Application Performance Management (APM) service for web developers on multiple platforms.
+* [Azure Log Analytics](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#querying-the-azure-log-analytics-service) gives you access to log data collected by Azure Monitor.
 
 ## Teams structure
 
@@ -60,7 +60,7 @@ Here are some of our conventions:
 * We use Azure AD integration for Grafana. That means that users have to use their Azure AD accounts to login to Grafana. I will cover Grafana infrastructure architecture at one of the later posts.
 * Users are assigned to one (or several) Grafana Teams. The same name is used for Grafana Team and Azure AD team.
 * Each team has its own Dashboard folder with the same name as a Team name.
-* We use Access Control List (ACL) model to [limit access](https://grafana.com/docs/grafana/latest/permissions/dashboard_folder_permissions/) to dashboard folder. We grant Team to their dashboard folder with Admin role and teams manage dashboards themselves.
+* We use Access Control List (ACL) model to [limit access](https://grafana.com/docs/grafana/latest/permissions/dashboard_folder_permissions/#dashboard-and-folder-permissions) to dashboard folder. We grant Team to their dashboard folder with Admin role and teams manage dashboards themselves.
 * We use dashboard `tags` to link dashboards to the teams.
 
 ## Deployment of Grafana resources owned by the teams
@@ -71,7 +71,7 @@ When it comes to data-source provisioning, there are 3 ways you can deploy data-
 
 1. Click-ops via Grafana UI
 2. Use [Data source API](https://grafana.com/docs/grafana/latest/http_api/data_source/)
-3. Configure the data-source with [provisioning](https://grafana.com/docs/grafana/latest/features/datasources/azuremonitor/#configure-the-data-source-with-provisioning)
+3. Configure the data-source with [provisioning](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#configure-the-data-source-with-provisioning)
 
 Options 1 is not an option at all, it's a good way to learn and "play around", but can't be used for automation. Option 3 allows you to provision dashboards during Grafana deployment and this is good option for post provisioning configuration. But in our case, teams should be able to configure and deploy their data-sources themselves. Therefore we decided to go with declarative approach. That is - teams will configure their data-sources as `json` files, create a PR to the Grafana resource repository, and when PR is approved and merged, data-sources will be deployed to Grafana using Azure DevOps CI/CD pipelines.
 
