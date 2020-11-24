@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Grafana datasource as code - or how to automate deployment of Azure Monitor data-sources to Grafana for multi-team setup"
+title: "Grafana data source as code - or how to automate deployment of Azure Monitor data sources to Grafana for multi-team setup"
 date: 2020-11-24
 image: ../images/2020-05-18-infra.png
 description: "Grafana supports many different storage back-ends for your time series data, including Azure Monitor, Log Analytics and Application Insights. In this blogpost I show how you can automate provision of grafana data-source for Azure time-series data-sources."
-categories: ["grafana", "Azure App Services", "AKS", "Azure Monitor", "Azure Functions", "Azure Log Analytics", "Application Insight", "DevOps"]
+categories: ["Grafana", "Azure App Services", "AKS", "Azure Monitor", "Azure Functions", "Azure Log Analytics", "Application Insight", "DevOps"]
 ---
 
 In my current project, the most of the workload is running on Azure ([Azure Kubernetes Service](https://azure.microsoft.com/nb-no/services/kubernetes-service?WT.mc_id=AZ-MVP-5003837), [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions?WT.mc_id=AZ-MVP-5003837) and [Azure App Services](https://docs.microsoft.com/en-us/azure/app-service?WT.mc_id=AZ-MVP-5003837)) and we use [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview?WT.mc_id=AZ-MVP-5003837), [Azure Log Analytics](https://docs.microsoft.com/en-us/azure/azure-monitor/log-query/log-analytics-overview?WT.mc_id=AZ-MVP-5003837) and [Application Insight](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview?WT.mc_id=AZ-MVP-5003837) to collect and analyse our logs and metrics. However, for the metrics visualization and alerts we use [Grafana](https://grafana.com/).
