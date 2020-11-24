@@ -334,11 +334,7 @@ else
             -H 'accept: application/json' \
             --data-binary "@${dataSourceName}.json" | jq .datasource.id -r)
 fi
-
-echo -e "Successfully deployed data source ${dataSourceName} - $grafanaRestAPIUrl/datasources/edit/${dataSourceId}/"
-
-echo -e "Cleaning up..."
-rm "${dataSourceName}.json"
+...
 ```
 
 and here is the data-source template file
