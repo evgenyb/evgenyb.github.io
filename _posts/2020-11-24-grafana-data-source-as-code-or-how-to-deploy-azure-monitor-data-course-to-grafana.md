@@ -431,10 +431,10 @@ With this file in place, I can deploy my data-source to the `test` Grafana insta
 
 ## Useful links
 
-* [Grafana data-source provisioning](https://grafana.com/docs/grafana/latest/administration/provisioning/#datasources)
+* [Grafana data-source provisioning](https://grafana.com/docs/grafana/latest/administration/provisioning/#data-sources)
 * [Grafana Data-source API](https://grafana.com/docs/grafana/latest/http_api/data_source/)
 * [Grafana Azure Monitor data-source](https://grafana.com/docs/grafana/latest/features/datasources/azuremonitor/)
-* [Grafana Alerts](https://grafana.com/docs/grafana/latest/alerting/alerts-overview/)
+* [Grafana Alerts](https://grafana.com/docs/grafana/latest/alerting/#alerts-overview)
 * [jq - a lightweight and flexible command-line JSON processor](https://stedolan.github.io/jq/)
 
 With that - thanks for reading!
