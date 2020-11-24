@@ -20,6 +20,16 @@ Let's start by introducing some of the terms used in Grafana.
 
 Grafana supports many different storage back-ends for your time series data ([data-source](https://grafana.com/docs/grafana/latest/datasources/#data-sources)). Each data-source has a specific Query Editor that is customized for the features and capabilities that the particular data-source exposes.
 
+By no surprise, [Azure Monitor](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/) is one of the supported data-sources.
+
+#### Azure Monitor data-source
+
+The Grafana Azure Monitor data-source supports the following services:
+
+* [Azure Monitor](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#query-the-azure-monitor-service) - the platform service that provides a single source for monitoring Azure resources.
+* [Application Insights](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#query-the-application-insights-service) - an extensible Application Performance Management (APM) service for web developers on multiple platforms.
+* [Azure Log Analytics](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#querying-the-azure-log-analytics-service) gives you access to log data collected by Azure Monitor.
+
 ### Dashboard
 
 A [dashboard](https://grafana.com/docs/grafana/latest/dashboards/) is a set of one or more panels organized and arranged into one or more rows. Grafana ships with a variety of Panels. Each panel can interact with data from any configured Grafana [Data Source](https://grafana.com/docs/grafana/latest/datasources/#data-sources).
@@ -35,21 +45,11 @@ Dashboards can be tagged.
 
 [Teams](https://grafana.com/docs/grafana/latest/manage-users/#teams) allow you to grant permissions for a group of users.
 
-Grafana supports many different data-sources and, by no surprise, [Azure Monitor](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/) is one of them.
-
-## Azure Monitor data-source
-
-The Grafana Azure Monitor data-source supports the following services:
-
-* [Azure Monitor](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#query-the-azure-monitor-service) - the platform service that provides a single source for monitoring Azure resources.
-* [Application Insights](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#query-the-application-insights-service) - an extensible Application Performance Management (APM) service for web developers on multiple platforms.
-* [Azure Log Analytics](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#querying-the-azure-log-analytics-service) gives you access to log data collected by Azure Monitor.
-
 ## Teams structure
 
-There are several independent autonomous teams and they use different Azure Monitor services to collect logs and metrics from applications and services. These Azure Monitor services are deployed to different resource groups at different subscriptions.
+There are several independent autonomous teams and they use different Azure Monitor services to collect logs and metrics from applications and services owned by these teams. Azure Monitor services are deployed to different resource groups at different subscriptions.
 
-All teams use the same Grafana instance. To visualize their data, teams need to configure their own Grafana Data Sources, connected to the teams' Azure Monitor services. With data-sources in place, teams can create dashboards and alerts using their data-sources.
+At the same time, all teams use the same Grafana instance. To visualize their data, teams need to configure their own Grafana data-sources, connected to the teams' Azure Monitor services. With data-sources in place, teams can create dashboards and alerts using their data-sources.
 
 How should we organize Grafana resources in such a multi-team environment?  
 
@@ -58,15 +58,15 @@ How should we organize Grafana resources in such a multi-team environment?
 Here are some of our conventions:
 
 * Grafana instance is deployed and running inside AKS cluster
-* We use Azure AD integration for Grafana. That means that users have to use their Azure AD accounts to login to Grafana. I will cover Grafana infrastructure architecture at one of the later posts.
+* We use Azure AD integration for Grafana. That means that users have to use their Azure AD accounts to login to Grafana. I will cover how to enable Azure AD integration for Grafana instance running in AKS at one of the later posts.
 * Users are assigned to one (or several) Grafana Teams. The same name is used for Grafana Team and Azure AD team.
 * Each team has its own Dashboard folder with the same name as a Team name.
-* We use Access Control List (ACL) model to [limit access](https://grafana.com/docs/grafana/latest/permissions/dashboard_folder_permissions/#dashboard-and-folder-permissions) to dashboard folder. We grant Team to their dashboard folder with Admin role and teams manage dashboards themselves.
+* We use Access Control List (ACL) model to [limit access](https://grafana.com/docs/grafana/latest/permissions/dashboard_folder_permissions/#dashboard-and-folder-permissions) to dashboard folder. We grant Team to their dashboard folder with `Admin` role and teams manage dashboards themselves.
 * We use dashboard `tags` to link dashboards to the teams.
 
 ## Deployment of Grafana resources owned by the teams
 
-For dashboards, we are currently evaluating [grafonnet](https://grafana.github.io/grafonnet-lib/). The idea is that teams implement Grafana dashboard as code and deploy them to Grafana with CI/CD pipelines. 
+For dashboards, we are currently evaluating [grafonnet](https://grafana.github.io/grafonnet-lib/). The idea is that teams implement Grafana dashboard as code and deploy them to Grafana with CI/CD pipelines.
 
 When it comes to data-source provisioning, there are 3 ways you can deploy data-source in Grafana:
 
@@ -74,7 +74,7 @@ When it comes to data-source provisioning, there are 3 ways you can deploy data-
 2. Use [Data source API](https://grafana.com/docs/grafana/latest/http_api/data_source/)
 3. Configure the data-source with [provisioning](https://grafana.com/docs/grafana/latest/datasources/azuremonitor/#configure-the-data-source-with-provisioning)
 
-Options 1 is not an option at all, it's a good way to learn and "play around", but can't be used for automation. Option 3 allows you to provision dashboards during Grafana deployment and this is good option for post provisioning configuration. But in our case, teams should be able to configure and deploy their data-sources themselves. Therefore we decided to go with declarative approach. That is - teams will configure their data-sources as `json` files, create a PR to the Grafana resource repository, and when PR is approved and merged, data-sources will be deployed to Grafana using Azure DevOps CI/CD pipelines.
+Options 1 is not an option at all, it's a good way to learn and "play around", but can't be used for automation. Option 3 allows you to provision dashboards during Grafana deployment and this is good option for post provisioning configuration. But in our case, teams should be able to configure and deploy their data-sources themselves at any time. Therefore we decided to go with declarative approach. That is - teams will configure their data-sources as `json` files, create a PR to the Grafana resources repository, and when PR is approved and merged, data-sources will be automatically deployed to Grafana using Azure DevOps CI/CD pipelines.
 
 ## Azure monitor data-source configuration
 
@@ -106,17 +106,17 @@ If you use both Azure Monitor Service and Log analytics Service at the same data
 
 For Application Insights you need two pieces of information:
 
-* Application Insight `Application ID`
-* Application Insight `API Key`
+* Application Insights `Application ID`
+* Application Insights `API Key`
 
 You can configure different combination of services at the same data-source. It may contain all three services, two of them or just one service.
 
 ## Sensitive information
 
-We want to use `json` files for data-source configuration and store them to git repository, and we definitely don't want to hard-code sensitive information, like Azure AD Application Client secret or Application Insight API key.
-We store sensitive information at Azure Key Vault, and since our teams use different Azure subscriptions for their resources, this sensitive part of data-source configuration will be distributed within different key-vaults, owned by the teams.
+We want to use `json` files for data-source configuration and store them to git repository, and we definitely don't want to hard-code sensitive information, like Azure AD Application `Client secret` or Application Insights `API key`.
+We store sensitive information at Azure Key Vault, and since our teams use different Azure subscriptions for their resources, this sensitive pieces of data-source configuration will be distributed within different key-vaults, owned by the teams.
 
-For instance, if team wants to add data-source for Application Insight service, they need to specify AppInsights `Application ID` and `API Key`. Since `API Key` is a sensitive information, it will be stored at one of the team's key-vault and team will provide the following information about key-vault inside data-source configuration:
+For instance, if team wants to add data-source for Application Insights service, they need to specify AppInsights `Application ID` and `API Key`. Since `API Key` is a sensitive information, it will be stored at one of the team's key-vault and team will provide the following information about key-vault inside data-source configuration:
 
 * key-vault name
 * key-vault resource group name
@@ -140,7 +140,7 @@ If we "transform" this information to `json`, it will look like this:
 
 ## Configuration file
 
-We decided to use one file per data-source model and here is the complete configuration file structure for `grafana-azure-monitor-datasource`:
+We decided to use one file per data-source type, and here is the complete configuration file structure for `grafana-azure-monitor-datasource` type:
 
 ```json
 {
@@ -195,7 +195,7 @@ the "logical" name of the data-source
 
 ### environment
 
-Teams may have different environments for their resources and each environment may have it's own set of Azure Monitor, Log Analytics or Application Insight services. In this case, team needs to create data-source for each environment and the actual name of the data-source in Grafana will be composed as: `datasource-name-environment-ds`.
+Teams may have different environments for their resources and each environment may have it's own set of Azure Monitor, Log Analytics or Application Insights services. In this case, team needs to create data-source for each environment and the actual name of the data-source in Grafana will be composed as: `datasource-name-environment-ds`.
 
 ### team
 
@@ -203,7 +203,7 @@ name of the team owning data-source
 
 ### type
 
-as of now, we use only one data-source type, but eventually, we may have other type of data-source (for example, prometheus). For Azure Monitor data-source, the type is set to `grafana-azure-monitor-datasource`.
+as of now, we only use one data-source type, but eventually, we may have other type of data-source (for example, prometheus). For Azure Monitor data-source, the type is set to `grafana-azure-monitor-datasource`.
 
 ### monitor
 
@@ -226,29 +226,28 @@ If team uses Log Analytics service, they need to add `logAnalytics` section and 
 
 ### appInsights
 
-If team uses Application Insight service, they need to add `appInsights` section and provide the following information:
+If team uses Application Insights service, they need to add `appInsights` section and provide the following information:
 
-* applicationId - Application Insight `Application Id`
-* apiKey - reference to key-vault secret containing Application Insight `API Key`
+* applicationId - Application Insights `Application Id`
+* apiKey - reference to key-vault secret containing Application Insights `API Key`
 
 ## Provisioning script
 
-We use bash with [`jq`](https://stedolan.github.io/jq/) to work with `json`, `az cli` to work with Azure key-vault and `curl` to call Grafana rest API, and here is what provisioning script does:
+In our case, we use bash with [`jq`](https://stedolan.github.io/jq/) to work with `json`, `az cli` to get access to Azure resources (like key-vaults) and `curl` to call Grafana rest API, and here is what our provisioning script does:
 
 * Reads input parameters
 * Reads Grafana admin user password from the key-vault
-* Identifies user or spn Azure AD object id
 * Reads json configuration from the data-source file
 * Parses `name`, `type` and `team` information
-* If data-source contains `monitor` section, parses it and extracts all configuration values. Reads `clientSecret` property value from the key-vault.
-* If data-source contains `logAnalytics` section, parses it and extracts all configuration values. Reads `clientSecret` property value from the key-vault.
-* If data-source contains `appInsights` section, parses it and extracts all configuration values. Reads `apiKey` property value from the key-vault.
+* If data-source contains `monitor` section, parses it and extracts all configuration values. Reads `clientSecret` property value from the specified key-vault.
+* If data-source contains `logAnalytics` section, parses it and extracts all configuration values. Reads `clientSecret` property value from the specified key-vault.
+* If data-source contains `appInsights` section, parses it and extracts all configuration values. Reads `apiKey` property value from the specified key-vault.
 * Replaces all placeholders with actual values in datasource template file
 * Checks if data-source already exists
-* If it does, updates existing data-source
-* If it doesn't, creates a new data-source
+* If it does, updates existing data-source using Grafana Rest API
+* If it doesn't, creates a new data-source using Grafana Rest API
 
-Here are some fragments of the script, and sorry for my `bash`:
+Here are some fragments of the script:
 
 ```bash
 ...
@@ -370,15 +369,15 @@ and here is the data-source template file
 
 ### Example
 
-My team uses Application Insight called `iac-foobar-dev-ai` deployed to `iac-foobar-dev-rg`. We use `iac-foobar-dev-infra-kv` to infrastructure related sensitive configuration elements.
-If I want to create new data-source with Application Insight service to Grafana, I will need to find 2 Application Insight information elements:
+My team uses Application Insights called `iac-foobar-dev-ai` deployed to `iac-foobar-dev-rg`. We use `iac-foobar-dev-infra-kv` for infrastructure related sensitive configuration.
+If I want to create new data-source with Application Insights service to Grafana, I will need to find 2 Application Insights configuration elements:
 
-* Application Insight `Application ID`
+* Application Insights `Application ID`
 * Create new `API Key`
 
-### Find Application Insight Application ID
+### Find Application Insights Application ID
 
-You can find your Application Insight Application ID at the portal under `API Access` right menu item. Or you can use `az cli` to get this information.
+You can find your Application Insights `Application ID` at the portal under `API Access` right menu item. Or you can use `az cli` to get this information.
 
 ```bash
 az monitor app-insights component show --app iac-foobar-dev-ai -g iac-foobar-dev-rg --query appId -o tsv
@@ -392,16 +391,16 @@ az extension add -n application-insights
 
 ### Create API Key and store it to key-vault
 
-You can create new API Key from the portal at the `API Access` page. And you can copy value and cerate new secret at the key-vault.
+You can create new `API Key` from the portal at the `API Access` page. And you can copy value and create new secret at the key-vault.
 
-Or you can use `az cli` to both create new API key and store it to the key-vault:
+Or you can use `az cli` to both create new `API key` and store it to the key-vault:
 
 ```bash
 apiKey=$(az monitor app-insights api-key create --app iac-foobar-dev-ai --api-key grafana-key -g iac-foobar-dev-rg --query apiKey --read-properties ReadTelemetry -o tsv)
 az keyvault secret set -n appinsight-api-key --vault-name iac-foobar-dev-infra-kv --value ${apiKey}
 ```
 
-Now I need to create new `foobar-dev.json` file with the following content:
+With `Application ID` and `API key` in place, I need to create new `foobar-dev.json` file with the following content:
 
 ```json
 {
@@ -409,7 +408,7 @@ Now I need to create new `foobar-dev.json` file with the following content:
     "team": "dev",
     "type": "grafana-azure-monitor-datasource",
     "appInsights": {
-        "applicationId": "application-id-value",
+        "applicationId": "your-application-id-value",
         "apiKey": {
             "keyvault": {
                 "name": "iac-foobar-dev-infra-kv",
@@ -423,7 +422,7 @@ Now I need to create new `foobar-dev.json` file with the following content:
 
 ```
 
-With this file in place, I can deploy my data-source to the `test` Grafana instance by executing the following script:
+And then I can deploy my data-source to the `test` Grafana instance by executing the following script:
 
 ```bash
 ./deploy-azure-monitor-datasource.sh test foobar-dev.json
