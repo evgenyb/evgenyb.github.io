@@ -44,7 +44,7 @@ The solution that we came up with was to introduce a proxy-service at the old na
 The proxy-service `ServiceA` is deployed to the `foobar` namespace and routes traffic to the "real" `ServiceA` at the `foo` namespace. Because proxy-service deployed to the same namespace, `AppC` can still call it by using `http://servicea/`.
 
 Kubernetes documentation describes services of type [ExternalName](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) as Service that maps a Service to a DNS name, not to a typical selector. 
-Here is proxy-service definition for `servicea` at `foobar` namespace:
+Here is a proxy-service definition for `servicea` at `foobar` namespace:
 
 ```yaml
 apiVersion: v1
@@ -64,13 +64,13 @@ With proxy-service in place, here is how our migration technique looks like:
 1. Re-configure `AppA` with correct URLs for all outbound dependencies 
 2. Deploy `AppA` into `foo` namespace
 ![step2](/images/2021-01-27-step2.png)
-3. Replace `servicea` in `foobar` namespace with `ExternalName` Service
+3. Replace `servicea` in `foobar` namespace with proxy-service
 ![step3](/images/2021-01-27-step3.png)
-4. Delete `AppA` pods (and other `k8s` resources) from `foobar` namespace
+4. Delete `AppA` pods (and other related Kubernetes resources) from `foobar` namespace
 ![step4](/images/2021-01-27-step4.png)
 5. Deploy new version of `AppC` with URL pointing to `servica` at `foo` namespace
 ![step5](/images/2021-01-27-step5.png)
-6. When connectivity from `AppC` confirmed successful, delete `servicea` from `foobar` namespace
+6. When all applications calling `AppA` at `foobar` namespace are re-configured and re-deployed, delete `servicea` from `foobar` namespace
 ![step6](/images/2021-01-27-step1.png)
 
 
