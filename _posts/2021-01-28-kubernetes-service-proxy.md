@@ -8,9 +8,10 @@ categories: ["AKS", "Kubernetes"]
 githubissuesid: 27
 ---
 
-At my current project we started restructuring of our cluster's namespaces model. We are moving from `one namespace` to `namespace per team/domain` model. One of the challenges that we immediately encountered was that when you move application to different namespaces, you need to reconfigure all dependent applications with new namespace. Let's look at the example below:
+At my current project we started restructuring our cluster's namespaces model. We are moving from `one namespace` to `namespace per team/domain` model. 
+One of the challenges that we immediately encountered was that when you move application to different namespace, you need to change service URLs of all dependent applications and include namespace. Here is an abstracted example:
 
-There are 3 applications `AppA`, `AppB` and `AppC`. Each one deployed with corresponding Kubernetes service in front called `ServiceA`, `ServiceB` and `ServiceC`.
+There are 3 applications `AppA`, `AppB` and `AppC`. All deployed with corresponding Kubernetes services called `ServiceA`, `ServiceB` and `ServiceC`.
 All 3 applications are deployed to the same namespace called `foobar`. `AppA` has inbound dependency from `AppC` and outbound dependency to `AppB`. 
 
 ![foobar](/images/2021-01-27-foobar.png)
