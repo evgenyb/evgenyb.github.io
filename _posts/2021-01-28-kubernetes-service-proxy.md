@@ -41,7 +41,7 @@ The solution that we came up with was to introduce a proxy-service at the old na
 
 ![proxy](/images/2021-01-27-final.png)
 
-Here is proxy-service `servicea` deployed to the `foobar` namespace that routes traffic to the "real" `servicea` at the `foo` namespace. Because proxy-service deployed to the same namespace, `AppC` can still call it using `http://servicea/`.
+The proxy-service `ServiceA` is deployed to the `foobar` namespace and routes traffic to the "real" `ServiceA` at the `foo` namespace. Because proxy-service deployed to the same namespace, `AppC` can still call it by using `http://servicea/`.
 
 Kubernetes documentation describes services of type [ExternalName]https://kubernetes.io/docs/concepts/services-networking/service/#externalname) as Service that maps a Service to a DNS name, not to a typical selector. 
 Here is proxy-service definition for `servicea` at `foobar` namespace:
