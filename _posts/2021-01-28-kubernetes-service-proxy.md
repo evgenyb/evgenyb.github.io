@@ -32,9 +32,10 @@ Since now applications are deployed to different namespaces, we need to change a
 * `http://serviceb.foobar.svc.cluster.local/`
 * `http://servicec.foobar.svc.cluster.local/` 
 
-Not only that requires changes at all 3 applications, but also may cause a possible down time at `AppC` during the migration period. In real life with hundreds of applications migrating to several namespaces, that can cause even longer down time and depending on dependency graph, can require a lot of deployment orchestration during transition period. What if some of the dependent applications can't be re-configured and re-deployed at the moment? All these factors forced us to think how can we do such a migration with close to zero down time. 
+Not only that requires changes at all 3 applications, but also may cause a possible down time at `AppC` during the migration period. In real life, with hundreds of applications migrating to several namespaces, that can cause even longer down time and depending on the dependency graph, can require a lot of deployment orchestration during transition period. Not to mention that it might be that some of the applications can't be re-configured and re-deployed at the moment. 
+All these factors forced us to think how can we do such a migration with close to zero down time. 
 
-## Proxy-service with ExternalName
+## Proxy with ExternalName Service type
 
 The solution that we came up with was to introduce a proxy-service at the old namespace with the same name as service being migrated, pointing to the service in new namespace.
 
