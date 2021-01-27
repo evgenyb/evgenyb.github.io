@@ -59,7 +59,7 @@ spec:
 
 ## Migration plan
 
-With proxy-service in place, here is how our migration technique looks like:
+With proxy-service in place, here is our migration strategy:
 
 1. Re-configure `AppA` with correct URLs for all outbound dependencies 
 2. Deploy `AppA` into `foo` namespace
