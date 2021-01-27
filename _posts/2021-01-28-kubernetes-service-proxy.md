@@ -41,9 +41,10 @@ The solution that we came up with was to introduce a proxy-service at the old na
 
 ![proxy](/images/2021-01-27-final.png)
 
-Here is a new service `servicea` deployed to the `foobar` namespace that routes traffic to the `servicea` at the `foo` namespace. `AppC` can still use `http://servicea/` to access this service.
+Here is proxy-service `servicea` deployed to the `foobar` namespace that routes traffic to the "real" `servicea` at the `foo` namespace. Because proxy-service deployed to the same namespace, `AppC` can still call it using `http://servicea/`.
 
-Kubernetes services of type [ExternalName]https://kubernetes.io/docs/concepts/services-networking/service/#externalname) map a Service to a DNS name, not to a typical selector. Here is Service definition for `servicea` at `foobar` namespace:
+Kubernetes documentation describes services of type [ExternalName]https://kubernetes.io/docs/concepts/services-networking/service/#externalname) as Service that maps a Service to a DNS name, not to a typical selector. 
+Here is proxy-service definition for `servicea` at `foobar` namespace:
 
 ```yaml
 apiVersion: v1
@@ -58,7 +59,7 @@ spec:
 
 ## Migration plan
 
-Here is how our migration technique looks like now:
+With proxy-service in place, here is how our migration technique looks like:
 
 1. Re-configure `AppA` with correct URLs for all outbound dependencies 
 2. Deploy `AppA` into `foo` namespace
