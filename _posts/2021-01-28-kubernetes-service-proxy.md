@@ -8,20 +8,19 @@ categories: ["AKS", "Kubernetes"]
 githubissuesid: 27
 ---
 
-At my project we started restructuring our cluster's namespaces strategy. We are moving from `one namespace` to `namespace per team/domain` model. One of the challenges that we immediately encountered was that when you move application to different namespaces, you need to reconfigure all dependent applications with new namespace. Let's look at the example below:
+At my current project we started restructuring of our cluster's namespaces model. We are moving from `one namespace` to `namespace per team/domain` model. One of the challenges that we immediately encountered was that when you move application to different namespaces, you need to reconfigure all dependent applications with new namespace. Let's look at the example below:
 
-There are 3 applications `AppA`, `AppB` and `AppC`. Each one deployed with corresponding `k8s` service in front called `ServiceA`, `ServiceB` and `ServiceC`.
+There are 3 applications `AppA`, `AppB` and `AppC`. Each one deployed with corresponding Kubernetes service in front called `ServiceA`, `ServiceB` and `ServiceC`.
 All 3 applications are deployed to the same namespace called `foobar`. `AppA` has inbound dependency from `AppC` and outbound dependency to `AppB`. 
 
 ![foobar](/images/2021-01-27-foobar.png)
 
-Since everything is deployed to the same namespace, we can use the following uris: 
+Since everything is deployed to the same namespace, we use the following URLs to call our services:
+
 * `http://servicea/` 
 * `http://serviceb/`
 * `http://servicec/` 
-
-to call our services. 
-
+ 
 Now, we want to move `AppA` to the new `foo` namespace.
 
 ![step1](/images/2021-01-27-step1.png)
