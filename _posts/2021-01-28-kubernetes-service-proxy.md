@@ -26,7 +26,7 @@ Now, we want to move `AppA` to the new `foo` namespace.
 
 ![step1](/images/2021-01-27-step1.png)
 
-Since now applications are deployed to different namespaces, we need to change and use the following URLs to call services:
+Since applications are now deployed to different namespaces, we need to change and use the following URLs to call services:
 
 * `http://servicea.foo.svc.cluster.local/` 
 * `http://serviceb.foobar.svc.cluster.local/`
