@@ -63,14 +63,19 @@ With proxy-service in place, here is our migration strategy:
 
 1. Re-configure `AppA` with correct URLs for all outbound dependencies 
 2. Deploy `AppA` into `foo` namespace
+
 ![step2](/images/2021-01-27-step2.png)
 3. Replace `servicea` in `foobar` namespace with proxy-service
+
 ![step3](/images/2021-01-27-step3.png)
 4. Delete `AppA` pods (and other related Kubernetes resources) from `foobar` namespace
+
 ![step4](/images/2021-01-27-step4.png)
 5. Deploy new version of `AppC` with URL pointing to `servica` at `foo` namespace
+
 ![step5](/images/2021-01-27-step5.png)
 6. When all applications calling `AppA` at `foobar` namespace are re-configured and re-deployed, delete `servicea` from `foobar` namespace
+
 ![step6](/images/2021-01-27-step1.png)
 
 
