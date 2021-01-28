@@ -5,7 +5,7 @@ date: 2021-01-28
 description: "It's easy to reorganize your Kubernetes namespaces structure in test environments, but you need to have a solid plan how to migrate your applications between namespaces in your production cluster with zero downtime. In this blogpost I show how you can use Kubernetes ExternalName Service type to implement proxy-services to achieve zero downtime migration."
 image: "/images/2021-01-27-step5.png"
 categories: ["AKS", "Kubernetes"]
-githubissuesid: 27
+githubissuesid: 28
 ---
 
 At my current project, we have started restructuring our cluster's namespaces model. We are moving from `one namespace` to `namespace per team/domain` model. 
