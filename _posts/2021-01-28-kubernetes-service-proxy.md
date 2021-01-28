@@ -8,8 +8,8 @@ categories: ["AKS", "Kubernetes"]
 githubissuesid: 27
 ---
 
-At my current project we started restructuring our cluster's namespaces model. We are moving from `one namespace` to `namespace per team/domain` model. 
-One of the challenges that we immediately encountered was that when you move application to different namespace, you need to change service URLs of all dependent applications and include namespace. Here is an abstracted example:
+At my current project, we have started restructuring our cluster's namespaces model. We are moving from `one namespace` to `namespace per team/domain` model. 
+One of the challenges that we immediately encountered was that when you move application to a different namespace, you need to change service URLs of all dependent applications and include namespace. Here is an abstracted example:
 
 There are 3 applications `AppA`, `AppB` and `AppC`. All deployed with corresponding Kubernetes services called `ServiceA`, `ServiceB` and `ServiceC`.
 All 3 applications are deployed to the same namespace called `foobar`. `AppA` has inbound dependency from `AppC` and outbound dependency to `AppB`. 
@@ -33,11 +33,11 @@ Since now applications are deployed to different namespaces, we need to change a
 * `http://servicec.foobar.svc.cluster.local/` 
 
 Not only that requires changes at all 3 applications, but also may cause a possible down time at `AppC` during the migration period. In real life, with hundreds of applications migrating to several namespaces, that can cause even longer down time and depending on the dependency graph, can require a lot of deployment orchestration during transition period. Not to mention that it might be that some of the applications can't be re-configured and re-deployed at the moment. 
-All these factors forced us to think how can we do such a migration with close to zero down time. 
+All these factors forced us to think how we can do such a migration with close to zero down time. 
 
 ## Proxy with ExternalName Service type
 
-The solution that we came up with was to introduce a proxy-service at the old namespace with the same name as service being migrated, pointing to the service in new namespace.
+The solution that we came up with was to introduce a proxy-service at the old namespace with the same name as service being migrated, pointing to the service in the new namespace.
 
 ![proxy](/images/2021-01-27-final.png)
 
