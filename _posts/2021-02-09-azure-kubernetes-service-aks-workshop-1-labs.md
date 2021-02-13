@@ -5,6 +5,7 @@ date: 2021-02-09
 description: "This is an introduction level workshop targeted to those of you who have never worked with neither Azure Kubernetes Service (AKS) nor Kubernetes and covers the basics of using Kubernetes on Azure."
 image: "/images/2021-02-09-logo.png"
 categories: ["AKS", "Workshops", "Infrastructure as Code", "Kubernetes"]
+githubissuesid: 30
 ---
 
 ![logo](/images/2021-02-09-logo.png)
