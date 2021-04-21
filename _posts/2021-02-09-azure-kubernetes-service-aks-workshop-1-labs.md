@@ -26,11 +26,13 @@ Luckily after the second restart all worked well...
 
 Here is preliminary set of workshops lined up for 2021:
 
-* Workshop #2 - Advanced AKS configuration
-* Workshop #3 - Use Pulumi to provision and configuring AKS cluster
-* Workshop #4 - Service mesh with linkerd
-* Workshop #5 - AKS application deployment strategies
-* Workshop #6 - AKS security
+* [Workshop #1 - Introduction to Azure Kubernetes Service (AKS)](https://borzenin.com/azure-kubernetes-service-aks-workshop-1-labs/)
+* [Workshop #2 - Advanced AKS configuration](https://borzenin.com/azure-kubernetes-service-aks-workshop-2-labs/)
+* Workshop #3 - Immutable AKS infrastructure with Bicep
+* Workshop #4 - Monitoring in AKS
+* Workshop #5 - Service mesh with linkerd
+* Workshop #6 - AKS application deployment strategies
+* Workshop #7 - AKS security
 
 You can also check out my previous workshops:
 

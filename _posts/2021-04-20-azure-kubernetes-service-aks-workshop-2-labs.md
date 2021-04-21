@@ -28,7 +28,7 @@ As always, labs are [available](https://github.com/evgenyb/aks-workshops/tree/ma
 Here is preliminary set of workshops lined up for 2021:
 
 * [Workshop #1 - Introduction to Azure Kubernetes Service (AKS)](https://borzenin.com/azure-kubernetes-service-aks-workshop-1-labs/)
-* Workshop #2 - Advanced AKS configuration
+* [Workshop #2 - Advanced AKS configuration](https://borzenin.com/azure-kubernetes-service-aks-workshop-2-labs/)
 * Workshop #3 - Immutable AKS infrastructure with Bicep
 * Workshop #4 - Monitoring in AKS
 * Workshop #5 - Service mesh with linkerd
