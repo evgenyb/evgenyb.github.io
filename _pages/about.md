@@ -5,7 +5,7 @@ permalink: /about/
 ---
 I am a Microsoft Azure MVP, Azure Solutions Architect Expert, Microsoft Azure Community and Content Hero, technical architect and developer with more than 20 years of experience, strong communication skills and love for automation.
 
-I am currently working as a consultant at [Konsulentselskapet Ensō AS](https://enso.no/) and presently assigned to [Vipps AS](https://vipps.no/).
+I am currently working as Senior Cloud Solution Architect at Cloud Center of Excellence at [Storebrand](https://www.storebrand.no/).
 
 I have a very strong development background working with complex distributed back-end systems at medium to big size enterprises in the financial sector. During the past 5 years, my focus has shifted towards Azure infrastructure, mainly because I feel that cloud infrastructure in general is becoming a central component of any IT. I believe that Azure, as a cloud provider, is one of the strongest players at the market.
 
