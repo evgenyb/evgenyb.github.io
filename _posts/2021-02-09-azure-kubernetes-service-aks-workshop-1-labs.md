@@ -24,15 +24,16 @@ Some funny (or not really) facts. During the workshop my main PC died after 2++ 
 
 Luckily after the second restart all worked well...
 
-Here is preliminary set of workshops lined up for 2021:
+Here is workshops road-map for 2021-2022:
 
-* [Workshop #1 - Introduction to Azure Kubernetes Service (AKS)](https://borzenin.com/azure-kubernetes-service-aks-workshop-1-labs/)
-* [Workshop #2 - Advanced AKS configuration](https://borzenin.com/azure-kubernetes-service-aks-workshop-2-labs/)
-* [Workshop #3 - Immutable AKS infrastructure with Bicep](https://borzenin.com/azure-kubernetes-service-aks-workshop-3-labs/)
-* Workshop #4 - Monitoring in AKS
-* Workshop #5 - Service mesh with linkerd
-* Workshop #6 - AKS application deployment strategies
-* Workshop #7 - AKS security
+* [AKS Workshop #1 - Introduction to Azure Kubernetes Service (AKS)](https://borzenin.com/azure-kubernetes-service-aks-workshop-1-labs/)
+* [AKS Workshop #2 - Advanced AKS configuration](https://borzenin.com/azure-kubernetes-service-aks-workshop-2-labs/)
+* [AKS Workshop #3 - Immutable AKS infrastructure with Bicep](https://borzenin.com/azure-kubernetes-service-aks-workshop-3-labs/)
+* [AKS Workshop #4 - GitOps in AKS with Flux](https://borzenin.com/azure-kubernetes-service-aks-workshop-4-labs/)
+* AKS Workshop #5 - scaling options for applications and clusters in AKS
+* AKS Workshop #6 - Monitoring in AKS
+* AKS Workshop #7 - Service mesh with linkerd
+* AKS Workshop #8 - AKS security
 
 You can also check out my previous workshops:
 
