@@ -23,7 +23,7 @@ Here is workshops road-map for 2021-2022:
 * [AKS Workshop #2 - Advanced AKS configuration](https://borzenin.com/azure-kubernetes-service-aks-workshop-2-labs/)
 * [AKS Workshop #3 - Immutable AKS infrastructure with Bicep](https://borzenin.com/azure-kubernetes-service-aks-workshop-3-labs/)
 * [AKS Workshop #4 - GitOps in AKS with Flux](https://borzenin.com/azure-kubernetes-service-aks-workshop-4-labs/)
-* AKS Workshop #5 - scaling options for applications and clusters in AKS
+* [AKS Workshop #5 - scaling options for applications and clusters in AKS](https://borzenin.com/azure-kubernetes-service-aks-workshop-5-labs/)
 * AKS Workshop #6 - Monitoring in AKS
 * AKS Workshop #7 - Service mesh with linkerd
 * AKS Workshop #8 - AKS security
