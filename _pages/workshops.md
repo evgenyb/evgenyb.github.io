@@ -10,6 +10,7 @@ permalink: /workshops/
 * [Implement immutable infrastructure on Azure with ARM templates](https://borzenin.com/iac-ws2-labs/)
 * [Implement immutable infrastructure with Pulumi: Part I](https://borzenin.com/iac-ws3-labs/)
 * [Implement immutable infrastructure with Pulumi: Part II](https://borzenin.com/iac-ws4-labs/)
+* [Immutable AKS infrastructure with Bicep](https://borzenin.com/azure-kubernetes-service-aks-workshop-3-labs/)
 
 ## AKS workshops
 
@@ -18,5 +19,6 @@ permalink: /workshops/
 * [Immutable AKS infrastructure with Bicep](https://borzenin.com/azure-kubernetes-service-aks-workshop-3-labs/)
 * [GitOps in AKS with Flux](https://borzenin.com/azure-kubernetes-service-aks-workshop-4-labs/)
 * [Scaling options for applications and clusters in AKS](https://borzenin.com/azure-kubernetes-service-aks-workshop-5-labs/)
+* [Monitoring options in AKS](https://borzenin.com/azure-aks-workshop-6-monitoring-options-aks-labs/)
 
 If you have any questions, please reach out to me at evgeny.borzenin@gmail.com.
