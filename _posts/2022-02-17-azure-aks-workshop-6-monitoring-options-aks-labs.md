@@ -2,7 +2,7 @@
 layout: post
 title: "Labs from AKS workshop #6: monitoring options in AKS"
 date: 2022-02-17
-description: "That was an introduction level workshop that covered monitoring aspects of AKS."
+description: "That was an introduction level workshop that covered different monitoring options available for AKS."
 image: "/images/2022-02-17-logo.png"
 categories: ["AKS", "Workshops", "Infrastructure as Code", "Kubernetes", "Prometheus", "Grafana", "Azure Monitor"]
 githubissuesid: 35
