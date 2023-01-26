@@ -8,7 +8,7 @@ categories: ["Bicep", "Workshops", "Infrastructure as Code", "Azure DevOps", "Az
 githubissuesid: 36
 ---
 
-![logo](/images/2023-01-25-logo.png)
+![logo](/images/2023-01-25-logo.jpg)
 
 Yesterday I held [Automate workload provisioning with Bicep, PowerShell and Azure DevOps](https://www.meetup.com/infrastructure-as-code-user-group-oslo/events/285739597/) workshop under my [Infrastructure as Code user group](https://www.meetup.com/Infrastructure-As-Code-User-Group-Oslo).
 
