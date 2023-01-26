@@ -22,7 +22,7 @@ This time we focused on workload provisioning with `Bicep`, `PowerShell` and `Az
 
 As always, labs are [available](https://github.com/evgenyb/iac-workshops/tree/main/iac-with-azure-devops) and you are welcome to work with them.
 
-Here is AKS workshops road-map for 2021-2022:
+Here is IaC workshops road-map for 2021-2022:
 
 * Azure API Management 101
 * Azure Networking 101
