@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {% include gtm-head.html %}
     <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
     {% include meta.html %}
 
@@ -14,6 +15,7 @@
   </head>
                                                                     	
   <body>
+    {% include gtm-body.html %}
     <div id="bar"></div>
     <div class="wrapper-container">
       <div class="wrapper-masthead">
@@ -53,7 +55,6 @@
         </div>
       </div>
     </div>
-
-  {% include analytics.html %}
+  <!-- {% include analytics.html %} -->
   </body>
 </html>
