@@ -6,12 +6,13 @@ permalink: /workshops/
 
 ## Infrastructure As Code workshops
 
+* [Automate Azure workload provisioning with Bicep, Powershell and Azure DevOps](https://borzenin.com/iac-with-azure-devops-workshop-labs/)
 * [How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/)
 * [Implement immutable infrastructure on Azure with ARM templates](https://borzenin.com/iac-ws2-labs/)
 * [Implement immutable infrastructure with Pulumi: Part I](https://borzenin.com/iac-ws3-labs/)
 * [Implement immutable infrastructure with Pulumi: Part II](https://borzenin.com/iac-ws4-labs/)
 * [Immutable AKS infrastructure with Bicep](https://borzenin.com/azure-kubernetes-service-aks-workshop-3-labs/)
-* [Automate Azure workload provisioning with Bicep, Powershell and Azure DevOps](https://borzenin.com/iac-with-azure-devops-workshop-labs/)
+
 
 ## AKS workshops
 
