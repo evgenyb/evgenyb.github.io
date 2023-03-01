@@ -6,6 +6,7 @@ permalink: /workshops/
 
 ## Infrastructure As Code workshops
 
+* [Load-Balancing Options on Azure](https://borzenin.com/azure-load-balancing-options-workshop-labs/)
 * [Automate Azure workload provisioning with Bicep, Powershell and Azure DevOps](https://borzenin.com/iac-with-azure-devops-workshop-labs/)
 * [How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/)
 * [Implement immutable infrastructure on Azure with ARM templates](https://borzenin.com/iac-ws2-labs/)

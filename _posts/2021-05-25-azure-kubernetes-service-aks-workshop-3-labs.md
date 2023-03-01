@@ -32,10 +32,12 @@ Don't miss any upcoming workshops and join my [Infrastructure as Code user group
 
 You can also check out my previous workshops dedicated to Infrastructure as Code tools:
 
-* [IaC workshop #1: How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/)
-* [IaC workshop #2: Implement immutable infrastructure on Azure with ARM templates](https://borzenin.com/iac-ws2-labs/)
-* [IaC workshop #3: Implement immutable infrastructure with Pulumi: Part I](https://borzenin.com/iac-ws3-labs/)
-* [IaC workshop #4: Implement immutable infrastructure with Pulumi: Part II](https://borzenin.com/iac-ws4-labs/)
+* [IaC workshop: Load-Balancing Options on Azure](https://borzenin.com/azure-load-balancing-options-workshop-labs/)
+* [IaC workshop: Automate Azure workload provisioning with Bicep, Powershell and Azure DevOps](https://borzenin.com/iac-with-azure-devops-workshop-labs/)
+* [IaC workshop: How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/)
+* [IaC workshop: Implement immutable infrastructure on Azure with ARM templates](https://borzenin.com/iac-ws2-labs/)
+* [IaC workshop: Implement immutable infrastructure with Pulumi: Part I](https://borzenin.com/iac-ws3-labs/)
+* [IaC workshop: Implement immutable infrastructure with Pulumi: Part II](https://borzenin.com/iac-ws4-labs/)
 
 
 With that - thanks for reading!

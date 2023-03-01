@@ -37,6 +37,7 @@ Don't miss any upcoming workshops and join my [Infrastructure as Code user group
 
 You can also check out my previous workshops dedicated to Infrastructure as Code tools:
 
+* [IaC workshop: Load-Balancing Options on Azure](https://borzenin.com/azure-load-balancing-options-workshop-labs/)
 * [IaC workshop: Automate Azure workload provisioning with Bicep, Powershell and Azure DevOps](https://borzenin.com/iac-with-azure-devops-workshop-labs/)
 * [IaC workshop: How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/)
 * [IaC workshop: Implement immutable infrastructure on Azure with ARM templates](https://borzenin.com/iac-ws2-labs/)
