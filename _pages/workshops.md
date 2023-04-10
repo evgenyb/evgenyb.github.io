@@ -6,6 +6,7 @@ permalink: /workshops/
 
 ## Infrastructure As Code workshops
 
+* [Automate DNS and Certificate management on Azure with Azure DevOps](https://borzenin.com/dns-and-ssl-management-on-azure-with-ado-workshop-labs/)
 * [Load-Balancing Options on Azure](https://borzenin.com/azure-load-balancing-options-workshop-labs/)
 * [Automate Azure workload provisioning with Bicep, Powershell and Azure DevOps](https://borzenin.com/iac-with-azure-devops-workshop-labs/)
 * [How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/)
@@ -14,8 +15,7 @@ permalink: /workshops/
 * [Implement immutable infrastructure with Pulumi: Part II](https://borzenin.com/iac-ws4-labs/)
 * [Immutable AKS infrastructure with Bicep](https://borzenin.com/azure-kubernetes-service-aks-workshop-3-labs/)
 
-
-## AKS workshops
+## Azure Kubernetes Services (AKS) workshops
 
 * [Introduction to Azure Kubernetes Service (AKS)](https://borzenin.com/azure-kubernetes-service-aks-workshop-1-labs/)
 * [Advanced AKS configuration](https://borzenin.com/azure-kubernetes-service-aks-workshop-2-labs/)

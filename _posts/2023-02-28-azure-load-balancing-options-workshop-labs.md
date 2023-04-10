@@ -37,6 +37,7 @@ Don't miss any upcoming workshops and join my [Infrastructure as Code user group
 
 You can also check out my previous workshops dedicated to Infrastructure as Code tools:
 
+* [IaC workshop: Automate DNS and Certificate management on Azure with Azure DevOps](https://borzenin.com/dns-and-ssl-management-on-azure-with-ado-workshop-labs/)
 * [IaC workshop: Load-Balancing Options on Azure](https://borzenin.com/azure-load-balancing-options-workshop-labs/)
 * [IaC workshop: Automate Azure workload provisioning with Bicep, Powershell and Azure DevOps](https://borzenin.com/iac-with-azure-devops-workshop-labs/)
 * [IaC workshop: How to live in harmony with ARM templates](https://borzenin.com/iac-ws1-labs/)
@@ -52,6 +53,5 @@ and AKS
 * [AKS Workshop #4 - GitOps in AKS with Flux](https://borzenin.com/azure-kubernetes-service-aks-workshop-4-labs/)
 * [AKS Workshop #5 - scaling options for applications and clusters in AKS](https://borzenin.com/azure-kubernetes-service-aks-workshop-5-labs/)
 * [AKS Workshop #6 - Monitoring options in AKS](https://borzenin.com/azure-aks-workshop-6-monitoring-options-aks-labs/)
-
 
 With that - thanks for reading!
