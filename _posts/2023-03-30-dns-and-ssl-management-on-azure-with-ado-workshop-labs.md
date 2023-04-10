@@ -25,8 +25,9 @@ As always, labs are [available](https://github.com/evgenyb/iac-workshops/tree/ma
 
 Here is IaC workshops road-map for 2023:
 
-- Azure API Management 101
-- Azure Networking 101
+- Working with Azure Private Link
+- Azure Landing Zones 101
+- Working with Azure Container Apps
 - AKS Workshop #7 - AKS security
 - AKS Workshop #8 - Service mesh with linkerd
 
