@@ -4,7 +4,7 @@ title: "Labs from IaC Workshop: Automate DNS and Certificate management on Azure
 date: 2023-03-30
 description: "Level 200 workshop that covered different aspects of automating DNS and certificate management on Azure with Azure DNS Zone, keyvault-acmebot and Azure DevOps."
 image: "/images/2023-03-30-logo.png"
-categories: ["Bicep", "Workshops", "Infrastructure as Code", "Azure DNS Zone", "Azure App Service", "Azure KeyVault", "PowerShell", "Azure DevOps"]
+categories: ["Bicep", "Workshops", "Infrastructure as Code", "Azure DNS Zone", "Azure App Services", "Azure KeyVault", "PowerShell", "Azure DevOps"]
 githubissuesid: 38
 ---
 
