@@ -36,6 +36,7 @@ Don't miss any upcoming workshops and join my [Infrastructure as Code user group
 
 You can also check out my previous workshops dedicated to Infrastructure as Code tools:
 
+- [Working with Azure Private Links](https://borzenin.com/working-with-private-links-workshop-labs/)
 - [Automate DNS and Certificate management on Azure with Azure DevOps](https://borzenin.com/dns-and-ssl-management-on-azure-with-ado-workshop-labs/)
 - [Load-Balancing Options on Azure](https://borzenin.com/azure-load-balancing-options-workshop-labs/)
 - [Automate Azure workload provisioning with Bicep, Powershell and Azure DevOps](https://borzenin.com/iac-with-azure-devops-workshop-labs/)
@@ -43,6 +44,7 @@ You can also check out my previous workshops dedicated to Infrastructure as Code
 - [Implement immutable infrastructure on Azure with ARM templates](https://borzenin.com/iac-ws2-labs/)
 - [Implement immutable infrastructure with Pulumi: Part I](https://borzenin.com/iac-ws3-labs/)
 - [Implement immutable infrastructure with Pulumi: Part II](https://borzenin.com/iac-ws4-labs/)
+- [Immutable AKS infrastructure with Bicep](https://borzenin.com/azure-kubernetes-service-aks-workshop-3-labs/)
 
 and Azure Kubernetes Services:
 
