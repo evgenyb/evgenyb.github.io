@@ -18,7 +18,7 @@ Following [recommendations](https://learn.microsoft.com/en-us/azure/firewall/fir
 
 # The challenge
 
-There will be 16 new IP addresses that need to be whitelisted by partners and we need a way to test that `each` partner actually whitelisted `all` new IP addresses. So, we need to setup a soft of lab environment where we can:
+There will be 16 new IP addresses that need to be whitelisted by partners and we need a way to test that `each` partner actually whitelisted `all` new IP addresses. So, we need to setup a sort of lab environment where we can:
 - configure outbound traffic to be routed through one specified IP address
 - execute TCP test towards each partner IP / FQDN at the specified port(s)
 - run these tests automatically every day/week/month and generate report showing whitelisting progress
