@@ -63,7 +63,7 @@ Very simple version of connectivity tests towards partner IP / FQDN is located i
 ```
 The `Deployment Scripts` code is stored in `test.bicep` file. It reads the content of `testPartners.ps1` file at deployment time using [loadTextContent](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-files#loadtextcontent) function and sends it to the [deploymentScripts](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentscripts?pivots=deployment-language-bicep) resource. 
 
-```bicep
+```powershell
 ...
 scriptContent: loadTextContent('testPartners.ps1')
 ...
@@ -79,7 +79,7 @@ az network nat gateway update -g $resourceGroupName -n "natgw-$prefix" --public-
 
 The script execution results exposed via Bicep `output` property.
 
-```bicep
+```powershell
 ...
 output results array = dsTest.properties.outputs.results
 ```
