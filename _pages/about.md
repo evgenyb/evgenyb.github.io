@@ -11,6 +11,6 @@ I have a very strong development background working with complex distributed bac
 
 Building up my Azure competence, I have completed all required certifications and became an [Azure Solutions Architect Expert](https://docs.microsoft.com/en-us/learn/certifications/azure-solutions-architect).
 
-Check out my [Sessionize](https://sessionize.com/evgeny-borzenin), [LinkedIn](https://www.linkedin.com/in/evgeny-borzenin-8b13a4/) and [Azure MVP](https://mvp.microsoft.com/en-us/PublicProfile/5003837?fullName=Evgeny%20Borzenin) profiles.
+Check out my [Sessionize](https://sessionize.com/evgeny-borzenin) and [LinkedIn](https://www.linkedin.com/in/evgeny-borzenin-8b13a4/) profiles.
 
 If you have any questions, please reach out to me at evgeny.borzenin@gmail.com.
