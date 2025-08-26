@@ -6,6 +6,7 @@ permalink: /workshops/
 
 ## Infrastructure As Code workshops
 
+- [Working with Azure Virtual Network Manager](https://workshops.iac-labs.com/avnm-labs/)
 - [Working with Azure Network Watcher](https://borzenin.com/working-with-network-watcher/)
 - [Working with Azure Private Links](https://borzenin.com/working-with-private-links-workshop-labs/)
 - [Automate DNS and Certificate management on Azure with Azure DevOps](https://borzenin.com/dns-and-ssl-management-on-azure-with-ado-workshop-labs/)

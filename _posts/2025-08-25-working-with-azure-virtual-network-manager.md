@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Labs from IaC Workshop: Working with Azure Virtual Network Manager"
-date: 2023-10-26
+date: 2025-08-26
 description: "Level 200 workshop that covered different aspects of working with Azure Virtual Network Manager."
 image: "/images/2025-08-26-logo.png"
 categories: ["Bicep", "Workshops", "Infrastructure as Code", "Azure Virtual Network Manager"]
@@ -34,6 +34,7 @@ Don't miss any upcoming master classes and join my [Infrastructure as Code user 
 
 You can also check out my previous workshops dedicated to Infrastructure as Code tools:
 
+- [Working with Azure Virtual Network Manager](https://workshops.iac-labs.com/avnm-labs/)
 - [Working with Azure Network Watcher](https://borzenin.com/working-with-network-watcher/)
 - [Working with Azure Private Links](https://borzenin.com/working-with-private-links-workshop-labs/)
 - [Automate DNS and Certificate management on Azure with Azure DevOps](https://borzenin.com/dns-and-ssl-management-on-azure-with-ado-workshop-labs/)
