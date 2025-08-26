@@ -12,7 +12,7 @@ githubissuesid: 44
 
 Today I held [Working with Azure Virtual Network Manager](https://www.meetup.com/infrastructure-as-code-user-group-oslo/events/310450544) Workshop under [Infrastructure as Code user group Oslo](https://www.meetup.com/Infrastructure-As-Code-User-Group-Oslo).
 
-This time we looked at different aspects aspects of working with `Azure Virtual Network Manager` and locked at:
+This time we looked at different aspects of working with `Azure Virtual Network Manager` and learned:
 
 - How to segment virtual networks with Network Groups
 - How to implement hub-and-spoke and mesh network topology with AVNM
