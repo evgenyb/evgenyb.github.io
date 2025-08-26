@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Labs from IaC Workshop: Working with Azure Virtual Network Manager"
-date: 2023-10-26
+date: 2025-08-26
 description: "Level 200 workshop that covered different aspects of working with Azure Virtual Network Manager."
 image: "/images/2025-08-26-logo.png"
 categories: ["Bicep", "Workshops", "Infrastructure as Code", "Azure Virtual Network Manager"]
