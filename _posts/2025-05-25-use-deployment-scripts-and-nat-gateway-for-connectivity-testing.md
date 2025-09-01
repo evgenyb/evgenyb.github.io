@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Use Deployment Scripts and NAT Gateway to verify if your egress Public IP is whitelisted with you integration partners"
+title: "Azure Deployment Scripts + NAT Gateway: A Simple Way to Validate Egress IP Whitelisting"
 date: 2025-05-25
-description: "This post describes how to use Deployment Scripts and NAT Gateway to verify if your egress Public IP is whitelisted with you integration partners."
+description: "This post describes how to use Deployment Scripts and NAT Gateway to verify if your egress Public IPs are whitelisted with your integration partners."
 image: "/images/2025-05-25-logo.png"
-categories: ["Bicep", "NAT Gateway", "Infrastructure as Code", "Azure FIrewall", "Deployment Scripts"]
+categories: ["Bicep", "Azure NAT Gateway", "Infrastructure as Code", "Azure Firewall", "Deployment Scripts"]
 githubissuesid: 43
 ---
 
