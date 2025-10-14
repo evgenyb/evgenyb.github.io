@@ -6,7 +6,7 @@ permalink: /workshops/
 
 ## Infrastructure As Code workshops
 
-- [Working with Azure Virtual Network Manager](https://workshops.iac-labs.com/azure-firewall-labs/)
+- [Working with Azure Firewall](https://workshops.iac-labs.com/azure-firewall-labs/)
 - [Working with Azure Virtual Network Manager](https://workshops.iac-labs.com/avnm-labs/)
 - [Working with Azure Network Watcher](https://workshops.iac-labs.com/azure-network-watcher/)
 - [Working with Azure Private Links](https://workshops.iac-labs.com/azure-private-links/)
