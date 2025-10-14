@@ -12,14 +12,9 @@ githubissuesid: 48
 
 My customer recently asked me about the performance differences between Azure Firewall Standard and Premium SKUs. This prompted me to conduct a "sort-of" data-driven analysis comparing the performance of different SKUs.
 
-Azure Firewall is a robust solution for protecting Azure Network infrastructure. With two primary SKUs available - Standard and Premium - understanding their performance characteristics is crucial for making informed decisions. 
+Azure Firewall is cloud native, highly available, with built-in auto scaling firewall-as-a-service designed to handle large amounts of traffic. With two primary SKUs available - Standard and Premium - understanding their performance characteristics is crucial for making informed decisions. 
 
 In this post, I will be mainly focusing on the throughput performance and will not cover any other aspects of Azure Firewall product, like features, pricing or deployment scenarios.
-
-## What is Azure Firewall?
-
-Azure Firewall is cloud native, highly available, with built-in auto scaling firewall-as-a-service designed to handle large amounts of traffic. 
-Azure Firewall comes in three SKUs: Basic, Standard, and Premium.
 
 ## The test plan
 
@@ -27,7 +22,7 @@ Azure Firewall comes in three SKUs: Basic, Standard, and Premium.
 - I used `iperf3` tool to measure the throughput between VMs. `iperf3` is a widely used network testing tool that can create TCP data streams and measure the throughput of a network that is carrying them.
 - Azure Firewall uses five to seven minutes to scale up. Therefore I needed to run several (five to be precise) 10 min test sessions with 5 min apart to ensure that Azure Firewall had enough time to scale up.
 
-Here is the master-plan:
+Here was the master-plan:
 
 1. Implement Hub-and-Spoke network topology with Azure Firewall Standard and Azure Bastion Standard to secure the ssh sessions to the VMs.
 2. Deploy four pairs of VMs in the spoke virtual networks. Each pair is represented with server and client VMs. 
@@ -74,11 +69,11 @@ First, let's collect [Standard SKU specifications](https://learn.microsoft.com/e
 |---------|------------------|
 | Total throughput for initial firewall deployment | 3 Gbps |
 | Max bandwidth | 30 Gbps |
-| Max bandwidth for single TCP connection | 1.5 Gbps |
+| Max bandwidth for single TCP connection | up to 1.5 Gbps |
 | Scale up time | 5-7 minutes |
 
 Now, let's see how Azure Firewall Standard performs.
-I removed the direct peering between spoke VNets and routed all traffic (east-west and north-south) through Azure Firewall Standard.
+I removed the direct peering between spoke VNets and routed all spoke traffic (east-west and north-south) through Azure Firewall Standard.
 
 Then I run five 10 min `iperf3` test sessions using 32 parallel streams with 5 min apart to ensure that Azure Firewall had enough time to scale up. 
 
@@ -88,13 +83,15 @@ Here is the command I ran on each client VM:
 iperf3 -c <serverIP> -t 600 -P 32
 ```
 
-And here is the summary of the results:
+And here is the results summary:
 
 ### Run 1 - 4 sessions, 10min, 32 streams 
 
+I forgot to remove direct VNNet peering between client1 and server1 spokes, so I excluded metrics for client1 -> server1 pair from the table below.
+
 | Test pair | Throughput (Gbps) |
 |-----------|------------------|
-| client1 -> server1 | 1.86 |
+| client2 -> server2 | 1.86 |
 | client3 -> server3 | 1.57 |
 | client4 -> server4 | 2.66 |
 
@@ -154,5 +151,49 @@ And here is the summary of the results:
 As we can see from the results above, Azure Firewall took some time to scale up. During the first test session the throughput was ranging from 1.57 to 2.66 Gbps. That confirms to the `Total throughput for initial firewall deployment` specification of 3 Gbps.
 During the second session the throughput scaled up to 8 Gbps, third session - to 17 Gbps, fourth session - to 25 Gbps, and finally the fifth session the throughput was almost maxed out at Standard SKU limit of 30 Gbps.
 
+## Performance with Azure Firewall Premium
+
+As with Standard SKU, let's collect [Premium SKU specifications](https://learn.microsoft.com/en-us/azure/firewall/firewall-performance#performance-data)
+
+| Firewall use case | Specification |
+|---------|------------------|
+| Total throughput for initial firewall deployment | 18 Gbps |
+| Max bandwidth | 100 Gbps |
+| Max bandwidth for single TCP connection | up to 9 Gbps |
+| Scale up time | 5-7 minutes |
+
+Next, I re-provisioned lab environment with Azure Firewall Premium SKU and repeated the same test plan as with Standard SKU.
+
+This time, two test sessions were enough for Azure Firewall Premium to scale up to the maximum VM throughput capacity.
+
+### Run 1 - 4 sessions, 10min, 32 streams 
+
+| Test pair | Throughput (Gbps) |
+|-----------|------------------|
+| client1 -> server1 | 4.94 |
+| client2 -> server2 | 3.78 |
+| client3 -> server3 | 4.77 |
+| client4 -> server4 | 4.41 |
+
+![sessions-running1](/images/2025-09-24-fw-premiumsessions-running1.png)
+![fw-standard-run1](/images/2025-09-24-fw-premium-run1.png)
+
+### Run 2 - 4 sessions, 10min, 32 streams 
+
+| Test pair | Throughput (Gbps) |
+|-----------|------------------|
+| client1 -> server1 | 11.8 |
+| client2 -> server2 | 11.8 |
+| client3 -> server3 | 11.8 |
+| client4 -> server4 | 11.8 |
+
+![fw-standard-run1](/images/2025-09-24-fw-premium-run2.png)
+
+### Results interpretation
+
+During the first test session the total Firewall throughput was close to 18 Gbps and that confirms to the `Total throughput for initial firewall deployment` specification of 18 Gbps.
+During the second session the throughput scaled almost up to 50 Gbps. 
+
+At my test lab with 8 VMs, I wasn't able to stress throughput up to the Premium SKU limit of 100 Gbps. I would either need to use larger VM sizes or add more test pairs to achieve that.
 
 With that - thanks for reading!
